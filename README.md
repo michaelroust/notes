@@ -132,6 +132,8 @@
 - **ML Explainability** - Feature importance, local methods, gradient-based explanations, interpretable models
 - **Compiler Design and Optimization** - Lexical analysis, parsing, semantic analysis, code generation, optimization techniques
 - **Python Programming** - Syntax, data structures, OOP, functions, modules, error handling, advanced features
+- **Scala Programming** - Object-oriented and functional programming, pattern matching, collections, concurrency, advanced features
+- **Quantum Machine Learning** - Quantum algorithms for ML, quantum neural networks, quantum optimization, hybrid approaches
 
 - **Computer Graphics**
   - 3D transformations and projections
@@ -173,6 +175,41 @@
   - Distributed computing paradigms
   - Fault tolerance and reliability
   - Network protocols
+
+- **Computer Networks**
+  - TCP/IP protocol suite
+  - Routing algorithms (Dijkstra, Bellman-Ford)
+  - Network security and cryptography
+  - Wireless and mobile networks
+  - Network performance analysis
+
+- **Database Systems**
+  - ACID properties and transactions
+  - CAP theorem and consistency models
+  - Distributed databases and replication
+  - NoSQL databases (document, key-value, column-family)
+  - Query optimization and indexing
+
+- **Graph Theory**
+  - Graph algorithms (shortest path, minimum spanning tree)
+  - Network flow and matching
+  - Graph coloring and connectivity
+  - Planar graphs and graph minors
+  - Applications to social networks and biology
+
+- **Network Science**
+  - Complex networks and scale-free networks
+  - Small-world phenomena
+  - Network topology and structure
+  - Community detection algorithms
+  - Applications to social, biological, and technological networks
+
+- **Chaos Theory and Fractals**
+  - Nonlinear dynamics and strange attractors
+  - Fractal geometry and self-similarity
+  - Mandelbrot and Julia sets
+  - Applications to physics and biology
+  - Computational methods for chaos
 
 ### Engineering
 - **Electromagnetic Theory**
@@ -270,34 +307,42 @@
 ## Priority Recommendations
 
 ### High Priority (Builds on existing knowledge)
-1. **Topology** - Natural extension of analysis and geometry
-2. **Computability Theory** - Fundamental to computer science and logic, includes lambda calculus, connects to category theory
+1. **Graph Theory** - Fundamental, connects to algorithms, networks, topology, very applicable
+2. **Distributed Systems** - Critical for modern software development, builds on algorithms
+3. **Information Theory** - Beautiful bridge between mathematics, computer science, and physics
+4. **Topology** - Natural extension of analysis and geometry
+5. **Computability Theory** - Fundamental to computer science and logic, includes lambda calculus, connects to category theory
+
+### Medium Priority (Fills important gaps)
+1. **Computer Networks** - Fundamental to modern computing, practical applications
+2. **Database Systems** - Essential for data management, builds on algorithms and complexity
 3. **Control Theory** - Important applications, builds on differential equations
 4. **Statistical Mechanics** - Bridges thermodynamics and quantum mechanics
 5. **Combinatorics** - Fundamental discrete mathematics, builds on discrete math
+6. **Cryptography** - Security applications, builds on number theory
+7. **Network Science** - Modern interdisciplinary field, connects graph theory to real networks
 
-### Medium Priority (Fills important gaps)
+### Lower Priority (Specialized or advanced)
 1. **Algebraic Geometry** - Deep connections to number theory and topology
 2. **Programming Language Theory** - Connects lambda calculus to practical CS
 3. **Game Theory** - Important applications in economics and biology
 4. **Mathematical Finance** - Practical applications, builds on probability
-5. **Cryptography** - Security applications, builds on number theory
-6. **Dynamical Systems** - Bridges mathematics and physics
-
-### Lower Priority (Specialized or advanced)
-1. **Homological Algebra** - Advanced pure mathematics, requires topology
-2. **Representation Theory** - Specialized algebra, connects to physics
-3. **Formal Methods** - Specialized CS, requires logic background
-4. **Mathematical Biology** - Interdisciplinary, requires biology background
-5. **Particle Physics** - Highly specialized, requires advanced quantum field theory
-6. **Computational Complexity** - Theoretical computer science focus
-7. **Distributed Systems** - More engineering-focused
+5. **Chaos Theory and Fractals** - Visually appealing, connects math and physics
+6. **Quantum Machine Learning** - Cutting-edge field combining quantum computation and ML
+7. **Dynamical Systems** - Bridges mathematics and physics
+8. **Formal Methods** - Specialized CS, requires logic background
+9. **Computational Complexity** - Theoretical computer science focus
+10. **Homological Algebra** - Advanced pure mathematics, requires topology
+11. **Representation Theory** - Specialized algebra, connects to physics
+12. **Mathematical Biology** - Interdisciplinary, requires biology background
+13. **Particle Physics** - Highly specialized, requires advanced quantum field theory
+14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 20 (9 Pure Math, 7 Applied Math, 2 Physics, 4 Computer Science)
+- **Total completed subjects**: 22 (9 Pure Math, 7 Applied Math, 2 Physics, 6 Computer Science)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning
 # notes

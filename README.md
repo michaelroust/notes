@@ -1,5 +1,13 @@
 # Mathematical and Scientific Subjects Overview
 
+[![GitHub Views](https://img.shields.io/github/watchers/michaelroust/notes?style=social&label=Watchers)](https://github.com/michaelroust/notes)
+[![GitHub Stars](https://img.shields.io/github/stars/michaelroust/notes?style=social&label=Stars)](https://github.com/michaelroust/notes)
+[![GitHub Forks](https://img.shields.io/github/forks/michaelroust/notes?style=social&label=Forks)](https://github.com/michaelroust/notes)
+
+![README Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/michaelroust/notes/blob/main/README.md&title=README%20Views&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Views&edge_flat=false)
+
+A comprehensive collection of LaTeX notes covering various mathematical and scientific subjects.
+
 ## Existing Subjects (Completed)
 
 ### Pure Mathematics

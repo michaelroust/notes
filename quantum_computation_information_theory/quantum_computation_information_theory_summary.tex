@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+% Theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+% Common quantum notation
+\newcommand{\ket}[1]{\lvert #1 \rangle}
+\newcommand{\bra}[1]{\langle #1 \rvert}
+\newcommand{\braket}[2]{\langle #1 \vert #2 \rangle}
+\newcommand{\Tr}{\mathrm{Tr}}
+
+\title{Quantum Computation and Information Theory Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Foundations of Quantum Mechanics}
+
+\subsection{Postulates}
+\begin{enumerate}
+    \item States of an isolated system are represented by unit vectors $\ket{\psi}$ in a complex Hilbert space $\mathcal{H}$ (or density operators $\rho$ with $\rho \succeq 0$ and $\Tr\,\rho = 1$).
+    \item Evolution is unitary: $\ket{\psi} \mapsto U\ket{\psi}$, or $\rho \mapsto U\rho U^{\dagger}$.
+    \item Measurements are described by a set of operators $\{M_m\}$ with $\sum_m M_m^{\dagger}M_m = I$. Outcome $m$ occurs with probability $p(m)=\lVert M_m\ket{\psi}\rVert^2$ and post-measurement state $M_m\ket{\psi}/\sqrt{p(m)}$.
+    \item Composite systems are represented by the tensor product: $\mathcal{H}_{AB} = \mathcal{H}_A \otimes \mathcal{H}_B$.
+\end{enumerate}
+
+\subsection{Dirac Notation and Linear Algebra}
+Let $\ket{\psi} \in \mathcal{H}$, $\bra{\psi} = (\ket{\psi})^{\dagger}$, and $\braket{\phi}{\psi}$ the inner product. Observables are Hermitian operators $H = H^{\dagger}$.
+
+\subsection{Density Operators and Partial Trace}
+Mixed states are $\rho = \sum_i p_i \ket{\psi_i}\!\bra{\psi_i}$. For a bipartite state $\rho_{AB}$, the reduced state on $A$ is $\rho_A = \Tr_B\,\rho_{AB}$.
+
+\section{Qubits and Single-Qubit Gates}
+
+\subsection{Qubit States}
+The computational basis is $\{\ket{0},\ket{1}\}$. A pure qubit state is $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$ with $|\alpha|^2+|\beta|^2=1$. The Bloch representation uses Pauli matrices $\{X,Y,Z\}$: any state $\rho=\tfrac{1}{2}(I+\vec{r}\cdot\vec{\sigma})$ with $\lVert\vec{r}\rVert\le 1$.
+
+\subsection{Elementary Gates}
+Common gates: $X, Y, Z, H, S, T$ and rotations $R_{\hat{n}}(\theta)=e^{-i\theta\,\hat{n}\cdot\vec{\sigma}/2}$. Any single-qubit unitary is a rotation on the Bloch sphere.
+
+\section{Multi-Qubit Systems and Circuits}
+
+\subsection{Tensor Products and Entanglement}
+Composite states live in $\mathcal{H}_A\otimes\mathcal{H}_B$. A pure state $\ket{\psi}_{AB}$ is entangled if it cannot be written as $\ket{\phi}_A\otimes\ket{\chi}_B$. The Schmidt decomposition writes $\ket{\psi}_{AB}=\sum_i \sqrt{\lambda_i}\,\ket{i}_A\ket{i}_B$.
+
+\subsection{Controlled Gates and Universality}
+The CNOT gate together with all single-qubit gates generates a universal set for quantum computation.
+
+\subsection{Circuit Model}
+Algorithms are specified by unitary circuits acting on $n$ qubits followed by measurements in the computational basis.
+
+\section{Measurement Theory}
+
+\subsection{Projective Measurements}
+Given projectors $\{\Pi_m\}$ with $\Pi_m\Pi_{m'}=\delta_{mm'}\Pi_m$ and $\sum_m \Pi_m=I$, outcome $m$ occurs with probability $p(m)=\Tr(\Pi_m\rho)$ and post-measurement state $\Pi_m\rho\Pi_m/p(m)$.
+
+\subsection{POVMs and Naimark's Dilation}
+General measurements are POVMs $\{E_m\}$ with $E_m \succeq 0$ and $\sum_m E_m=I$. Any POVM can be realized as a projective measurement on a larger Hilbert space.
+
+\section{Core Phenomena}
+
+\subsection{No-Cloning Theorem}
+\begin{theorem}
+There is no unitary $U$ and fixed blank state $\ket{0}$ such that $U\ket{\psi}\ket{0}=\ket{\psi}\ket{\psi}$ for all $\ket{\psi}$.
+\end{theorem}
+
+\subsection{Bell States and Nonlocality}
+The Bell basis: $\ket{\Phi^{\pm}}=\tfrac{1}{\sqrt{2}}(\ket{00}\pm\ket{11})$, $\ket{\Psi^{\pm}}=\tfrac{1}{\sqrt{2}}(\ket{01}\pm\ket{10})$. Violations of CHSH inequalities witness nonclassical correlations.
+
+\subsection{Entanglement Measures}
+For a bipartite pure state, the entanglement entropy is $E(\ket{\psi}_{AB})=S(\rho_A)$ where $S(\rho)=-\Tr(\rho\log\rho)$ is the von Neumann entropy.
+
+\section{Quantum Algorithms}
+
+\subsection{Fourier Transform}
+The Quantum Fourier Transform (QFT) on $N=2^n$ basis states is $\mathrm{QFT}\ket{x}=\tfrac{1}{\sqrt{N}}\sum_{y=0}^{N-1} e^{2\pi i xy/N}\ket{y}$.
+
+\subsection{Deutsch-Jozsa and Phase Kickback}
+Using interference to distinguish constant vs balanced oracles in a single query for promise problems.
+
+\subsection{Grover's Search}
+Amplitude amplification finds a marked item in $O(\sqrt{N})$ queries using reflections about the uniform superposition and the solution subspace.
+
+\subsection{Shor's Algorithm (Outline)}
+Reduces integer factoring to period-finding via QFT, achieving polynomial time in the input length on a fault-tolerant quantum computer.
+
+\section{Noise and Quantum Channels}
+
+\subsection{CPTP Maps and Kraus Operators}
+Quantum channels are completely positive trace-preserving maps with Kraus form $\mathcal{E}(\rho)=\sum_k K_k\rho K_k^{\dagger}$, $\sum_k K_k^{\dagger}K_k=I$.
+
+\subsection{Canonical Noise Models}
+Depolarizing: $\mathcal{D}_p(\rho)=(1-p)\rho+\tfrac{p}{3}(X\rho X+Y\rho Y+Z\rho Z)$. Dephasing: $\mathcal{Z}_p(\rho)=(1-p)\rho+p\,Z\rho Z$. Amplitude damping with Kraus operators $K_0=\begin{pmatrix}1&0\\0&\sqrt{1-\gamma}\end{pmatrix}$, $K_1=\begin{pmatrix}0&\sqrt{\gamma}\\0&0\end{pmatrix}$.
+
+\subsection{Distances and Fidelity}
+Trace distance $\tfrac{1}{2}\lVert \rho-\sigma\rVert_1$ bounds state discrimination advantage; Uhlmann fidelity $F(\rho,\sigma)=\left(\Tr\sqrt{\sqrt{\rho}\,\sigma\,\sqrt{\rho}}\,\right)^2$ quantifies similarity.
+
+\section{Quantum Error Correction}
+
+\subsection{Stabilizer Formalism}
+An $[[n,k,d]]$ stabilizer code is the common $+1$ eigenspace of an abelian subgroup $\mathcal{S}$ of the $n$-qubit Pauli group. Errors are detected via syndrome measurement.
+
+\subsection{Simple Codes}
+Bit-flip code encodes $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$ as $\alpha\ket{000}+\beta\ket{111}$. CSS construction combines classical linear codes to correct bit- and phase-flip errors.
+
+\section{Quantum Information Theory}
+
+\subsection{Von Neumann Entropy and Mutual Information}
+$S(\rho)=-\Tr(\rho\log\rho)$, quantum mutual information $I(A:B)=S(\rho_A)+S(\rho_B)-S(\rho_{AB})$.
+
+\subsection{Data Processing and Strong Subadditivity}
+For a channel $\mathcal{E}$, relative entropy contracts: $D(\rho\,\Vert\,\sigma) \ge D(\mathcal{E}(\rho)\,\Vert\,\mathcal{E}(\sigma))$. Strong subadditivity: $S(\rho_{ABC})+S(\rho_B)\le S(\rho_{AB})+S(\rho_{BC})$.
+
+\subsection{Holevo Bound}
+For ensemble $\{p_x,\rho_x\}$ and measurement outcome $Y$, the accessible classical information satisfies $I(X:Y)\le \chi := S\!\left(\sum_x p_x\rho_x\right)-\sum_x p_x S(\rho_x)$.
+
+\subsection{Channel Capacities (Overview)}
+Classical capacity $C$ given by regularized Holevo information (HSW theorem). Quantum capacity $Q$ given by regularized coherent information $I_c(\rho,\mathcal{N})=S(\mathcal{N}(\rho))-S((\mathrm{id}\otimes\mathcal{N})(\ket{\psi}\!\bra{\psi}))$. Entanglement-assisted capacity $C_E=\max_{\rho} I(A:B)$ for the channel's Choi state.
+
+\section{Quantum Cryptography}
+
+\subsection{BB84 Protocol}
+Encoding random bits in two conjugate bases, sifting, error estimation, information reconciliation, and privacy amplification yield a secret key; security from no-cloning and disturbance of nonorthogonal states.
+
+\subsection{Entanglement-Based QKD}
+E91 uses entangled pairs and Bell tests to certify security under device assumptions.
+
+\section{Computational Complexity (Brief)}
+
+\subsection{BQP and QMA}
+\textbf{BQP} contains decision problems solvable by polynomial-size quantum circuits with bounded error. \textbf{QMA} is the quantum analogue of NP with a quantum proof and verifier.
+
+\section{References for Further Study}
+
+Nielsen and Chuang, ``Quantum Computation and Quantum Information''; Watrous, ``The Theory of Quantum Information''; Wilde, ``Quantum Information Theory''.
+
+\end{document}
+
+

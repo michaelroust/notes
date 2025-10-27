@@ -1,0 +1,624 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+
+\title{Algorithms Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Algorithm Analysis}
+
+\subsection{Time Complexity}
+\begin{definition}
+\textbf{Time complexity} measures how the running time of an algorithm grows as the input size increases.
+\end{definition}
+
+\subsection{Space Complexity}
+\begin{definition}
+\textbf{Space complexity} measures how much memory an algorithm uses as the input size increases.
+\end{definition}
+
+\subsection{Big-O Notation}
+\begin{definition}
+$f(n) = O(g(n))$ if there exist constants $c > 0$ and $n_0 \geq 0$ such that $f(n) \leq c \cdot g(n)$ for all $n \geq n_0$.
+\end{definition}
+
+\subsection{Common Complexity Classes}
+\begin{itemize}
+    \item \textbf{Constant}: $O(1)$ - Time doesn't depend on input size
+    \item \textbf{Logarithmic}: $O(\log n)$ - Binary search
+    \item \textbf{Linear}: $O(n)$ - Linear search
+    \item \textbf{Linearithmic}: $O(n \log n)$ - Merge sort, heap sort
+    \item \textbf{Quadratic}: $O(n^2)$ - Bubble sort, selection sort
+    \item \textbf{Cubic}: $O(n^3)$ - Matrix multiplication
+    \item \textbf{Exponential}: $O(2^n)$ - Brute force solutions
+    \item \textbf{Factorial}: $O(n!)$ - Permutation generation
+\end{itemize}
+
+\subsection{Other Notations}
+\begin{itemize}
+    \item \textbf{Big-Omega}: $f(n) = \Omega(g(n))$ if $g(n) = O(f(n))$
+    \item \textbf{Big-Theta}: $f(n) = \Theta(g(n))$ if $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$
+    \item \textbf{Little-o}: $f(n) = o(g(n))$ if $\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$
+\end{itemize}
+
+\section{Sorting Algorithms}
+
+\subsection{Comparison-Based Sorting}
+\begin{theorem}
+Any comparison-based sorting algorithm has a lower bound of $\Omega(n \log n)$ comparisons in the worst case.
+\end{theorem}
+
+\subsection{Bubble Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n^2)$ worst case, $O(n)$ best case
+    \item \textbf{Space Complexity}: $O(1)$
+    \item \textbf{Stable}: Yes
+    \item \textbf{In-place}: Yes
+\end{itemize}
+
+\begin{algorithm}
+\caption{Bubble Sort}
+\begin{algorithmic}[1]
+\Procedure{BubbleSort}{$A[1..n]$}
+    \For{$i = 1$ to $n-1$}
+        \For{$j = 1$ to $n-i$}
+            \If{$A[j] > A[j+1]$}
+                \State \Call{Swap}{$A[j], A[j+1]$}
+            \EndIf
+        \EndFor
+    \EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Selection Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n^2)$
+    \item \textbf{Space Complexity}: $O(1)$
+    \item \textbf{Stable}: No
+    \item \textbf{In-place}: Yes
+\end{itemize}
+
+\subsection{Insertion Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n^2)$ worst case, $O(n)$ best case
+    \item \textbf{Space Complexity}: $O(1)$
+    \item \textbf{Stable}: Yes
+    \item \textbf{In-place}: Yes
+\end{itemize}
+
+\subsection{Merge Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$
+    \item \textbf{Space Complexity}: $O(n)$
+    \item \textbf{Stable}: Yes
+    \item \textbf{In-place}: No
+\end{itemize}
+
+\begin{algorithm}
+\caption{Merge Sort}
+\begin{algorithmic}[1]
+\Procedure{MergeSort}{$A[1..n]$}
+    \If{$n \leq 1$}
+        \State \Return $A$
+    \EndIf
+    \State $mid \gets \lfloor n/2 \rfloor$
+    \State $left \gets$ \Call{MergeSort}{$A[1..mid]$}
+    \State $right \gets$ \Call{MergeSort}{$A[mid+1..n]$}
+    \State \Return \Call{Merge}{$left, right$}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Quick Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$ average, $O(n^2)$ worst case
+    \item \textbf{Space Complexity}: $O(\log n)$ average, $O(n)$ worst case
+    \item \textbf{Stable}: No
+    \item \textbf{In-place}: Yes (with proper implementation)
+\end{itemize}
+
+\subsection{Heap Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$
+    \item \textbf{Space Complexity}: $O(1)$
+    \item \textbf{Stable}: No
+    \item \textbf{In-place}: Yes
+\end{itemize}
+
+\subsection{Counting Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n + k)$ where $k$ is the range of input
+    \item \textbf{Space Complexity}: $O(k)$
+    \item \textbf{Stable}: Yes
+    \item \textbf{In-place}: No
+\end{itemize}
+
+\subsection{Radix Sort}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(d(n + k))$ where $d$ is the number of digits
+    \item \textbf{Space Complexity}: $O(n + k)$
+    \item \textbf{Stable}: Yes
+    \item \textbf{In-place}: No
+\end{itemize}
+
+\section{Searching Algorithms}
+
+\subsection{Linear Search}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n)$
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\subsection{Binary Search}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(\log n)$
+    \item \textbf{Space Complexity}: $O(1)$ iterative, $O(\log n)$ recursive
+    \item \textbf{Requirement}: Array must be sorted
+\end{itemize}
+
+\begin{algorithm}
+\caption{Binary Search}
+\begin{algorithmic}[1]
+\Procedure{BinarySearch}{$A[1..n], target$}
+    \State $left \gets 1$, $right \gets n$
+    \While{$left \leq right$}
+        \State $mid \gets \lfloor (left + right) / 2 \rfloor$
+        \If{$A[mid] = target$}
+            \State \Return $mid$
+        \ElsIf{$A[mid] < target$}
+            \State $left \gets mid + 1$
+        \Else
+            \State $right \gets mid - 1$
+        \EndIf
+    \EndWhile
+    \State \Return $-1$ \Comment{Not found}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Interpolation Search}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(\log \log n)$ average, $O(n)$ worst case
+    \item \textbf{Space Complexity}: $O(1)$
+    \item \textbf{Requirement}: Uniformly distributed sorted array
+\end{itemize}
+
+\section{Graph Algorithms}
+
+\subsection{Graph Representation}
+\begin{itemize}
+    \item \textbf{Adjacency Matrix}: $O(V^2)$ space, $O(1)$ edge lookup
+    \item \textbf{Adjacency List}: $O(V + E)$ space, $O(V)$ edge lookup
+\end{itemize}
+
+\subsection{Breadth-First Search (BFS)}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(V + E)$
+    \item \textbf{Space Complexity}: $O(V)$
+    \item \textbf{Uses}: Shortest path in unweighted graphs, level-order traversal
+\end{itemize}
+
+\begin{algorithm}
+\caption{Breadth-First Search}
+\begin{algorithmic}[1]
+\Procedure{BFS}{$G, start$}
+    \State $queue \gets$ empty queue
+    \State $visited \gets$ empty set
+    \State \Call{Enqueue}{$queue, start$}
+    \State \Call{Add}{$visited, start$}
+    \While{$queue$ is not empty}
+        \State $vertex \gets$ \Call{Dequeue}{$queue$}
+        \State \Call{Process}{$vertex$}
+        \For{each neighbor $v$ of $vertex$}
+            \If{$v$ not in $visited$}
+                \State \Call{Add}{$visited, v$}
+                \State \Call{Enqueue}{$queue, v$}
+            \EndIf
+        \EndFor
+    \EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Depth-First Search (DFS)}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(V + E)$
+    \item \textbf{Space Complexity}: $O(V)$
+    \item \textbf{Uses}: Topological sorting, cycle detection, path finding
+\end{itemize}
+
+\subsection{Dijkstra's Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O((V + E) \log V)$ with binary heap
+    \item \textbf{Space Complexity}: $O(V)$
+    \item \textbf{Uses}: Shortest path in weighted graphs with non-negative weights
+\end{itemize}
+
+\subsection{Bellman-Ford Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(VE)$
+    \item \textbf{Space Complexity}: $O(V)$
+    \item \textbf{Uses}: Shortest path with negative weights, negative cycle detection
+\end{itemize}
+
+\subsection{Floyd-Warshall Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(V^3)$
+    \item \textbf{Space Complexity}: $O(V^2)$
+    \item \textbf{Uses}: All-pairs shortest paths
+\end{itemize}
+
+\subsection{Minimum Spanning Tree}
+\subsubsection{Kruskal's Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(E \log E)$
+    \item \textbf{Space Complexity}: $O(V)$
+    \item \textbf{Uses}: Union-Find data structure
+\end{itemize}
+
+\subsubsection{Prim's Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(E \log V)$ with binary heap
+    \item \textbf{Space Complexity}: $O(V)$
+\end{itemize}
+
+\section{Dynamic Programming}
+
+\subsection{Principle of Optimality}
+\begin{definition}
+A problem has the \textbf{principle of optimality} if an optimal solution contains optimal solutions to subproblems.
+\end{definition}
+
+\subsection{Fibonacci Sequence}
+\begin{itemize}
+    \item \textbf{Naive Recursion}: $O(2^n)$
+    \item \textbf{Memoization}: $O(n)$ time, $O(n)$ space
+    \item \textbf{Tabulation}: $O(n)$ time, $O(n)$ space
+    \item \textbf{Space-Optimized}: $O(n)$ time, $O(1)$ space
+\end{itemize}
+
+\subsection{Longest Common Subsequence (LCS)}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(mn)$
+    \item \textbf{Space Complexity}: $O(mn)$
+    \item \textbf{Space-Optimized}: $O(\min(m,n))$
+\end{itemize}
+
+\subsection{Longest Increasing Subsequence (LIS)}
+\begin{itemize}
+    \item \textbf{Naive DP}: $O(n^2)$
+    \item \textbf{Binary Search}: $O(n \log n)$
+\end{itemize}
+
+\subsection{Edit Distance (Levenshtein)}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(mn)$
+    \item \textbf{Space Complexity}: $O(mn)$
+    \item \textbf{Space-Optimized}: $O(\min(m,n))$
+\end{itemize}
+
+\subsection{Knapsack Problem}
+\subsubsection{0/1 Knapsack}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(nW)$ where $W$ is capacity
+    \item \textbf{Space Complexity}: $O(nW)$
+\end{itemize}
+
+\subsubsection{Unbounded Knapsack}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(nW)$
+    \item \textbf{Space Complexity}: $O(W)$
+\end{itemize}
+
+\subsection{Matrix Chain Multiplication}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n^3)$
+    \item \textbf{Space Complexity}: $O(n^2)$
+\end{itemize}
+
+\section{Greedy Algorithms}
+
+\subsection{Greedy Choice Property}
+\begin{definition}
+A \textbf{greedy choice property} means that a locally optimal choice leads to a globally optimal solution.
+\end{definition}
+
+\subsection{Activity Selection Problem}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$ (due to sorting)
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\subsection{Huffman Coding}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$
+    \item \textbf{Space Complexity}: $O(n)$
+\end{itemize}
+
+\subsection{Fractional Knapsack}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n \log n)$ (due to sorting)
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\section{Divide and Conquer}
+
+\subsection{Master Theorem}
+\begin{theorem}
+For recurrence relations of the form $T(n) = aT(n/b) + f(n)$ where $a \geq 1$, $b > 1$:
+\begin{itemize}
+    \item If $f(n) = O(n^{\log_b a - \epsilon})$ for some $\epsilon > 0$, then $T(n) = \Theta(n^{\log_b a})$
+    \item If $f(n) = \Theta(n^{\log_b a})$, then $T(n) = \Theta(n^{\log_b a} \log n)$
+    \item If $f(n) = \Omega(n^{\log_b a + \epsilon})$ for some $\epsilon > 0$ and $af(n/b) \leq cf(n)$ for some $c < 1$, then $T(n) = \Theta(f(n))$
+\end{itemize}
+\end{theorem}
+
+\subsection{Binary Search}
+\begin{itemize}
+    \item \textbf{Recurrence}: $T(n) = T(n/2) + O(1)$
+    \item \textbf{Solution}: $T(n) = O(\log n)$
+\end{itemize}
+
+\subsection{Merge Sort}
+\begin{itemize}
+    \item \textbf{Recurrence}: $T(n) = 2T(n/2) + O(n)$
+    \item \textbf{Solution}: $T(n) = O(n \log n)$
+\end{itemize}
+
+\subsection{Quick Sort}
+\begin{itemize}
+    \item \textbf{Average Case}: $T(n) = 2T(n/2) + O(n) = O(n \log n)$
+    \item \textbf{Worst Case}: $T(n) = T(n-1) + O(n) = O(n^2)$
+\end{itemize}
+
+\subsection{Strassen's Matrix Multiplication}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n^{\log_2 7}) \approx O(n^{2.81})$
+    \item \textbf{Space Complexity}: $O(n^2)$
+\end{itemize}
+
+\section{String Algorithms}
+
+\subsection{Naive String Matching}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O((n-m+1)m)$ where $n$ is text length, $m$ is pattern length
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\subsection{KMP (Knuth-Morris-Pratt) Algorithm}
+\begin{itemize}
+    \item \textbf{Time Complexity}: $O(n + m)$
+    \item \textbf{Space Complexity}: $O(m)$
+\end{itemize}
+
+\subsection{Rabin-Karp Algorithm}
+\begin{itemize}
+    \item \textbf{Average Time Complexity}: $O(n + m)$
+    \item \textbf{Worst Time Complexity}: $O(nm)$
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\subsection{Boyer-Moore Algorithm}
+\begin{itemize}
+    \item \textbf{Best Case Time Complexity}: $O(n/m)$
+    \item \textbf{Worst Case Time Complexity}: $O(nm)$
+    \item \textbf{Space Complexity}: $O(k)$ where $k$ is alphabet size
+\end{itemize}
+
+\section{Tree Algorithms}
+
+\subsection{Tree Traversals}
+\begin{itemize}
+    \item \textbf{Preorder}: Root, Left, Right
+    \item \textbf{Inorder}: Left, Root, Right (gives sorted order for BST)
+    \item \textbf{Postorder}: Left, Right, Root
+    \item \textbf{Level-order}: Breadth-first traversal
+\end{itemize}
+
+\subsection{Binary Search Tree Operations}
+\begin{itemize}
+    \item \textbf{Search}: $O(\log n)$ average, $O(n)$ worst case
+    \item \textbf{Insert}: $O(\log n)$ average, $O(n)$ worst case
+    \item \textbf{Delete}: $O(\log n)$ average, $O(n)$ worst case
+\end{itemize}
+
+\subsection{AVL Tree}
+\begin{itemize}
+    \item \textbf{Height}: $O(\log n)$
+    \item \textbf{All Operations}: $O(\log n)$
+    \item \textbf{Balance Factor}: Height difference between left and right subtrees
+\end{itemize}
+
+\subsection{Red-Black Tree}
+\begin{itemize}
+    \item \textbf{Height}: $O(\log n)$
+    \item \textbf{All Operations}: $O(\log n)$
+    \item \textbf{Properties}: Root is black, red nodes have black children, all paths have same number of black nodes
+\end{itemize}
+
+\section{Hash Tables}
+
+\subsection{Hash Functions}
+\begin{itemize}
+    \item \textbf{Division Method}: $h(k) = k \bmod m$
+    \item \textbf{Multiplication Method}: $h(k) = \lfloor m(kA \bmod 1) \rfloor$ where $0 < A < 1$
+\end{itemize}
+
+\subsection{Collision Resolution}
+\subsubsection{Chaining}
+\begin{itemize}
+    \item \textbf{Average Search Time}: $O(1 + \alpha)$ where $\alpha$ is load factor
+    \item \textbf{Worst Case Search Time}: $O(n)$
+\end{itemize}
+
+\subsubsection{Open Addressing}
+\begin{itemize}
+    \item \textbf{Linear Probing}: $h(k,i) = (h'(k) + i) \bmod m$
+    \item \textbf{Quadratic Probing}: $h(k,i) = (h'(k) + c_1i + c_2i^2) \bmod m$
+    \item \textbf{Double Hashing}: $h(k,i) = (h_1(k) + ih_2(k)) \bmod m$
+\end{itemize}
+
+\section{Advanced Data Structures}
+
+\subsection{Segment Tree}
+\begin{itemize}
+    \item \textbf{Space Complexity}: $O(n)$
+    \item \textbf{Query Time}: $O(\log n)$
+    \item \textbf{Update Time}: $O(\log n)$
+    \item \textbf{Uses}: Range queries and updates
+\end{itemize}
+
+\subsection{Fenwick Tree (Binary Indexed Tree)}
+\begin{itemize}
+    \item \textbf{Space Complexity}: $O(n)$
+    \item \textbf{Query Time}: $O(\log n)$
+    \item \textbf{Update Time}: $O(\log n)$
+    \item \textbf{Uses}: Prefix sums, range sum queries
+\end{itemize}
+
+\subsection{Disjoint Set Union (Union-Find)}
+\begin{itemize}
+    \item \textbf{Union by Rank}: $O(\log n)$ per operation
+    \item \textbf{Path Compression}: $O(\alpha(n))$ per operation where $\alpha$ is inverse Ackermann
+    \item \textbf{Both Optimizations}: $O(\alpha(n))$ per operation
+\end{itemize}
+
+\subsection{Trie (Prefix Tree)}
+\begin{itemize}
+    \item \textbf{Space Complexity}: $O(ALPHABET\_SIZE \times N \times M)$ where $N$ is number of strings, $M$ is average length
+    \item \textbf{Search Time}: $O(m)$ where $m$ is length of string
+    \item \textbf{Insert Time}: $O(m)$
+\end{itemize}
+
+\section{Computational Complexity}
+
+\subsection{P vs NP}
+\begin{definition}
+\textbf{P} is the class of decision problems solvable in polynomial time by a deterministic Turing machine.
+\end{definition}
+
+\begin{definition}
+\textbf{NP} is the class of decision problems solvable in polynomial time by a non-deterministic Turing machine, or equivalently, problems for which a solution can be verified in polynomial time.
+\end{definition}
+
+\subsection{NP-Complete Problems}
+\begin{itemize}
+    \item Boolean Satisfiability (SAT)
+    \item 3-SAT
+    \item Clique Problem
+    \item Vertex Cover
+    \item Hamiltonian Cycle
+    \item Traveling Salesman Problem
+    \item Subset Sum
+    \item Knapsack Problem
+\end{itemize}
+
+\subsection{NP-Hard Problems}
+\begin{itemize}
+    \item Halting Problem
+    \item Optimization versions of NP-Complete problems
+    \item Integer Linear Programming
+\end{itemize}
+
+\section{Approximation Algorithms}
+
+\subsection{Approximation Ratio}
+\begin{definition}
+An algorithm has \textbf{approximation ratio} $\rho(n)$ if for any input of size $n$, the cost $C$ of the solution produced by the algorithm is within a factor of $\rho(n)$ of the cost $C^*$ of an optimal solution: $\max(C/C^*, C^*/C) \leq \rho(n)$.
+\end{definition}
+
+\subsection{Vertex Cover}
+\begin{itemize}
+    \item \textbf{Greedy Algorithm}: 2-approximation
+    \item \textbf{LP Rounding}: 2-approximation
+\end{itemize}
+
+\subsection{Set Cover}
+\begin{itemize}
+    \item \textbf{Greedy Algorithm}: $O(\log n)$-approximation
+\end{itemize}
+
+\subsection{Traveling Salesman Problem}
+\begin{itemize}
+    \item \textbf{Metric TSP}: 2-approximation (double tree algorithm)
+    \item \textbf{Christofides Algorithm}: 1.5-approximation for metric TSP
+\end{itemize}
+
+\section{Randomized Algorithms}
+
+\subsection{Las Vegas Algorithms}
+\begin{definition}
+\textbf{Las Vegas algorithms} always produce the correct result, but running time is random.
+\end{definition}
+
+\subsection{Monte Carlo Algorithms}
+\begin{definition}
+\textbf{Monte Carlo algorithms} have deterministic running time but may produce incorrect results with some probability.
+\end{definition}
+
+\subsection{Quick Sort (Randomized)}
+\begin{itemize}
+    \item \textbf{Expected Time Complexity}: $O(n \log n)$
+    \item \textbf{Worst Case Time Complexity}: $O(n^2)$
+    \item \textbf{Space Complexity}: $O(\log n)$
+\end{itemize}
+
+\subsection{Randomized Selection}
+\begin{itemize}
+    \item \textbf{Expected Time Complexity}: $O(n)$
+    \item \textbf{Worst Case Time Complexity}: $O(n^2)$
+    \item \textbf{Space Complexity}: $O(1)$
+\end{itemize}
+
+\section{Online Algorithms}
+
+\subsection{Competitive Ratio}
+\begin{definition}
+An online algorithm has \textbf{competitive ratio} $c$ if for any input sequence, the cost of the algorithm is at most $c$ times the cost of an optimal offline algorithm.
+\end{definition}
+
+\subsection{Paging Problem}
+\begin{itemize}
+    \item \textbf{LRU}: $k$-competitive where $k$ is cache size
+    \item \textbf{FIFO}: $k$-competitive
+    \item \textbf{Optimal Offline}: MIN algorithm
+\end{itemize}
+
+\subsection{Ski Rental Problem}
+\begin{itemize}
+    \item \textbf{Deterministic}: 2-competitive
+    \item \textbf{Randomized}: $e/(e-1) \approx 1.58$-competitive
+\end{itemize}
+
+\end{document}

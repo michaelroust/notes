@@ -1,0 +1,396 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+
+\title{Advanced Calculus Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Multivariable Functions}
+
+\subsection{Limits and Continuity}
+\begin{definition}
+A function $f: \mathbb{R}^n \to \mathbb{R}$ has limit $L$ at point $\mathbf{a}$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that:
+$$0 < \|\mathbf{x} - \mathbf{a}\| < \delta \Rightarrow |f(\mathbf{x}) - L| < \epsilon$$
+\end{definition}
+
+\subsection{Partial Derivatives}
+\begin{definition}
+The \textbf{partial derivative} of $f(x,y)$ with respect to $x$ is:
+$$\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h,y) - f(x,y)}{h}$$
+\end{definition}
+
+\subsection{Clairaut's Theorem}
+\begin{theorem}
+If $f$ has continuous second partial derivatives, then:
+$$\frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x}$$
+\end{theorem}
+
+\subsection{Chain Rule for Multivariable Functions}
+\begin{theorem}
+If $z = f(x,y)$ where $x = g(t)$ and $y = h(t)$, then:
+$$\frac{dz}{dt} = \frac{\partial f}{\partial x} \frac{dx}{dt} + \frac{\partial f}{\partial y} \frac{dy}{dt}$$
+\end{theorem}
+
+\subsection{Implicit Differentiation}
+For $F(x,y,z) = 0$:
+$$\frac{\partial z}{\partial x} = -\frac{F_x}{F_z}, \quad \frac{\partial z}{\partial y} = -\frac{F_y}{F_z}$$
+
+\section{Directional Derivatives and Gradients}
+
+\subsection{Directional Derivative}
+\begin{definition}
+The \textbf{directional derivative} of $f$ at $\mathbf{a}$ in direction $\mathbf{u}$ is:
+$$D_{\mathbf{u}} f(\mathbf{a}) = \lim_{h \to 0} \frac{f(\mathbf{a} + h\mathbf{u}) - f(\mathbf{a})}{h}$$
+\end{definition}
+
+\subsection{Gradient}
+\begin{definition}
+The \textbf{gradient} of $f(x,y,z)$ is:
+$$\nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\right)$$
+\end{definition}
+
+\subsection{Relationship}
+\begin{theorem}
+$$D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}$$
+where $\mathbf{u}$ is a unit vector.
+\end{theorem}
+
+\subsection{Properties of Gradient}
+\begin{itemize}
+    \item $\nabla f$ points in the direction of maximum increase
+    \item $|\nabla f|$ is the maximum rate of change
+    \item $\nabla f$ is perpendicular to level curves/surfaces
+\end{itemize}
+
+\section{Tangent Planes and Linear Approximation}
+
+\subsection{Tangent Plane}
+For surface $z = f(x,y)$ at point $(a,b,f(a,b))$:
+$$z = f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)$$
+
+\subsection{Linear Approximation}
+$$f(x,y) \approx f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)$$
+
+\subsection{Total Differential}
+$$dz = \frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy$$
+
+\section{Maximum and Minimum Values}
+
+\subsection{Critical Points}
+\begin{definition}
+A \textbf{critical point} of $f(x,y)$ is a point $(a,b)$ where either:
+\begin{itemize}
+    \item $f_x(a,b) = 0$ and $f_y(a,b) = 0$, or
+    \item $f_x(a,b)$ or $f_y(a,b)$ doesn't exist
+\end{itemize}
+\end{definition}
+
+\subsection{Second Derivative Test}
+\begin{theorem}
+Let $D = f_{xx}(a,b)f_{yy}(a,b) - [f_{xy}(a,b)]^2$ at critical point $(a,b)$:
+\begin{itemize}
+    \item If $D > 0$ and $f_{xx}(a,b) > 0$, then $(a,b)$ is a local minimum
+    \item If $D > 0$ and $f_{xx}(a,b) < 0$, then $(a,b)$ is a local maximum
+    \item If $D < 0$, then $(a,b)$ is a saddle point
+    \item If $D = 0$, the test is inconclusive
+\end{itemize}
+\end{theorem}
+
+\subsection{Lagrange Multipliers}
+\begin{theorem}
+To find extrema of $f(x,y,z)$ subject to constraint $g(x,y,z) = k$:
+$$\nabla f = \lambda \nabla g$$
+for some scalar $\lambda$.
+\end{theorem}
+
+\section{Multiple Integrals}
+
+\subsection{Double Integrals}
+\begin{definition}
+$$\iint_R f(x,y) \, dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \, dy \, dx$$
+\end{definition}
+
+\subsection{Properties of Double Integrals}
+\begin{itemize}
+    \item $\iint_R [f(x,y) + g(x,y)] \, dA = \iint_R f(x,y) \, dA + \iint_R g(x,y) \, dA$
+    \item $\iint_R cf(x,y) \, dA = c\iint_R f(x,y) \, dA$
+    \item If $f(x,y) \geq g(x,y)$ on $R$, then $\iint_R f(x,y) \, dA \geq \iint_R g(x,y) \, dA$
+\end{itemize}
+
+\subsection{Polar Coordinates}
+$$\iint_R f(x,y) \, dA = \int_\alpha^\beta \int_{h_1(\theta)}^{h_2(\theta)} f(r\cos\theta, r\sin\theta) \, r \, dr \, d\theta$$
+
+\subsection{Triple Integrals}
+$$\iiint_E f(x,y,z) \, dV = \int_a^b \int_{g_1(x)}^{g_2(x)} \int_{u_1(x,y)}^{u_2(x,y)} f(x,y,z) \, dz \, dy \, dx$$
+
+\subsection{Cylindrical Coordinates}
+$$x = r\cos\theta, \quad y = r\sin\theta, \quad z = z$$
+$$dV = r \, dz \, dr \, d\theta$$
+
+\subsection{Spherical Coordinates}
+$$x = \rho\sin\phi\cos\theta, \quad y = \rho\sin\phi\sin\theta, \quad z = \rho\cos\phi$$
+$$dV = \rho^2\sin\phi \, d\rho \, d\phi \, d\theta$$
+
+\section{Vector Fields}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{vector field} on $\mathbb{R}^n$ is a function $\mathbf{F}$ that assigns to each point $\mathbf{x}$ a vector $\mathbf{F}(\mathbf{x})$.
+\end{definition}
+
+\subsection{Gradient Fields}
+\begin{definition}
+A vector field $\mathbf{F}$ is \textbf{conservative} if $\mathbf{F} = \nabla f$ for some scalar function $f$.
+\end{definition}
+
+\subsection{Divergence}
+\begin{definition}
+$$\text{div } \mathbf{F} = \nabla \cdot \mathbf{F} = \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}$$
+\end{definition}
+
+\subsection{Curl}
+\begin{definition}
+$$\text{curl } \mathbf{F} = \nabla \times \mathbf{F} = \begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+\frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+P & Q & R
+\end{vmatrix}$$
+\end{definition}
+
+\section{Line Integrals}
+
+\subsection{Line Integral of Scalar Function}
+$$\int_C f(x,y,z) \, ds = \int_a^b f(\mathbf{r}(t)) |\mathbf{r}'(t)| \, dt$$
+
+\subsection{Line Integral of Vector Field}
+$$\int_C \mathbf{F} \cdot d\mathbf{r} = \int_a^b \mathbf{F}(\mathbf{r}(t)) \cdot \mathbf{r}'(t) \, dt$$
+
+\subsection{Fundamental Theorem for Line Integrals}
+\begin{theorem}
+If $\mathbf{F} = \nabla f$ and $C$ is any curve from $A$ to $B$, then:
+$$\int_C \mathbf{F} \cdot d\mathbf{r} = f(B) - f(A)$$
+\end{theorem}
+
+\subsection{Independence of Path}
+\begin{theorem}
+$\int_C \mathbf{F} \cdot d\mathbf{r}$ is independent of path if and only if $\mathbf{F}$ is conservative.
+\end{theorem}
+
+\section{Green's Theorem}
+
+\subsection{Green's Theorem}
+\begin{theorem}
+$$\oint_C P \, dx + Q \, dy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) \, dA$$
+where $C$ is the positively oriented boundary of region $D$.
+\end{theorem}
+
+\subsection{Area Using Green's Theorem}
+$$A = \frac{1}{2} \oint_C x \, dy - y \, dx$$
+
+\section{Surface Integrals}
+
+\subsection{Parametric Surfaces}
+A surface $S$ can be parametrized as:
+$$\mathbf{r}(u,v) = x(u,v)\mathbf{i} + y(u,v)\mathbf{j} + z(u,v)\mathbf{k}$$
+
+\subsection{Surface Area}
+$$A = \iint_D |\mathbf{r}_u \times \mathbf{r}_v| \, dA$$
+
+\subsection{Surface Integral of Scalar Function}
+$$\iint_S f(x,y,z) \, dS = \iint_D f(\mathbf{r}(u,v)) |\mathbf{r}_u \times \mathbf{r}_v| \, dA$$
+
+\subsection{Surface Integral of Vector Field}
+$$\iint_S \mathbf{F} \cdot d\mathbf{S} = \iint_S \mathbf{F} \cdot \mathbf{n} \, dS$$
+
+\section{Divergence Theorem}
+
+\subsection{Divergence Theorem (Gauss's Theorem)}
+\begin{theorem}
+$$\iint_S \mathbf{F} \cdot d\mathbf{S} = \iiint_E \nabla \cdot \mathbf{F} \, dV$$
+where $S$ is the boundary of solid region $E$.
+\end{theorem}
+
+\section{Stokes' Theorem}
+
+\subsection{Stokes' Theorem}
+\begin{theorem}
+$$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}$$
+where $C$ is the boundary of surface $S$.
+\end{theorem}
+
+\section{Sequences and Series of Functions}
+
+\subsection{Pointwise Convergence}
+\begin{definition}
+Sequence $\{f_n\}$ converges pointwise to $f$ if:
+$$\lim_{n \to \infty} f_n(x) = f(x) \text{ for each } x \in D$$
+\end{definition}
+
+\subsection{Uniform Convergence}
+\begin{definition}
+Sequence $\{f_n\}$ converges uniformly to $f$ if:
+$$\lim_{n \to \infty} \sup_{x \in D} |f_n(x) - f(x)| = 0$$
+\end{definition}
+
+\subsection{Weierstrass M-Test}
+\begin{theorem}
+If $|f_n(x)| \leq M_n$ for all $x \in D$ and $\sum M_n$ converges, then $\sum f_n(x)$ converges uniformly.
+\end{theorem}
+
+\section{Power Series}
+
+\subsection{Radius of Convergence}
+\begin{theorem}
+For power series $\sum_{n=0}^{\infty} a_n(x-c)^n$:
+$$R = \frac{1}{\limsup_{n \to \infty} |a_n|^{1/n}}$$
+\end{theorem}
+
+\subsection{Operations on Power Series}
+\begin{itemize}
+    \item \textbf{Addition}: $\sum a_n x^n + \sum b_n x^n = \sum (a_n + b_n) x^n$
+    \item \textbf{Multiplication}: $(\sum a_n x^n)(\sum b_n x^n) = \sum c_n x^n$ where $c_n = \sum_{k=0}^n a_k b_{n-k}$
+    \item \textbf{Differentiation}: $\frac{d}{dx}[\sum a_n x^n] = \sum n a_n x^{n-1}$
+    \item \textbf{Integration}: $\int [\sum a_n x^n] \, dx = \sum \frac{a_n}{n+1} x^{n+1} + C$
+\end{itemize}
+
+\section{Fourier Series}
+
+\subsection{Fourier Coefficients}
+For function $f$ with period $2\pi$:
+$$a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, dx$$
+$$b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, dx$$
+
+\subsection{Fourier Series}
+$$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(nx) + b_n \sin(nx)]$$
+
+\subsection{Complex Form}
+$$f(x) = \sum_{n=-\infty}^{\infty} c_n e^{inx}$$
+where $c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} \, dx$
+
+\subsection{Parseval's Theorem}
+$$\frac{1}{\pi} \int_{-\pi}^{\pi} |f(x)|^2 \, dx = \frac{|a_0|^2}{2} + \sum_{n=1}^{\infty} (|a_n|^2 + |b_n|^2)$$
+
+\section{Partial Differential Equations}
+
+\subsection{Heat Equation}
+$$\frac{\partial u}{\partial t} = k \frac{\partial^2 u}{\partial x^2}$$
+
+\subsection{Wave Equation}
+$$\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}$$
+
+\subsection{Laplace's Equation}
+$$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} = 0$$
+
+\subsection{Method of Separation of Variables}
+Assume solution of form $u(x,t) = X(x)T(t)$ and substitute into PDE.
+
+\section{Complex Analysis}
+
+\subsection{Complex Functions}
+\begin{definition}
+A \textbf{complex function} is a function $f: \mathbb{C} \to \mathbb{C}$.
+\end{definition}
+
+\subsection{Cauchy-Riemann Equations}
+For $f(z) = u(x,y) + iv(x,y)$ to be differentiable:
+$$\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \quad \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$$
+
+\subsection{Cauchy's Integral Theorem}
+\begin{theorem}
+If $f$ is analytic in simply connected domain $D$ and $C$ is a closed curve in $D$, then:
+$$\oint_C f(z) \, dz = 0$$
+\end{theorem}
+
+\subsection{Cauchy's Integral Formula}
+\begin{theorem}
+If $f$ is analytic inside and on simple closed curve $C$, then for any point $a$ inside $C$:
+$$f(a) = \frac{1}{2\pi i} \oint_C \frac{f(z)}{z-a} \, dz$$
+\end{theorem}
+
+\subsection{Residue Theorem}
+\begin{theorem}
+$$\oint_C f(z) \, dz = 2\pi i \sum \text{Res}(f, a_k)$$
+where the sum is over all isolated singularities inside $C$.
+\end{theorem}
+
+\section{Important Theorems}
+
+\subsection{Mean Value Theorem for Integrals}
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then there exists $c \in [a,b]$ such that:
+$$\int_a^b f(x) \, dx = f(c)(b-a)$$
+\end{theorem}
+
+\subsection{Fubini's Theorem}
+\begin{theorem}
+If $f$ is continuous on rectangle $R = [a,b] \times [c,d]$, then:
+$$\iint_R f(x,y) \, dA = \int_a^b \int_c^d f(x,y) \, dy \, dx = \int_c^d \int_a^b f(x,y) \, dx \, dy$$
+\end{theorem}
+
+\subsection{Change of Variables}
+\begin{theorem}
+$$\iint_R f(x,y) \, dA = \iint_S f(x(u,v), y(u,v)) \left|\frac{\partial(x,y)}{\partial(u,v)}\right| \, du \, dv$$
+\end{theorem}
+
+\subsection{Implicit Function Theorem}
+\begin{theorem}
+If $F(x,y) = 0$ and $\frac{\partial F}{\partial y} \neq 0$ at $(a,b)$, then there exists a function $y = f(x)$ such that $F(x,f(x)) = 0$ near $(a,b)$.
+\end{theorem}
+
+\section{Applications}
+
+\subsection{Optimization Problems}
+\begin{itemize}
+    \item Find extrema of functions of several variables
+    \item Constrained optimization using Lagrange multipliers
+    \item Applications in economics, physics, engineering
+\end{itemize}
+
+\subsection{Volume and Surface Area}
+\begin{itemize}
+    \item Triple integrals for volume calculations
+    \item Surface integrals for surface area
+    \item Applications in geometry and physics
+\end{itemize}
+
+\subsection{Flux and Circulation}
+\begin{itemize}
+    \item Line integrals for work and circulation
+    \item Surface integrals for flux
+    \item Applications in fluid dynamics and electromagnetism
+\end{itemize}
+
+\subsection{Heat and Wave Propagation}
+\begin{itemize}
+    \item Fourier series for periodic phenomena
+    \item PDEs for modeling physical processes
+    \item Applications in physics and engineering
+\end{itemize}
+
+\end{document}

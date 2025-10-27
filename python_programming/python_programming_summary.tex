@@ -1,0 +1,1160 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+
+% Code listing style
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
+
+\title{Python Programming Language}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction to Python}
+
+\subsection{What is Python?}
+
+\begin{definition}[Python Programming Language]
+Python is a high-level, interpreted, general-purpose programming language with dynamic typing and automatic memory management. It emphasizes code readability and simplicity.
+\end{definition}
+
+Python was created by Guido van Rossum and first released in 1991. The language design philosophy emphasizes:
+\begin{itemize}
+    \item \textbf{Readability} - Code should be easy to read and understand
+    \item \textbf{Simplicity} - Simple is better than complex
+    \item \textbf{Explicit} - Explicit is better than implicit
+    \item \textbf{Beautiful} - Beautiful is better than ugly
+\end{itemize}
+
+\subsection{Python's Design Principles}
+
+The Zen of Python (PEP 20) outlines the guiding principles:
+\begin{enumerate}
+    \item Beautiful is better than ugly
+    \item Explicit is better than implicit
+    \item Simple is better than complex
+    \item Complex is better than complicated
+    \item Flat is better than nested
+    \item Sparse is better than dense
+    \item Readability counts
+    \item Special cases aren't special enough to break the rules
+    \item Although practicality beats purity
+    \item Errors should never pass silently
+    \item Unless explicitly silenced
+    \item In the face of ambiguity, refuse the temptation to guess
+    \item There should be one obvious way to do it
+    \item Although that way may not be obvious at first
+    \item Now is better than never
+    \item Although never is often better than right now
+    \item If the implementation is hard to explain, it's a bad idea
+    \item If the implementation is easy to explain, it may be a good idea
+    \item Namespaces are one honking great idea
+\end{enumerate}
+
+\section{Python Syntax and Basic Concepts}
+
+\subsection{Indentation and Code Blocks}
+
+\begin{definition}[Indentation]
+Python uses indentation to define code blocks instead of braces or keywords. The standard is 4 spaces per indentation level.
+\end{definition}
+
+\begin{example}[Indentation Example]
+\begin{lstlisting}
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+for i in range(10):
+    print(f"F({i}) = {fibonacci(i)}")
+\end{lstlisting}
+\end{example}
+
+\subsection{Variables and Data Types}
+
+\subsubsection{Dynamic Typing}
+
+\begin{definition}[Dynamic Typing]
+Python uses dynamic typing, meaning variable types are determined at runtime rather than compile time.
+\end{definition}
+
+\begin{example}[Variable Assignment]
+\begin{lstlisting}
+# Variables can change type
+x = 42          # Integer
+x = "Hello"    # String
+x = [1, 2, 3]  # List
+x = 3.14       # Float
+\end{lstlisting}
+\end{example}
+
+\subsubsection{Basic Data Types}
+
+\begin{enumerate}
+    \item \textbf{Integers} - Whole numbers (unlimited precision)
+    \item \textbf{Floats} - Decimal numbers
+    \item \textbf{Strings} - Text data
+    \item \textbf{Booleans} - True/False values
+    \item \textbf{None} - Represents absence of value
+\end{enumerate}
+
+\begin{example}[Data Type Examples]
+\begin{lstlisting}
+# Integer
+age = 25
+
+# Float
+pi = 3.14159
+
+# String
+name = "Alice"
+
+# Boolean
+is_student = True
+
+# None
+result = None
+\end{lstlisting}
+\end{example}
+
+\subsection{Operators}
+
+\subsubsection{Arithmetic Operators}
+\begin{itemize}
+    \item \texttt{+} - Addition
+    \item \texttt{-} - Subtraction
+    \item \texttt{*} - Multiplication
+    \item \texttt{/} - Division (returns float)
+    \item \texttt{//} - Floor division
+    \item \texttt{\%} - Modulo
+    \item \texttt{**} - Exponentiation
+\end{itemize}
+
+\subsubsection{Comparison Operators}
+\begin{itemize}
+    \item \texttt{==} - Equal to
+    \item \texttt{!=} - Not equal to
+    \item \texttt{<} - Less than
+    \item \texttt{>} - Greater than
+    \item \texttt{<=} - Less than or equal to
+    \item \texttt{>=} - Greater than or equal to
+\end{itemize}
+
+\subsubsection{Logical Operators}
+\begin{itemize}
+    \item \texttt{and} - Logical AND
+    \item \texttt{or} - Logical OR
+    \item \texttt{not} - Logical NOT
+\end{itemize}
+
+\section{Data Structures}
+
+\subsection{Lists}
+
+\begin{definition}[List]
+A list is an ordered, mutable collection of items. Lists can contain items of different types.
+\end{definition}
+
+\begin{example}[List Operations]
+\begin{lstlisting}
+# Creating lists
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", 3.14, True]
+
+# Accessing elements
+first = numbers[0]      # 1
+last = numbers[-1]      # 5
+
+# Slicing
+subset = numbers[1:4]    # [2, 3, 4]
+
+# List methods
+numbers.append(6)        # Add to end
+numbers.insert(0, 0)    # Insert at index
+numbers.remove(3)       # Remove first occurrence
+numbers.pop()           # Remove and return last element
+numbers.sort()          # Sort in place
+\end{lstlisting}
+\end{example}
+
+\subsection{Tuples}
+
+\begin{definition}[Tuple]
+A tuple is an ordered, immutable collection of items. Once created, tuples cannot be modified.
+\end{definition}
+
+\begin{example}[Tuple Usage]
+\begin{lstlisting}
+# Creating tuples
+coordinates = (10, 20)
+point = (x, y, z)
+
+# Unpacking
+x, y = coordinates
+
+# Single element tuple
+single = (42,)  # Note the comma
+
+# Tuple methods
+count = coordinates.count(10)
+index = coordinates.index(20)
+\end{lstlisting}
+\end{example}
+
+\subsection{Dictionaries}
+
+\begin{definition}[Dictionary]
+A dictionary is an unordered collection of key-value pairs. Keys must be immutable types.
+\end{definition}
+
+\begin{example}[Dictionary Operations]
+\begin{lstlisting}
+# Creating dictionaries
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York"
+}
+
+# Accessing values
+name = person["name"]
+age = person.get("age", 0)  # With default value
+
+# Modifying dictionaries
+person["email"] = "alice@example.com"
+person.update({"phone": "123-456-7890"})
+
+# Dictionary methods
+keys = person.keys()
+values = person.values()
+items = person.items()
+\end{lstlisting}
+\end{example}
+
+\subsection{Sets}
+
+\begin{definition}[Set]
+A set is an unordered collection of unique elements. Sets support mathematical set operations.
+\end{definition}
+
+\begin{example}[Set Operations]
+\begin{lstlisting}
+# Creating sets
+numbers = {1, 2, 3, 4, 5}
+evens = {2, 4, 6, 8}
+
+# Set operations
+union = numbers | evens           # Union
+intersection = numbers & evens     # Intersection
+difference = numbers - evens       # Difference
+symmetric_diff = numbers ^ evens   # Symmetric difference
+
+# Set methods
+numbers.add(6)
+numbers.remove(1)
+numbers.discard(7)  # Safe remove
+\end{lstlisting}
+\end{example}
+
+\section{Control Flow}
+
+\subsection{Conditional Statements}
+
+\begin{example}[If-Elif-Else]
+\begin{lstlisting}
+score = 85
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "F"
+
+print(f"Grade: {grade}")
+\end{lstlisting}
+\end{example}
+
+\subsection{Loops}
+
+\subsubsection{For Loops}
+
+\begin{example}[For Loop Examples]
+\begin{lstlisting}
+# Iterating over a list
+fruits = ["apple", "banana", "orange"]
+for fruit in fruits:
+    print(fruit)
+
+# Using range
+for i in range(5):
+    print(i)
+
+# With enumerate
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+
+# Dictionary iteration
+person = {"name": "Alice", "age": 30}
+for key, value in person.items():
+    print(f"{key}: {value}")
+\end{lstlisting}
+\end{example}
+
+\subsubsection{While Loops}
+
+\begin{example}[While Loop]
+\begin{lstlisting}
+count = 0
+while count < 5:
+    print(f"Count: {count}")
+    count += 1
+
+# Break and continue
+while True:
+    user_input = input("Enter 'quit' to exit: ")
+    if user_input == "quit":
+        break
+    elif user_input == "skip":
+        continue
+    print(f"You entered: {user_input}")
+\end{lstlisting}
+\end{example}
+
+\section{Functions}
+
+\subsection{Function Definition}
+
+\begin{definition}[Function]
+A function is a reusable block of code that performs a specific task. Functions can take parameters and return values.
+\end{definition}
+
+\begin{example}[Basic Function]
+\begin{lstlisting}
+def greet(name):
+    """Return a greeting message."""
+    return f"Hello, {name}!"
+
+# Function call
+message = greet("Alice")
+print(message)
+\end{lstlisting}
+\end{example}
+
+\subsection{Function Parameters}
+
+\subsubsection{Default Parameters}
+
+\begin{example}[Default Parameters]
+\begin{lstlisting}
+def power(base, exponent=2):
+    """Calculate base raised to the power of exponent."""
+    return base ** exponent
+
+# Using default parameter
+result1 = power(5)      # 25
+result2 = power(5, 3)   # 125
+\end{lstlisting}
+\end{example}
+
+\subsubsection{Keyword Arguments}
+
+\begin{example}[Keyword Arguments]
+\begin{lstlisting}
+def create_person(name, age, city="Unknown"):
+    return {"name": name, "age": age, "city": city}
+
+# Using keyword arguments
+person1 = create_person("Alice", 30, "New York")
+person2 = create_person(age=25, name="Bob", city="Boston")
+\end{lstlisting}
+\end{example}
+
+\subsubsection{Variable Arguments}
+
+\begin{example}[Variable Arguments]
+\begin{lstlisting}
+def sum_all(*args):
+    """Sum all arguments."""
+    return sum(args)
+
+def print_info(**kwargs):
+    """Print keyword arguments."""
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+# Usage
+total = sum_all(1, 2, 3, 4, 5)
+print_info(name="Alice", age=30, city="New York")
+\end{lstlisting}
+\end{example}
+
+\subsection{Lambda Functions}
+
+\begin{definition}[Lambda Function]
+A lambda function is an anonymous function defined using the lambda keyword. It can have any number of arguments but only one expression.
+\end{definition}
+
+\begin{example}[Lambda Functions]
+\begin{lstlisting}
+# Basic lambda
+square = lambda x: x ** 2
+
+# Using with built-in functions
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x ** 2, numbers))
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+# Sorting with lambda
+students = [("Alice", 85), ("Bob", 92), ("Charlie", 78)]
+students.sort(key=lambda student: student[1])  # Sort by grade
+\end{lstlisting}
+\end{example}
+
+\section{Object-Oriented Programming}
+
+\subsection{Classes and Objects}
+
+\begin{definition}[Class]
+A class is a blueprint for creating objects. It defines attributes and methods that the objects will have.
+\end{definition}
+
+\begin{example}[Basic Class]
+\begin{lstlisting}
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def greet(self):
+        return f"Hello, I'm {self.name} and I'm {self.age} years old."
+    
+    def have_birthday(self):
+        self.age += 1
+
+# Creating objects
+person1 = Person("Alice", 30)
+person2 = Person("Bob", 25)
+
+# Using methods
+print(person1.greet())
+person1.have_birthday()
+print(person1.age)  # 31
+\end{lstlisting}
+\end{example}
+
+\subsection{Inheritance}
+
+\begin{definition}[Inheritance]
+Inheritance allows a class to inherit attributes and methods from another class.
+\end{definition}
+
+\begin{example}[Inheritance]
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        return "Some generic animal sound"
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+# Using inheritance
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+print(dog.speak())  # Woof!
+print(cat.speak())  # Meow!
+\end{lstlisting}
+\end{example}
+
+\subsection{Encapsulation}
+
+\begin{example}[Encapsulation with Properties]
+\begin{lstlisting}
+class BankAccount:
+    def __init__(self, initial_balance=0):
+        self._balance = initial_balance
+    
+    @property
+    def balance(self):
+        return self._balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+            return True
+        return False
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self._balance:
+            self._balance -= amount
+            return True
+        return False
+
+# Using encapsulation
+account = BankAccount(100)
+print(account.balance)  # 100
+account.deposit(50)
+account.withdraw(25)
+print(account.balance)  # 125
+\end{lstlisting}
+\end{example}
+
+\section{Error Handling}
+
+\subsection{Exceptions}
+
+\begin{definition}[Exception]
+An exception is an event that occurs during program execution that disrupts the normal flow of instructions.
+\end{definition}
+
+\begin{example}[Basic Exception Handling]
+\begin{lstlisting}
+try:
+    number = int(input("Enter a number: "))
+    result = 10 / number
+    print(f"Result: {result}")
+except ValueError:
+    print("Invalid input. Please enter a number.")
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    print("This always executes.")
+\end{lstlisting}
+\end{example}
+
+\subsection{Custom Exceptions}
+
+\begin{example}[Custom Exception]
+\begin{lstlisting}
+class CustomError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+def validate_age(age):
+    if age < 0:
+        raise CustomError("Age cannot be negative")
+    if age > 150:
+        raise CustomError("Age seems unrealistic")
+    return True
+
+try:
+    validate_age(-5)
+except CustomError as e:
+    print(f"Validation error: {e.message}")
+\end{lstlisting}
+\end{example}
+
+\section{Modules and Packages}
+
+\subsection{Importing Modules}
+
+\begin{example}[Module Import]
+\begin{lstlisting}
+# Import entire module
+import math
+print(math.pi)
+
+# Import specific functions
+from math import sqrt, sin, cos
+print(sqrt(16))
+
+# Import with alias
+import numpy as np
+array = np.array([1, 2, 3])
+
+# Import all (not recommended)
+from math import *
+print(pi)
+\end{lstlisting}
+\end{example}
+
+\subsection{Creating Modules}
+
+\begin{example}[Custom Module - calculator.py]
+\begin{lstlisting}
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+
+# Using the module
+import calculator
+result = calculator.add(5, 3)
+\end{lstlisting}
+\end{example}
+
+\subsection{Packages}
+
+\begin{definition}[Package]
+A package is a collection of modules organized in a directory structure with an \_\_init\_\_.py file.
+\end{definition}
+
+\begin{example}[Package Structure]
+\begin{lstlisting}
+# Package structure:
+# mypackage/
+#     __init__.py
+#     module1.py
+#     module2.py
+#     subpackage/
+#         __init__.py
+#         module3.py
+
+# __init__.py content:
+from .module1 import function1
+from .module2 import function2
+
+# Using the package
+from mypackage import function1, function2
+from mypackage.subpackage.module3 import function3
+\end{lstlisting}
+\end{example}
+
+\section{File Handling}
+
+\subsection{Reading Files}
+
+\begin{example}[File Reading]
+\begin{lstlisting}
+# Reading entire file
+with open("data.txt", "r") as file:
+    content = file.read()
+
+# Reading line by line
+with open("data.txt", "r") as file:
+    for line in file:
+        print(line.strip())
+
+# Reading all lines into a list
+with open("data.txt", "r") as file:
+    lines = file.readlines()
+\end{lstlisting}
+\end{example}
+
+\subsection{Writing Files}
+
+\begin{example}[File Writing]
+\begin{lstlisting}
+# Writing text
+with open("output.txt", "w") as file:
+    file.write("Hello, World!")
+
+# Writing multiple lines
+lines = ["Line 1", "Line 2", "Line 3"]
+with open("output.txt", "w") as file:
+    file.writelines(lines)
+
+# Appending to file
+with open("output.txt", "a") as file:
+    file.write("\nAppended line")
+\end{lstlisting}
+\end{example}
+
+\section{List Comprehensions and Generators}
+
+\subsection{List Comprehensions}
+
+\begin{definition}[List Comprehension]
+A list comprehension is a concise way to create lists based on existing lists or other iterables.
+\end{definition}
+
+\begin{example}[List Comprehensions]
+\begin{lstlisting}
+# Basic list comprehension
+squares = [x**2 for x in range(10)]
+
+# With condition
+evens = [x for x in range(20) if x % 2 == 0]
+
+# Nested list comprehension
+matrix = [[i*j for j in range(3)] for i in range(3)]
+
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+
+# Set comprehension
+unique_lengths = {len(word) for word in ["hello", "world", "python"]}
+\end{lstlisting}
+\end{example}
+
+\subsection{Generators}
+
+\begin{definition}[Generator]
+A generator is a function that returns an iterator. It uses the yield keyword instead of return.
+\end{definition}
+
+\begin{example}[Generators]
+\begin{lstlisting}
+def fibonacci_generator(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+# Using generator
+for num in fibonacci_generator(10):
+    print(num)
+
+# Generator expression
+squares_gen = (x**2 for x in range(10))
+print(list(squares_gen))
+\end{lstlisting}
+\end{example}
+
+\section{Decorators}
+
+\begin{definition}[Decorator]
+A decorator is a function that takes another function as input and returns a modified version of that function.
+\end{definition}
+
+\begin{example}[Basic Decorator]
+\begin{lstlisting}
+def timer(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end - start:.4f} seconds")
+        return result
+    return wrapper
+
+@timer
+def slow_function():
+    time.sleep(1)
+    return "Done"
+
+# Using decorator
+result = slow_function()
+\end{lstlisting}
+\end{example}
+
+\subsection{Built-in Decorators}
+
+\begin{example}[Built-in Decorators]
+\begin{lstlisting}
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+    
+    @property
+    def radius(self):
+        return self._radius
+    
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("Radius cannot be negative")
+        self._radius = value
+    
+    @property
+    def area(self):
+        return 3.14159 * self._radius ** 2
+
+# Using properties
+circle = Circle(5)
+print(circle.area)  # 78.54
+circle.radius = 10
+print(circle.area)  # 314.16
+\end{lstlisting}
+\end{example}
+
+\section{Advanced Topics}
+
+\subsection{Context Managers}
+
+\begin{definition}[Context Manager]
+A context manager is an object that defines the methods \_\_enter\_\_ and \_\_exit\_\_ for use with the with statement.
+\end{definition}
+
+\begin{example}[Custom Context Manager]
+\begin{lstlisting}
+class DatabaseConnection:
+    def __init__(self, database):
+        self.database = database
+    
+    def __enter__(self):
+        print(f"Connecting to {self.database}")
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"Closing connection to {self.database}")
+        if exc_type:
+            print(f"Exception occurred: {exc_val}")
+
+# Using context manager
+with DatabaseConnection("mydb") as db:
+    print("Performing database operations")
+    # raise Exception("Something went wrong")
+\end{lstlisting}
+\end{example}
+
+\subsection{Metaclasses}
+
+\begin{definition}[Metaclass]
+A metaclass is a class whose instances are classes. It defines how classes are created.
+\end{definition}
+
+\begin{example}[Simple Metaclass]
+\begin{lstlisting}
+class SingletonMeta(type):
+    _instances = {}
+    
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Singleton(metaclass=SingletonMeta):
+    def __init__(self):
+        self.value = None
+
+# Testing singleton
+s1 = Singleton()
+s2 = Singleton()
+print(s1 is s2)  # True
+\end{lstlisting}
+\end{example}
+
+\subsection{Concurrency}
+
+\subsubsection{Threading}
+
+\begin{example}[Threading]
+\begin{lstlisting}
+import threading
+import time
+
+def worker(name, delay):
+    for i in range(5):
+        print(f"Worker {name}: {i}")
+        time.sleep(delay)
+
+# Creating threads
+thread1 = threading.Thread(target=worker, args=("A", 1))
+thread2 = threading.Thread(target=worker, args=("B", 0.5))
+
+# Starting threads
+thread1.start()
+thread2.start()
+
+# Waiting for threads to complete
+thread1.join()
+thread2.join()
+\end{lstlisting}
+\end{example}
+
+\subsubsection{Asyncio}
+
+\begin{example}[Asyncio]
+\begin{lstlisting}
+import asyncio
+
+async def async_worker(name, delay):
+    for i in range(5):
+        print(f"Async Worker {name}: {i}")
+        await asyncio.sleep(delay)
+
+async def main():
+    # Running coroutines concurrently
+    await asyncio.gather(
+        async_worker("A", 1),
+        async_worker("B", 0.5)
+    )
+
+# Running the async main function
+asyncio.run(main())
+\end{lstlisting}
+\end{example}
+
+\section{Python Standard Library}
+
+\subsection{Common Modules}
+
+\begin{enumerate}
+    \item \textbf{os} - Operating system interface
+    \item \textbf{sys} - System-specific parameters
+    \item \textbf{json} - JSON data handling
+    \item \textbf{csv} - CSV file handling
+    \item \textbf{datetime} - Date and time handling
+    \item \textbf{collections} - Specialized container types
+    \item \textbf{itertools} - Iterator functions
+    \item \textbf{functools} - Higher-order functions
+    \item \textbf{re} - Regular expressions
+    \item \textbf{urllib} - URL handling
+\end{enumerate}
+
+\begin{example}[Using Standard Library]
+\begin{lstlisting}
+import os
+import json
+import datetime
+from collections import Counter
+
+# File system operations
+files = os.listdir('.')
+current_dir = os.getcwd()
+
+# JSON handling
+data = {"name": "Alice", "age": 30}
+json_string = json.dumps(data)
+parsed_data = json.loads(json_string)
+
+# Date and time
+now = datetime.datetime.now()
+formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
+
+# Collections
+words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+word_count = Counter(words)
+print(word_count)  # Counter({'apple': 3, 'banana': 2, 'cherry': 1})
+\end{lstlisting}
+\end{example}
+
+\section{Best Practices and Style}
+
+\subsection{PEP 8 Style Guide}
+
+\begin{definition}[PEP 8]
+PEP 8 is the official style guide for Python code, covering naming conventions, code layout, and formatting.
+\end{definition}
+
+Key PEP 8 guidelines:
+\begin{itemize}
+    \item Use 4 spaces for indentation
+    \item Limit lines to 79 characters
+    \item Use descriptive variable names
+    \item Use snake\_case for functions and variables
+    \item Use PascalCase for classes
+    \item Use UPPER\_CASE for constants
+\end{itemize}
+
+\subsection{Documentation}
+
+\begin{example}[Docstrings]
+\begin{lstlisting}
+def calculate_fibonacci(n):
+    """
+    Calculate the nth Fibonacci number.
+    
+    Args:
+        n (int): The position in the Fibonacci sequence
+        
+    Returns:
+        int: The nth Fibonacci number
+        
+    Raises:
+        ValueError: If n is negative
+        
+    Example:
+        >>> calculate_fibonacci(10)
+        55
+    """
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    
+    if n <= 1:
+        return n
+    
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    
+    return b
+\end{lstlisting}
+\end{example}
+
+\subsection{Testing}
+
+\begin{example}[Unit Testing]
+\begin{lstlisting}
+import unittest
+
+def add(a, b):
+    return a + b
+
+class TestMath(unittest.TestCase):
+    def test_add_positive_numbers(self):
+        self.assertEqual(add(2, 3), 5)
+    
+    def test_add_negative_numbers(self):
+        self.assertEqual(add(-2, -3), -5)
+    
+    def test_add_mixed_numbers(self):
+        self.assertEqual(add(2, -3), -1)
+
+if __name__ == '__main__':
+    unittest.main()
+\end{lstlisting}
+\end{example}
+
+\section{Python Ecosystem}
+
+\subsection{Popular Libraries}
+
+\begin{enumerate}
+    \item \textbf{NumPy} - Numerical computing
+    \item \textbf{Pandas} - Data manipulation and analysis
+    \item \textbf{Matplotlib} - Plotting and visualization
+    \item \textbf{Scikit-learn} - Machine learning
+    \item \textbf{Django/Flask} - Web frameworks
+    \item \textbf{Requests} - HTTP library
+    \item \textbf{Pillow} - Image processing
+    \item \textbf{SymPy} - Symbolic mathematics
+\end{enumerate}
+
+\subsection{Virtual Environments}
+
+\begin{definition}[Virtual Environment]
+A virtual environment is an isolated Python environment that allows you to manage dependencies for different projects.
+\end{definition}
+
+\begin{example}[Virtual Environment Usage]
+\begin{lstlisting}
+# Creating virtual environment
+python -m venv myenv
+
+# Activating (Windows)
+myenv\Scripts\activate
+
+# Activating (Unix/MacOS)
+source myenv/bin/activate
+
+# Installing packages
+pip install numpy pandas matplotlib
+
+# Freezing requirements
+pip freeze > requirements.txt
+
+# Installing from requirements
+pip install -r requirements.txt
+\end{lstlisting}
+\end{example}
+
+\section{Performance and Optimization}
+
+\subsection{Profiling}
+
+\begin{example}[Basic Profiling]
+\begin{lstlisting}
+import cProfile
+import pstats
+
+def slow_function():
+    total = 0
+    for i in range(1000000):
+        total += i ** 2
+    return total
+
+# Profiling
+profiler = cProfile.Profile()
+profiler.enable()
+result = slow_function()
+profiler.disable()
+
+# Analyzing results
+stats = pstats.Stats(profiler)
+stats.sort_stats('cumulative')
+stats.print_stats(10)
+\end{lstlisting}
+\end{example}
+
+\subsection{Optimization Techniques}
+
+\begin{enumerate}
+    \item Use list comprehensions instead of loops
+    \item Use generators for large datasets
+    \item Use appropriate data structures
+    \item Avoid global variables
+    \item Use local variables in loops
+    \item Profile before optimizing
+\end{enumerate}
+
+\section{Conclusion}
+
+Python is a versatile, powerful programming language that emphasizes readability and simplicity. Its key strengths include:
+
+\begin{itemize}
+    \item \textbf{Readability} - Clean, intuitive syntax
+    \item \textbf{Versatility} - Suitable for many domains
+    \item \textbf{Large Ecosystem} - Extensive standard library and third-party packages
+    \item \textbf{Community} - Active, supportive community
+    \item \textbf{Cross-platform} - Runs on multiple operating systems
+\end{itemize}
+
+Python's design philosophy of "batteries included" and its focus on developer productivity make it an excellent choice for beginners and experienced programmers alike. The language continues to evolve with regular updates and improvements, ensuring its relevance in modern software development.
+
+\end{document}

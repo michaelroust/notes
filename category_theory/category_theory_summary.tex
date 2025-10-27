@@ -1,0 +1,478 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Category Theory Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Basic Definitions}
+
+\subsection{Categories}
+\begin{definition}
+A \textbf{category} $\mathcal{C}$ consists of:
+\begin{itemize}
+    \item A collection of \textbf{objects} $\text{Ob}(\mathcal{C})$
+    \item For each pair of objects $A, B$, a set $\text{Hom}(A,B)$ of \textbf{morphisms} (or arrows)
+    \item For each object $A$, an \textbf{identity morphism} $1_A: A \to A$
+    \item A \textbf{composition} operation $\circ: \text{Hom}(B,C) \times \text{Hom}(A,B) \to \text{Hom}(A,C)$
+\end{itemize}
+satisfying:
+\begin{itemize}
+    \item \textbf{Associativity}: $(f \circ g) \circ h = f \circ (g \circ h)$
+    \item \textbf{Identity}: $f \circ 1_A = f = 1_B \circ f$ for $f: A \to B$
+\end{itemize}
+\end{definition}
+
+\subsection{Morphisms}
+\begin{definition}
+A morphism $f: A \to B$ is:
+\begin{itemize}
+    \item \textbf{Monic} (monomorphism) if $f \circ g = f \circ h$ implies $g = h$
+    \item \textbf{Epic} (epimorphism) if $g \circ f = h \circ f$ implies $g = h$
+    \item \textbf{Iso} (isomorphism) if there exists $g: B \to A$ such that $f \circ g = 1_B$ and $g \circ f = 1_A$
+\end{itemize}
+\end{definition}
+
+\subsection{Examples of Categories}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Set}: Objects are sets, morphisms are functions
+    \item \textbf{Grp}: Objects are groups, morphisms are group homomorphisms
+    \item \textbf{Top}: Objects are topological spaces, morphisms are continuous maps
+    \item \textbf{Vect}$_k$: Objects are vector spaces over field $k$, morphisms are linear maps
+    \item \textbf{Pos}: Objects are partially ordered sets, morphisms are order-preserving maps
+\end{itemize}
+\end{example}
+
+\section{Functors}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{functor} $F: \mathcal{C} \to \mathcal{D}$ consists of:
+\begin{itemize}
+    \item A function $F: \text{Ob}(\mathcal{C}) \to \text{Ob}(\mathcal{D})$
+    \item For each $f: A \to B$ in $\mathcal{C}$, a morphism $F(f): F(A) \to F(B)$ in $\mathcal{D}$
+\end{itemize}
+satisfying:
+\begin{itemize}
+    \item $F(1_A) = 1_{F(A)}$
+    \item $F(f \circ g) = F(f) \circ F(g)$
+\end{itemize}
+\end{definition}
+
+\subsection{Types of Functors}
+\begin{definition}
+A functor $F: \mathcal{C} \to \mathcal{D}$ is:
+\begin{itemize}
+    \item \textbf{Covariant} if $F(f: A \to B) = F(f): F(A) \to F(B)$
+    \item \textbf{Contravariant} if $F(f: A \to B) = F(f): F(B) \to F(A)$
+    \item \textbf{Full} if $\text{Hom}(A,B) \to \text{Hom}(F(A),F(B))$ is surjective
+    \item \textbf{Faithful} if $\text{Hom}(A,B) \to \text{Hom}(F(A),F(B))$ is injective
+\end{itemize}
+\end{definition}
+
+\subsection{Examples of Functors}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Forgetful functor}: $U: \text{Grp} \to \text{Set}$ sends groups to their underlying sets
+    \item \textbf{Free functor}: $F: \text{Set} \to \text{Grp}$ sends sets to free groups
+    \item \textbf{Hom functor}: $\text{Hom}(A,-): \mathcal{C} \to \text{Set}$ sends $B$ to $\text{Hom}(A,B)$
+    \item \textbf{Power set functor}: $P: \text{Set} \to \text{Set}$ sends sets to their power sets
+\end{itemize}
+\end{example}
+
+\section{Natural Transformations}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{natural transformation} $\eta: F \Rightarrow G$ between functors $F, G: \mathcal{C} \to \mathcal{D}$ consists of:
+\begin{itemize}
+    \item For each object $A$ in $\mathcal{C}$, a morphism $\eta_A: F(A) \to G(A)$
+\end{itemize}
+such that for any morphism $f: A \to B$, the following diagram commutes:
+$$\begin{tikzcd}
+F(A) \arrow[r, "F(f)"] \arrow[d, "\eta_A"] & F(B) \arrow[d, "\eta_B"] \\
+G(A) \arrow[r, "G(f)"] & G(B)
+\end{tikzcd}$$
+\end{definition}
+
+\subsection{Natural Isomorphism}
+\begin{definition}
+A natural transformation $\eta: F \Rightarrow G$ is a \textbf{natural isomorphism} if each $\eta_A$ is an isomorphism.
+\end{definition}
+
+\section{Limits and Colimits}
+
+\subsection{Cones and Cocones}
+\begin{definition}
+Given a diagram $D: \mathcal{J} \to \mathcal{C}$, a \textbf{cone} over $D$ consists of:
+\begin{itemize}
+    \item An object $C$ in $\mathcal{C}$
+    \item For each object $j$ in $\mathcal{J}$, a morphism $c_j: C \to D(j)$
+\end{itemize}
+such that for any morphism $f: j \to j'$ in $\mathcal{J}$, we have $D(f) \circ c_j = c_{j'}$.
+\end{definition}
+
+\begin{definition}
+A \textbf{limit} of a diagram $D: \mathcal{J} \to \mathcal{C}$ is a cone $(L, \lambda)$ that is universal: for any other cone $(C, c)$, there exists a unique morphism $u: C \to L$ such that $\lambda_j \circ u = c_j$ for all $j$.
+\end{definition}
+
+\subsection{Colimits}
+\begin{definition}
+A \textbf{colimit} of a diagram $D: \mathcal{J} \to \mathcal{C}$ is a cocone $(C, c)$ that is universal: for any other cocone $(L, \lambda)$, there exists a unique morphism $u: C \to L$ such that $u \circ c_j = \lambda_j$ for all $j$.
+\end{definition}
+
+\subsection{Specific Limits and Colimits}
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Product}: Limit of a discrete diagram
+    \item \textbf{Coproduct}: Colimit of a discrete diagram
+    \item \textbf{Equalizer}: Limit of a parallel pair
+    \item \textbf{Coequalizer}: Colimit of a parallel pair
+    \item \textbf{Pullback}: Limit of a cospan
+    \item \textbf{Pushout}: Colimit of a span
+\end{itemize}
+\end{definition}
+
+\section{Adjoint Functors}
+
+\subsection{Definition}
+\begin{definition}
+Functors $F: \mathcal{C} \to \mathcal{D}$ and $G: \mathcal{D} \to \mathcal{C}$ are \textbf{adjoint} (written $F \dashv G$) if there exists a natural isomorphism:
+$$\text{Hom}_{\mathcal{D}}(F(A), B) \cong \text{Hom}_{\mathcal{C}}(A, G(B))$$
+\end{definition}
+
+\subsection{Unit and Counit}
+\begin{definition}
+For adjoint functors $F \dashv G$:
+\begin{itemize}
+    \item The \textbf{unit} is $\eta: 1_{\mathcal{C}} \Rightarrow G \circ F$
+    \item The \textbf{counit} is $\epsilon: F \circ G \Rightarrow 1_{\mathcal{D}}$
+\end{itemize}
+satisfying the triangle identities:
+\begin{itemize}
+    \item $\epsilon_{F(A)} \circ F(\eta_A) = 1_{F(A)}$
+    \item $G(\epsilon_B) \circ \eta_{G(B)} = 1_{G(B)}$
+\end{itemize}
+\end{definition}
+
+\subsection{Examples of Adjoints}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Free-Forgetful}: $F \dashv U: \text{Grp} \to \text{Set}$
+    \item \textbf{Tensor-Hom}: $-\otimes A \dashv \text{Hom}(A,-)$ in vector spaces
+    \item \textbf{Product-Exponential}: $A \times - \dashv (-)^A$ in cartesian closed categories
+\end{itemize}
+\end{example}
+
+\section{Monads}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{monad} on a category $\mathcal{C}$ is a triple $(T, \eta, \mu)$ where:
+\begin{itemize}
+    \item $T: \mathcal{C} \to \mathcal{C}$ is a functor
+    \item $\eta: 1_{\mathcal{C}} \Rightarrow T$ (unit)
+    \item $\mu: T^2 \Rightarrow T$ (multiplication)
+\end{itemize}
+satisfying:
+\begin{itemize}
+    \item $\mu \circ T\mu = \mu \circ \mu T$ (associativity)
+    \item $\mu \circ T\eta = \mu \circ \eta T = 1_T$ (unit laws)
+\end{itemize}
+\end{definition}
+
+\subsection{Monad Algebras}
+\begin{definition}
+A \textbf{T-algebra} for a monad $(T, \eta, \mu)$ is a pair $(A, \alpha)$ where:
+\begin{itemize}
+    \item $A$ is an object in $\mathcal{C}$
+    \item $\alpha: T(A) \to A$ is a morphism
+\end{itemize}
+satisfying:
+\begin{itemize}
+    \item $\alpha \circ \eta_A = 1_A$
+    \item $\alpha \circ T(\alpha) = \alpha \circ \mu_A$
+\end{itemize}
+\end{definition}
+
+\subsection{Examples of Monads}
+\begin{example}
+\begin{itemize}
+    \item \textbf{List monad}: $T(A) = \text{List}(A)$
+    \item \textbf{Maybe monad}: $T(A) = A \cup \{\bot\}$
+    \item \textbf{State monad}: $T(A) = S \to (A \times S)$
+    \item \textbf{Continuation monad}: $T(A) = (A \to R) \to R$
+\end{itemize}
+\end{example}
+
+\section{Yoneda Lemma}
+
+\subsection{Presheaves}
+\begin{definition}
+A \textbf{presheaf} on a category $\mathcal{C}$ is a functor $\mathcal{C}^{\text{op}} \to \text{Set}$.
+\end{definition}
+
+\subsection{Yoneda Embedding}
+\begin{definition}
+The \textbf{Yoneda embedding} is the functor $Y: \mathcal{C} \to [\mathcal{C}^{\text{op}}, \text{Set}]$ defined by:
+$$Y(A) = \text{Hom}(-, A)$$
+\end{definition}
+
+\subsection{Yoneda Lemma}
+\begin{theorem}[Yoneda Lemma]
+For any presheaf $F: \mathcal{C}^{\text{op}} \to \text{Set}$ and object $A$ in $\mathcal{C}$:
+$$[\mathcal{C}^{\text{op}}, \text{Set}](\text{Hom}(-, A), F) \cong F(A)$$
+\end{theorem}
+
+\subsection{Corollary}
+\begin{corollary}
+The Yoneda embedding is full and faithful.
+\end{corollary}
+
+\section{Topoi}
+
+\subsection{Definition}
+\begin{definition}
+An \textbf{elementary topos} is a category $\mathcal{E}$ with:
+\begin{itemize}
+    \item Finite limits
+    \item A subobject classifier $\Omega$
+    \item Power objects
+\end{itemize}
+\end{definition}
+
+\subsection{Subobject Classifier}
+\begin{definition}
+A \textbf{subobject classifier} is an object $\Omega$ with a morphism $\text{true}: 1 \to \Omega$ such that for any monomorphism $m: A \to B$, there exists a unique morphism $\chi_m: B \to \Omega$ making the following diagram a pullback:
+$$\begin{tikzcd}
+A \arrow[r, "m"] \arrow[d] & B \arrow[d, "\chi_m"] \\
+1 \arrow[r, "\text{true}"] & \Omega
+\end{tikzcd}$$
+\end{definition}
+
+\subsection{Examples of Topoi}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Set}: The category of sets
+    \item \textbf{Sh}(X): Sheaves on a topological space $X$
+    \item \textbf{Sh}(C, J): Sheaves on a site $(C, J)$
+\end{itemize}
+\end{example}
+
+\section{Higher Category Theory}
+
+\subsection{2-Categories}
+\begin{definition}
+A \textbf{2-category} is a category enriched over Cat, consisting of:
+\begin{itemize}
+    \item Objects
+    \item 1-morphisms between objects
+    \item 2-morphisms between 1-morphisms
+\end{itemize}
+with horizontal and vertical composition satisfying interchange laws.
+\end{definition}
+
+\subsection{$\infty$-Categories}
+\begin{definition}
+An \textbf{$\infty$-category} (or $(\infty,1)$-category) is a simplicial set satisfying the weak Kan condition, where morphisms can be composed up to higher homotopies.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Algebraic Topology}
+\begin{itemize}
+    \item Fundamental groupoid
+    \item Homology and cohomology as functors
+    \item Spectral sequences
+    \item Fibrations and cofibrations
+\end{itemize}
+
+\subsection{Algebraic Geometry}
+\begin{itemize}
+    \item Schemes as functors
+    \item Sheaves and presheaves
+    \item Étale cohomology
+    \item Derived categories
+\end{itemize}
+
+\subsection{Logic and Computer Science}
+\begin{itemize}
+    \item Curry-Howard correspondence
+    \item Type theory
+    \item Domain theory
+    \item Coalgebras
+\end{itemize}
+
+\subsection{Physics}
+\begin{itemize}
+    \item Quantum mechanics
+    \item String theory
+    \item Topological quantum field theory
+    \item Categorical quantum mechanics
+\end{itemize}
+
+\section{Universal Properties}
+
+\subsection{Initial and Terminal Objects}
+\begin{definition}
+\begin{itemize}
+    \item An object $I$ is \textbf{initial} if for any object $A$, there exists a unique morphism $I \to A$
+    \item An object $T$ is \textbf{terminal} if for any object $A$, there exists a unique morphism $A \to T$
+\end{itemize}
+\end{definition}
+
+\subsection{Universal Elements}
+\begin{definition}
+A \textbf{universal element} of a functor $F: \mathcal{C}^{\text{op}} \to \text{Set}$ is a pair $(A, x)$ where $A$ is an object and $x \in F(A)$, such that for any other pair $(B, y)$ with $y \in F(B)$, there exists a unique morphism $f: B \to A$ with $F(f)(x) = y$.
+\end{definition}
+
+\section{Enriched Categories}
+
+\subsection{Definition}
+\begin{definition}
+A category \textbf{enriched over} a monoidal category $\mathcal{V}$ is a category $\mathcal{C}$ where:
+\begin{itemize}
+    \item $\text{Hom}(A,B)$ is an object in $\mathcal{V}$
+    \item Composition is a morphism $\text{Hom}(B,C) \otimes \text{Hom}(A,B) \to \text{Hom}(A,C)$
+    \item Identity is a morphism $I \to \text{Hom}(A,A)$
+\end{itemize}
+satisfying associativity and unit laws.
+\end{definition}
+
+\subsection{Examples}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Ordinary categories}: Enriched over Set
+    \item \textbf{Preorders}: Enriched over $\{0,1\}$
+    \item \textbf{Metric spaces}: Enriched over $([0,\infty], \geq)$
+    \item \textbf{Abelian categories}: Enriched over Ab
+\end{itemize}
+\end{example}
+
+\section{Coends and Ends}
+
+\subsection{Definition}
+\begin{definition}
+For a functor $F: \mathcal{C}^{\text{op}} \times \mathcal{C} \to \mathcal{D}$, the \textbf{coend} is the colimit of the diagram formed by $F(A,A)$ for all objects $A$, with morphisms induced by $F(f, 1_A)$ and $F(1_A, f)$.
+\end{definition}
+
+\begin{definition}
+For a functor $F: \mathcal{C}^{\text{op}} \times \mathcal{C} \to \mathcal{D}$, the \textbf{end} is the limit of the diagram formed by $F(A,A)$ for all objects $A$, with morphisms induced by $F(f, 1_A)$ and $F(1_A, f)$.
+\end{definition}
+
+\subsection{Examples}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Tensor product}: $\int^A F(A) \otimes G(A)$
+    \item \textbf{Hom functor}: $\int_A \text{Hom}(F(A), G(A))$
+    \item \textbf{Geometric realization}: $\int^n \Delta^n \times X_n$
+\end{itemize}
+\end{example}
+
+\section{Monoidal Categories}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{monoidal category} is a category $\mathcal{C}$ equipped with:
+\begin{itemize}
+    \item A bifunctor $\otimes: \mathcal{C} \times \mathcal{C} \to \mathcal{C}$
+    \item A unit object $I$
+    \item Natural isomorphisms for associativity and unit
+\end{itemize}
+satisfying coherence conditions.
+\end{definition}
+
+\subsection{Symmetric Monoidal Categories}
+\begin{definition}
+A \textbf{symmetric monoidal category} is a monoidal category with a natural isomorphism $\sigma_{A,B}: A \otimes B \to B \otimes A$ satisfying $\sigma_{B,A} \circ \sigma_{A,B} = 1_{A \otimes B}$.
+\end{definition}
+
+\subsection{Examples}
+\begin{example}
+\begin{itemize}
+    \item \textbf{Set} with cartesian product
+    \item \textbf{Vect} with tensor product
+    \item \textbf{Ab} with tensor product
+    \item \textbf{Cat} with cartesian product
+\end{itemize}
+\end{example}
+
+\section{Important Theorems}
+
+\subsection{Adjoint Functor Theorem}
+\begin{theorem}[Adjoint Functor Theorem]
+A functor $G: \mathcal{D} \to \mathcal{C}$ has a left adjoint if and only if:
+\begin{itemize}
+    \item $G$ preserves limits
+    \item $\mathcal{C}$ is complete
+    \item The solution set condition holds
+\end{itemize}
+\end{theorem}
+
+\subsection{Freyd's Theorem}
+\begin{theorem}[Freyd's Theorem]
+A small category with all small limits is a preorder.
+\end{theorem}
+
+\subsection{Brown Representability}
+\begin{theorem}[Brown Representability]
+In the homotopy category of pointed CW complexes, a contravariant functor $F$ is representable if and only if:
+\begin{itemize}
+    \item $F$ satisfies the wedge axiom
+    \item $F$ satisfies the Mayer-Vietoris axiom
+\end{itemize}
+\end{theorem}
+
+\section{Conclusion}
+
+Category theory provides a unifying framework for mathematics by abstracting common patterns across different fields. Key concepts include:
+
+\begin{itemize}
+    \item Categories, functors, and natural transformations
+    \item Limits, colimits, and universal properties
+    \item Adjoint functors and monads
+    \item Topoi and higher categories
+    \item Enriched categories and monoidal categories
+\end{itemize}
+
+These concepts have found applications in:
+\begin{itemize}
+    \item Algebraic topology and geometry
+    \item Logic and computer science
+    \item Physics and quantum mechanics
+    \item Functional programming
+    \item Database theory
+\end{itemize}
+
+Category theory continues to be a powerful tool for understanding mathematical structures and their relationships.
+
+\end{document}

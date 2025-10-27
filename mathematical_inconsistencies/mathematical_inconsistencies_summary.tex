@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{paradox}{Paradox}[section]
+
+\title{Mathematical Inconsistencies, Paradoxes, and Contradictions}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Foundational Paradoxes}
+
+\subsection{Russell's Paradox}
+\begin{paradox}[Russell's Paradox]
+Let $R = \{x : x \notin x\}$ be the set of all sets that do not contain themselves. Then:
+\begin{itemize}
+    \item If $R \in R$, then by definition $R \notin R$ (contradiction)
+    \item If $R \notin R$, then by definition $R \in R$ (contradiction)
+\end{itemize}
+\end{paradox}
+
+\begin{theorem}
+The naive set theory (unrestricted comprehension) is inconsistent.
+\end{theorem}
+
+\subsection{Cantor's Paradox}
+\begin{paradox}[Cantor's Paradox]
+Let $U$ be the universal set containing all sets. Then $P(U)$ (the power set of $U$) has cardinality $2^{|U|}$. But since $U$ contains all sets, $P(U) \subseteq U$, which implies $2^{|U|} \leq |U|$, contradicting Cantor's theorem that $|A| < |P(A)|$ for any set $A$.
+\end{paradox}
+
+\subsection{Burali-Forti Paradox}
+\begin{paradox}[Burali-Forti Paradox]
+Let $\Omega$ be the set of all ordinal numbers. Then $\Omega$ is well-ordered and transitive, so $\Omega$ is an ordinal. But then $\Omega \in \Omega$, which contradicts the fact that no ordinal can be an element of itself.
+\end{paradox}
+
+\section{Logical Paradoxes}
+
+\subsection{The Liar Paradox}
+\begin{paradox}[The Liar Paradox]
+Consider the statement: "This statement is false."
+\begin{itemize}
+    \item If the statement is true, then it is false (contradiction)
+    \item If the statement is false, then it is true (contradiction)
+\end{itemize}
+\end{paradox}
+
+\subsection{Epimenides Paradox}
+\begin{paradox}[Epimenides Paradox]
+A Cretan says: "All Cretans are liars."
+\begin{itemize}
+    \item If the Cretan is telling the truth, then all Cretans are liars, including himself
+    \item If the Cretan is lying, then not all Cretans are liars, so he might be telling the truth
+\end{itemize}
+\end{paradox}
+
+\subsection{Berry Paradox}
+\begin{paradox}[Berry Paradox]
+Consider the smallest positive integer not definable in fewer than twelve words. This integer is defined in eleven words, creating a contradiction.
+\end{paradox}
+
+\subsection{Grelling-Nelson Paradox}
+\begin{paradox}[Grelling-Nelson Paradox]
+A word is \textbf{heterological} if it does not describe itself. For example, "long" is heterological because "long" is not a long word. But is "heterological" heterological?
+\begin{itemize}
+    \item If "heterological" is heterological, then it describes itself, so it's not heterological
+    \item If "heterological" is not heterological, then it doesn't describe itself, so it is heterological
+\end{itemize}
+\end{paradox}
+
+\section{Set-Theoretic Paradoxes}
+
+\subsection{Skolem's Paradox}
+\begin{paradox}[Skolem's Paradox]
+Skolem's paradox states that if Zermelo-Fraenkel set theory (ZFC) is consistent, then it has a countable model, even though ZFC proves the existence of uncountable sets.
+\end{paradox}
+
+\subsection{The Banach-Tarski Paradox}
+\begin{paradox}[Banach-Tarski Paradox]
+Given a solid ball in 3-dimensional space, there exists a decomposition of the ball into a finite number of disjoint subsets, which can then be put back together in a different way to yield two identical copies of the original ball.
+\end{paradox}
+
+\begin{theorem}[Banach-Tarski Theorem]
+If $A$ and $B$ are bounded subsets of $\mathbb{R}^3$ with non-empty interior, then $A$ and $B$ are equidecomposable.
+\end{theorem}
+
+\subsection{Hausdorff Paradox}
+\begin{paradox}[Hausdorff Paradox]
+There exists a countable set $D$ such that $S^2 \setminus D$ is equidecomposable with two copies of itself.
+\end{paradox}
+
+\section{Probability Paradoxes}
+
+\subsection{Bertrand's Paradox}
+\begin{paradox}[Bertrand's Paradox]
+What is the probability that a random chord of a circle is longer than the side of an inscribed equilateral triangle? Different methods give different answers:
+\begin{itemize}
+    \item Method 1: Random endpoints on circumference $\rightarrow P = \frac{1}{3}$
+    \item Method 2: Random midpoint in circle $\rightarrow P = \frac{1}{4}$
+    \item Method 3: Random perpendicular distance $\rightarrow P = \frac{1}{2}$
+\end{itemize}
+\end{paradox}
+
+\subsection{Monty Hall Problem}
+\begin{paradox}[Monty Hall Problem]
+In a game show, you choose one of three doors. Behind one door is a car, behind the others are goats. The host opens a door revealing a goat and offers you the chance to switch. Should you switch?
+\end{paradox}
+
+\begin{theorem}
+Switching gives you a $\frac{2}{3}$ probability of winning, while staying gives only $\frac{1}{3}$.
+\end{theorem}
+
+\subsection{Simpson's Paradox}
+\begin{paradox}[Simpson's Paradox]
+A trend appears in different groups of data but disappears or reverses when these groups are combined.
+\end{paradox}
+
+\begin{example}
+Consider two treatments A and B:
+\begin{itemize}
+    \item Treatment A: 20/40 patients recover (50\%)
+    \item Treatment B: 10/20 patients recover (50\%)
+    \item Overall: Treatment A appears better
+    \item But when stratified by severity: Treatment B is better in both groups
+\end{itemize}
+\end{example}
+
+\section{Geometric Paradoxes}
+
+\subsection{The Missing Square Puzzle}
+\begin{paradox}[Missing Square Puzzle]
+Rearrange four pieces of a right triangle to form the same triangle, but with a "missing" square unit.
+\end{paradox}
+
+\subsection{The Coastline Paradox}
+\begin{paradox}[Coastline Paradox]
+The length of a coastline depends on the scale of measurement. As the measurement scale becomes smaller, the measured length increases without bound.
+\end{paradox}
+
+\subsection{Zeno's Paradoxes}
+\begin{paradox}[Zeno's Paradox of Motion]
+To reach a destination, you must first reach the halfway point. To reach the halfway point, you must reach the quarter-way point, and so on. Since there are infinitely many points to reach, motion is impossible.
+\end{paradox}
+
+\begin{paradox}[Achilles and the Tortoise]
+Achilles runs after a tortoise. When Achilles reaches the tortoise's starting position, the tortoise has moved ahead. When Achilles reaches that position, the tortoise has moved ahead again, and so on. Achilles never catches the tortoise.
+\end{paradox}
+
+\section{Infinite Series Paradoxes}
+
+\subsection{Grandi's Series}
+\begin{paradox}[Grandi's Series]
+The series $1 - 1 + 1 - 1 + 1 - 1 + \cdots$ can be evaluated in different ways:
+\begin{itemize}
+    \item Grouping: $(1-1) + (1-1) + \cdots = 0 + 0 + \cdots = 0$
+    \item Alternative grouping: $1 + (-1+1) + (-1+1) + \cdots = 1 + 0 + 0 + \cdots = 1$
+    \item Cesàro sum: $\frac{1}{2}$
+\end{itemize}
+\end{paradox}
+
+\subsection{Riemann Rearrangement Theorem}
+\begin{theorem}[Riemann Rearrangement Theorem]
+If a series $\sum a_n$ converges conditionally, then for any real number $L$, there exists a rearrangement of the series that converges to $L$.
+\end{theorem}
+
+\subsection{The Harmonic Series}
+\begin{paradox}[Harmonic Series Divergence]
+The series $\sum_{n=1}^{\infty} \frac{1}{n}$ diverges, but $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$ converges to $\ln(2)$.
+\end{paradox}
+
+\section{Computational Paradoxes}
+
+\subsection{The Halting Problem}
+\begin{theorem}[Halting Problem]
+There is no algorithm that can determine whether an arbitrary computer program will halt or run forever.
+\end{theorem}
+
+\begin{proof}
+Assume there exists a function $H(P, I)$ that returns true if program $P$ halts on input $I$, false otherwise. Define:
+$$D(P) = \begin{cases}
+\text{halt} & \text{if } H(P, P) = \text{false} \\
+\text{loop forever} & \text{if } H(P, P) = \text{true}
+\end{cases}$$
+
+Then $H(D, D)$ cannot be determined without contradiction.
+\end{proof}
+
+\subsection{Rice's Theorem}
+\begin{theorem}[Rice's Theorem]
+For any non-trivial property of partial functions, it is undecidable whether a given Turing machine computes a partial function with that property.
+\end{theorem}
+
+\subsection{The Busy Beaver Problem}
+\begin{definition}
+The \textbf{busy beaver function} $\Sigma(n)$ is the maximum number of 1s that can be written by an $n$-state Turing machine before halting.
+\end{definition}
+
+\begin{theorem}
+The busy beaver function is non-computable and grows faster than any computable function.
+\end{theorem}
+
+\section{Mathematical Inconsistencies}
+
+\subsection{Inconsistent Axiom Systems}
+\begin{definition}
+An axiom system is \textbf{inconsistent} if it can prove both a statement and its negation.
+\end{definition}
+
+\subsection{Naive Set Theory}
+\begin{theorem}
+Naive set theory with unrestricted comprehension is inconsistent.
+\end{theorem}
+
+\subsection{Inconsistent Mathematics}
+\begin{definition}
+\textbf{Paraconsistent logic} allows for the study of inconsistent theories without everything becoming provable (explosion principle).
+\end{definition}
+
+\section{Philosophical Paradoxes}
+
+\subsection{The Sorites Paradox}
+\begin{paradox}[Sorites Paradox (Heap Paradox)]
+\begin{itemize}
+    \item One grain of sand is not a heap
+    \item Adding one grain to a non-heap does not make it a heap
+    \item Therefore, no number of grains makes a heap
+\end{itemize}
+\end{paradox}
+
+\subsection{The Ship of Theseus}
+\begin{paradox}[Ship of Theseus]
+If all the parts of a ship are replaced over time, is it still the same ship?
+\end{paradox}
+
+\subsection{The Raven Paradox}
+\begin{paradox}[Raven Paradox (Hempel's Paradox)]
+The statement "All ravens are black" is logically equivalent to "All non-black things are non-ravens." But observing a white shoe seems to confirm the second statement, and thus the first, which seems counterintuitive.
+\end{paradox}
+
+\section{Statistical Paradoxes}
+
+\subsection{The Birthday Paradox}
+\begin{paradox}[Birthday Paradox]
+In a group of 23 people, there is a 50\% chance that two people share the same birthday.
+\end{paradox}
+
+\subsection{The Prosecutor's Fallacy}
+\begin{paradox}[Prosecutor's Fallacy]
+Confusing the probability of evidence given innocence with the probability of innocence given evidence.
+\end{paradox}
+
+\subsection{The Base Rate Fallacy}
+\begin{paradox}[Base Rate Fallacy]
+Ignoring the base rate when evaluating conditional probabilities.
+\end{paradox}
+
+\section{Game-Theoretic Paradoxes}
+
+\subsection{The Prisoner's Dilemma}
+\begin{paradox}[Prisoner's Dilemma]
+Two prisoners must decide whether to cooperate or defect. The Nash equilibrium (both defect) is worse for both than mutual cooperation.
+\end{paradox}
+
+\subsection{Newcomb's Problem}
+\begin{paradox}[Newcomb's Problem]
+A predictor offers you two boxes: Box A (always contains \$1000) and Box B (contains \$1,000,000 if predicted you'd take only Box B, \$0 otherwise). What should you choose?
+\end{paradox}
+
+\subsection{The St. Petersburg Paradox}
+\begin{paradox}[St. Petersburg Paradox]
+A fair coin is flipped until heads appears. If heads appears on the $n$-th flip, you win \$2$^n$. The expected value is infinite, but most people wouldn't pay much to play.
+\end{paradox}
+
+\section{Resolution Attempts}
+
+\subsection{Axiomatic Set Theory}
+\begin{itemize}
+    \item Zermelo-Fraenkel (ZF) axioms
+    \item Axiom of Choice
+    \item Axiom of Regularity
+    \item Axiom of Replacement
+\end{itemize}
+
+\subsection{Type Theory}
+\begin{itemize}
+    \item Russell's type theory
+    \item Simple type theory
+    \item Dependent type theory
+\end{itemize}
+
+\subsection{Category Theory}
+\begin{itemize}
+    \item Topos theory
+    \item Internal logic
+    \item Synthetic differential geometry
+\end{itemize}
+
+\subsection{Constructive Mathematics}
+\begin{itemize}
+    \item Intuitionistic logic
+    \item Brouwer's intuitionism
+    \item Bishop's constructive analysis
+\end{itemize}
+
+\section{Modern Approaches}
+
+\subsection{Non-Standard Analysis}
+\begin{definition}
+\textbf{Non-standard analysis} uses hyperreal numbers to rigorously handle infinitesimals and infinite numbers.
+\end{definition}
+
+\subsection{Paraconsistent Logic}
+\begin{definition}
+\textbf{Paraconsistent logic} allows contradictions without everything being provable.
+\end{definition}
+
+\subsection{Modal Logic}
+\begin{definition}
+\textbf{Modal logic} extends classical logic with operators for necessity and possibility.
+\end{definition}
+
+\section{Open Problems}
+
+\subsection{Continuum Hypothesis}
+\begin{theorem}[Gödel-Cohen]
+The continuum hypothesis is independent of ZFC.
+\end{theorem}
+
+\subsection{Consistency of Mathematics}
+\begin{theorem}[Gödel's Second Incompleteness Theorem]
+If a formal system is consistent, it cannot prove its own consistency.
+\end{theorem}
+
+\subsection{The Axiom of Choice}
+\begin{theorem}[Zermelo]
+The axiom of choice is independent of ZF.
+\end{theorem}
+
+\section{Implications for Mathematics}
+
+\subsection{Foundational Crisis}
+\begin{itemize}
+    \item Crisis in set theory (early 20th century)
+    \item Crisis in analysis (infinitesimals)
+    \item Crisis in geometry (non-Euclidean)
+\end{itemize}
+
+\subsection{Mathematical Pluralism}
+\begin{itemize}
+    \item Multiple valid mathematical frameworks
+    \item Different axioms lead to different mathematics
+    \item No single "true" mathematics
+\end{itemize}
+
+\subsection{Computational Limitations}
+\begin{itemize}
+    \item Undecidable problems
+    \item Incomputable functions
+    \item Complexity barriers
+\end{itemize}
+
+\section{Conclusion}
+
+Mathematical paradoxes and inconsistencies have played a crucial role in the development of mathematics, leading to:
+
+\begin{itemize}
+    \item More rigorous foundations
+    \item New mathematical structures
+    \item Deeper understanding of logic
+    \item Recognition of limitations
+    \item Philosophical insights
+\end{itemize}
+
+These paradoxes remind us that mathematics is a human construction, subject to the limitations of our logical systems and requiring constant refinement and revision.
+
+\end{document}

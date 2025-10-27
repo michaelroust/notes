@@ -1,0 +1,470 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Abstract Algebra Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Groups}
+
+\subsection{Definition and Basic Properties}
+\begin{definition}
+A \textbf{group} is a set $G$ together with a binary operation $*$ such that:
+\begin{enumerate}
+    \item \textbf{Closure}: For all $a, b \in G$, $a * b \in G$
+    \item \textbf{Associativity}: For all $a, b, c \in G$, $(a * b) * c = a * (b * c)$
+    \item \textbf{Identity}: There exists $e \in G$ such that $e * a = a * e = a$ for all $a \in G$
+    \item \textbf{Inverses}: For each $a \in G$, there exists $a^{-1} \in G$ such that $a * a^{-1} = a^{-1} * a = e$
+\end{enumerate}
+\end{definition}
+
+\subsection{Abelian Groups}
+\begin{definition}
+A group $G$ is \textbf{abelian} (or \textbf{commutative}) if $a * b = b * a$ for all $a, b \in G$.
+\end{definition}
+
+\subsection{Order of Elements and Groups}
+\begin{definition}
+The \textbf{order} of an element $g \in G$ is the smallest positive integer $n$ such that $g^n = e$. If no such $n$ exists, $g$ has infinite order.
+\end{definition}
+
+\begin{definition}
+The \textbf{order} of a group $G$, denoted $|G|$, is the number of elements in $G$.
+\end{definition}
+
+\subsection{Subgroups}
+\begin{definition}
+A subset $H$ of a group $G$ is a \textbf{subgroup} if $H$ is itself a group under the operation of $G$.
+\end{definition}
+
+\begin{theorem}[Subgroup Test]
+A nonempty subset $H$ of a group $G$ is a subgroup if and only if:
+\begin{enumerate}
+    \item For all $a, b \in H$, $ab \in H$
+    \item For all $a \in H$, $a^{-1} \in H$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Cyclic Groups}
+\begin{definition}
+A group $G$ is \textbf{cyclic} if there exists $g \in G$ such that $G = \langle g \rangle = \{g^n : n \in \mathbb{Z}\}$.
+\end{definition}
+
+\begin{theorem}
+Every cyclic group is abelian.
+\end{theorem}
+
+\begin{theorem}
+If $G$ is a cyclic group of order $n$, then $G \cong \mathbb{Z}_n$.
+\end{theorem}
+
+\subsection{Cosets and Lagrange's Theorem}
+\begin{definition}
+Let $H$ be a subgroup of $G$ and $a \in G$. The \textbf{left coset} of $H$ containing $a$ is $aH = \{ah : h \in H\}$. The \textbf{right coset} is $Ha = \{ha : h \in H\}$.
+\end{definition}
+
+\begin{theorem}[Lagrange's Theorem]
+If $G$ is a finite group and $H$ is a subgroup of $G$, then $|H|$ divides $|G|$.
+\end{theorem}
+
+\subsection{Normal Subgroups}
+\begin{definition}
+A subgroup $N$ of $G$ is \textbf{normal} if $gN = Ng$ for all $g \in G$. We write $N \triangleleft G$.
+\end{definition}
+
+\begin{theorem}
+A subgroup $N$ of $G$ is normal if and only if $gNg^{-1} \subseteq N$ for all $g \in G$.
+\end{theorem}
+
+\subsection{Quotient Groups}
+\begin{definition}
+If $N$ is a normal subgroup of $G$, then the \textbf{quotient group} $G/N$ is the set of cosets of $N$ in $G$ with operation $(aN)(bN) = (ab)N$.
+\end{definition}
+
+\subsection{Homomorphisms}
+\begin{definition}
+A \textbf{homomorphism} from group $G$ to group $H$ is a function $\phi: G \to H$ such that $\phi(ab) = \phi(a)\phi(b)$ for all $a, b \in G$.
+\end{definition}
+
+\begin{definition}
+A homomorphism $\phi: G \to H$ is:
+\begin{itemize}
+    \item An \textbf{isomorphism} if it is bijective
+    \item A \textbf{monomorphism} if it is injective
+    \item An \textbf{epimorphism} if it is surjective
+\end{itemize}
+\end{definition}
+
+\subsection{First Isomorphism Theorem}
+\begin{theorem}
+If $\phi: G \to H$ is a homomorphism, then $\ker(\phi) \triangleleft G$ and $G/\ker(\phi) \cong \text{im}(\phi)$.
+\end{theorem}
+
+\section{Rings}
+
+\subsection{Definition and Basic Properties}
+\begin{definition}
+A \textbf{ring} is a set $R$ with two binary operations $+$ and $\cdot$ such that:
+\begin{enumerate}
+    \item $(R, +)$ is an abelian group
+    \item Multiplication is associative: $(ab)c = a(bc)$
+    \item Distributive laws: $a(b + c) = ab + ac$ and $(a + b)c = ac + bc$
+\end{enumerate}
+\end{definition}
+
+\subsection{Types of Rings}
+\begin{definition}
+A ring $R$ is:
+\begin{itemize}
+    \item \textbf{Commutative} if $ab = ba$ for all $a, b \in R$
+    \item A \textbf{ring with unity} if there exists $1 \in R$ such that $1 \cdot a = a \cdot 1 = a$ for all $a \in R$
+    \item An \textbf{integral domain} if it is commutative, has unity, and has no zero divisors
+    \item A \textbf{field} if it is commutative, has unity, and every nonzero element has a multiplicative inverse
+\end{itemize}
+\end{definition}
+
+\subsection{Subrings and Ideals}
+\begin{definition}
+A subset $S$ of a ring $R$ is a \textbf{subring} if $S$ is itself a ring under the operations of $R$.
+\end{definition}
+
+\begin{definition}
+A subset $I$ of a ring $R$ is an \textbf{ideal} if:
+\begin{enumerate}
+    \item $I$ is a subgroup of $(R, +)$
+    \item For all $r \in R$ and $a \in I$, both $ra \in I$ and $ar \in I$
+\end{enumerate}
+\end{definition}
+
+\subsection{Quotient Rings}
+\begin{definition}
+If $I$ is an ideal of $R$, then the \textbf{quotient ring} $R/I$ is the set of cosets of $I$ in $R$ with operations $(a + I) + (b + I) = (a + b) + I$ and $(a + I)(b + I) = (ab) + I$.
+\end{definition}
+
+\subsection{Ring Homomorphisms}
+\begin{definition}
+A \textbf{ring homomorphism} from ring $R$ to ring $S$ is a function $\phi: R \to S$ such that:
+\begin{enumerate}
+    \item $\phi(a + b) = \phi(a) + \phi(b)$
+    \item $\phi(ab) = \phi(a)\phi(b)$
+\end{enumerate}
+\end{definition}
+
+\subsection{First Isomorphism Theorem for Rings}
+\begin{theorem}
+If $\phi: R \to S$ is a ring homomorphism, then $\ker(\phi)$ is an ideal of $R$ and $R/\ker(\phi) \cong \text{im}(\phi)$.
+\end{theorem}
+
+\section{Fields}
+
+\subsection{Definition and Examples}
+\begin{definition}
+A \textbf{field} is a commutative ring with unity in which every nonzero element has a multiplicative inverse.
+\end{definition}
+
+\begin{example}
+Examples of fields:
+\begin{itemize}
+    \item $\mathbb{Q}$ (rational numbers)
+    \item $\mathbb{R}$ (real numbers)
+    \item $\mathbb{C}$ (complex numbers)
+    \item $\mathbb{Z}_p$ where $p$ is prime
+\end{itemize}
+\end{example}
+
+\subsection{Field Extensions}
+\begin{definition}
+If $F$ is a subfield of field $E$, then $E$ is a \textbf{field extension} of $F$, denoted $E/F$.
+\end{definition}
+
+\begin{definition}
+The \textbf{degree} of extension $E/F$, denoted $[E:F]$, is the dimension of $E$ as a vector space over $F$.
+\end{definition}
+
+\subsection{Algebraic and Transcendental Elements}
+\begin{definition}
+An element $\alpha \in E$ is \textbf{algebraic} over $F$ if there exists a nonzero polynomial $f(x) \in F[x]$ such that $f(\alpha) = 0$. Otherwise, $\alpha$ is \textbf{transcendental}.
+\end{definition}
+
+\subsection{Minimal Polynomial}
+\begin{definition}
+The \textbf{minimal polynomial} of $\alpha$ over $F$ is the monic polynomial of least degree in $F[x]$ that has $\alpha$ as a root.
+\end{definition}
+
+\subsection{Finite Fields}
+\begin{theorem}
+For every prime $p$ and positive integer $n$, there exists a unique field of order $p^n$, denoted $\mathbb{F}_{p^n}$.
+\end{theorem}
+
+\section{Polynomial Rings}
+
+\subsection{Definition}
+\begin{definition}
+The \textbf{polynomial ring} $R[x]$ over ring $R$ is the set of all polynomials with coefficients in $R$.
+\end{definition}
+
+\subsection{Division Algorithm}
+\begin{theorem}
+Let $F$ be a field and $f(x), g(x) \in F[x]$ with $g(x) \neq 0$. Then there exist unique polynomials $q(x), r(x) \in F[x]$ such that $f(x) = g(x)q(x) + r(x)$ where $\deg(r) < \deg(g)$.
+\end{theorem}
+
+\subsection{Irreducible Polynomials}
+\begin{definition}
+A polynomial $f(x) \in F[x]$ is \textbf{irreducible} over $F$ if it cannot be factored as a product of two non-constant polynomials in $F[x]$.
+\end{definition}
+
+\subsection{Eisenstein's Criterion}
+\begin{theorem}
+Let $f(x) = a_n x^n + \cdots + a_0 \in \mathbb{Z}[x]$. If there exists a prime $p$ such that:
+\begin{enumerate}
+    \item $p \nmid a_n$
+    \item $p \mid a_i$ for $i = 0, 1, \ldots, n-1$
+    \item $p^2 \nmid a_0$
+\end{enumerate}
+then $f(x)$ is irreducible over $\mathbb{Q}$.
+\end{theorem}
+
+\section{Galois Theory}
+
+\subsection{Automorphisms}
+\begin{definition}
+An \textbf{automorphism} of field $E$ is an isomorphism from $E$ to itself.
+\end{definition}
+
+\begin{definition}
+The \textbf{Galois group} of extension $E/F$, denoted $\text{Gal}(E/F)$, is the group of all automorphisms of $E$ that fix $F$ pointwise.
+\end{definition}
+
+\subsection{Fixed Fields}
+\begin{definition}
+If $G$ is a group of automorphisms of field $E$, then the \textbf{fixed field} of $G$ is $\text{Fix}(G) = \{a \in E : \sigma(a) = a \text{ for all } \sigma \in G\}$.
+\end{definition}
+
+\subsection{Galois Extensions}
+\begin{definition}
+A finite extension $E/F$ is \textbf{Galois} if $|\text{Gal}(E/F)| = [E:F]$.
+\end{definition}
+
+\subsection{Fundamental Theorem of Galois Theory}
+\begin{theorem}
+Let $E/F$ be a Galois extension with Galois group $G$. Then there is a one-to-one correspondence between:
+\begin{itemize}
+    \item Subgroups of $G$ and intermediate fields of $E/F$
+    \item Normal subgroups of $G$ and normal extensions of $F$ contained in $E$
+\end{itemize}
+\end{theorem}
+
+\section{Modules}
+
+\subsection{Definition}
+\begin{definition}
+Let $R$ be a ring. A \textbf{left $R$-module} is an abelian group $M$ together with a scalar multiplication $R \times M \to M$ satisfying:
+\begin{enumerate}
+    \item $(r + s)m = rm + sm$
+    \item $r(m + n) = rm + rn$
+    \item $(rs)m = r(sm)$
+    \item $1m = m$ (if $R$ has unity)
+\end{enumerate}
+\end{definition}
+
+\subsection{Submodules and Quotient Modules}
+\begin{definition}
+A \textbf{submodule} of $R$-module $M$ is a subgroup $N$ of $M$ such that $rn \in N$ for all $r \in R$ and $n \in N$.
+\end{definition}
+
+\begin{definition}
+If $N$ is a submodule of $M$, then the \textbf{quotient module} $M/N$ is the quotient group with scalar multiplication $r(m + N) = rm + N$.
+\end{definition}
+
+\subsection{Module Homomorphisms}
+\begin{definition}
+An \textbf{$R$-module homomorphism} from $M$ to $N$ is a group homomorphism $\phi: M \to N$ such that $\phi(rm) = r\phi(m)$ for all $r \in R$ and $m \in M$.
+\end{definition}
+
+\section{Vector Spaces}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{vector space} over field $F$ is an abelian group $V$ with scalar multiplication $F \times V \to V$ satisfying the module axioms.
+\end{definition}
+
+\subsection{Basis and Dimension}
+\begin{definition}
+A \textbf{basis} for vector space $V$ is a linearly independent spanning set.
+\end{definition}
+
+\begin{theorem}
+Every vector space has a basis, and any two bases have the same cardinality.
+\end{theorem}
+
+\begin{definition}
+The \textbf{dimension} of vector space $V$, denoted $\dim(V)$, is the cardinality of any basis.
+\end{definition}
+
+\subsection{Linear Transformations}
+\begin{definition}
+A \textbf{linear transformation} from vector space $V$ to vector space $W$ is a function $T: V \to W$ such that:
+\begin{enumerate}
+    \item $T(v + w) = T(v) + T(w)$
+    \item $T(cv) = cT(v)$
+\end{enumerate}
+\end{definition}
+
+\section{Group Actions}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{group action} of group $G$ on set $X$ is a function $G \times X \to X$ (denoted $(g, x) \mapsto g \cdot x$) such that:
+\begin{enumerate}
+    \item $e \cdot x = x$ for all $x \in X$
+    \item $(gh) \cdot x = g \cdot (h \cdot x)$ for all $g, h \in G$ and $x \in X$
+\end{enumerate}
+\end{definition}
+
+\subsection{Orbits and Stabilizers}
+\begin{definition}
+The \textbf{orbit} of $x \in X$ under action of $G$ is $\text{Orb}(x) = \{g \cdot x : g \in G\}$.
+\end{definition}
+
+\begin{definition}
+The \textbf{stabilizer} of $x \in X$ is $\text{Stab}(x) = \{g \in G : g \cdot x = x\}$.
+\end{definition}
+
+\subsection{Orbit-Stabilizer Theorem}
+\begin{theorem}
+If $G$ acts on $X$ and $x \in X$, then $|\text{Orb}(x)| = |G|/|\text{Stab}(x)|$.
+\end{theorem}
+
+\section{Sylow Theorems}
+
+\subsection{Definition}
+\begin{definition}
+Let $G$ be a finite group and $p$ a prime. A \textbf{Sylow $p$-subgroup} of $G$ is a maximal $p$-subgroup of $G$.
+\end{definition}
+
+\subsection{First Sylow Theorem}
+\begin{theorem}
+If $G$ is a finite group and $p$ divides $|G|$, then $G$ has a Sylow $p$-subgroup.
+\end{theorem}
+
+\subsection{Second Sylow Theorem}
+\begin{theorem}
+All Sylow $p$-subgroups of $G$ are conjugate to each other.
+\end{theorem}
+
+\subsection{Third Sylow Theorem}
+\begin{theorem}
+If $G$ is a finite group and $p$ divides $|G|$, then the number of Sylow $p$-subgroups is congruent to $1 \bmod p$ and divides $|G|$.
+\end{theorem}
+
+\section{Free Groups and Presentations}
+
+\subsection{Free Groups}
+\begin{definition}
+A group $F$ is \textbf{free} on set $X$ if every function from $X$ to a group $G$ extends uniquely to a homomorphism from $F$ to $G$.
+\end{definition}
+
+\subsection{Group Presentations}
+\begin{definition}
+A \textbf{group presentation} is an expression of the form $\langle X | R \rangle$ where $X$ is a set of generators and $R$ is a set of relations.
+\end{definition}
+
+\section{Important Theorems}
+
+\subsection{Cayley's Theorem}
+\begin{theorem}
+Every group is isomorphic to a subgroup of a symmetric group.
+\end{theorem}
+
+\subsection{Chinese Remainder Theorem}
+\begin{theorem}
+If $m$ and $n$ are relatively prime integers, then $\mathbb{Z}_{mn} \cong \mathbb{Z}_m \times \mathbb{Z}_n$.
+\end{theorem}
+
+\subsection{Classification of Finite Simple Groups}
+\begin{theorem}
+Every finite simple group is one of:
+\begin{itemize}
+    \item A cyclic group of prime order
+    \item An alternating group $A_n$ for $n \geq 5$
+    \item A group of Lie type
+    \item One of 26 sporadic groups
+\end{itemize}
+\end{theorem}
+
+\subsection{Wedderburn's Theorem}
+\begin{theorem}
+Every finite division ring is a field.
+\end{theorem}
+
+\subsection{Hilbert's Nullstellensatz}
+\begin{theorem}
+Let $k$ be an algebraically closed field and $I$ an ideal in $k[x_1, \ldots, x_n]$. Then $I(V(I)) = \sqrt{I}$ where $V(I)$ is the variety of $I$ and $\sqrt{I}$ is the radical of $I$.
+\end{theorem}
+
+\section{Applications}
+
+\subsection{Cryptography}
+Abstract algebra is fundamental to:
+\begin{itemize}
+    \item RSA encryption (based on Euler's theorem)
+    \item Elliptic curve cryptography
+    \item Diffie-Hellman key exchange
+    \item Digital signatures
+\end{itemize}
+
+\subsection{Coding Theory}
+Applications include:
+\begin{itemize}
+    \item Error-correcting codes
+    \item Linear codes over finite fields
+    \item Cyclic codes
+    \item Reed-Solomon codes
+\end{itemize}
+
+\subsection{Algebraic Geometry}
+Connections to:
+\begin{itemize}
+    \item Varieties and schemes
+    \item Commutative algebra
+    \item Homological algebra
+    \item Category theory
+\end{itemize}
+
+\subsection{Number Theory}
+Applications in:
+\begin{itemize}
+    \item Algebraic number theory
+    \item Class field theory
+    \item Modular forms
+    \item Diophantine equations
+\end{itemize}
+
+\end{document}

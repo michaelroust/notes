@@ -1,0 +1,420 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Signal Processing Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Discrete-Time Signals}
+
+\subsection{Basic Definitions}
+\begin{definition}
+A \textbf{discrete-time signal} is a sequence $x[n]$ where $n \in \mathbb{Z}$ is the discrete time index.
+\end{definition}
+
+\begin{definition}
+A signal is \textbf{causal} if $x[n] = 0$ for $n < 0$.
+\end{definition}
+
+\begin{definition}
+A signal is \textbf{finite-length} if $x[n] = 0$ for $n < 0$ and $n \geq N$.
+\end{definition}
+
+\subsection{Elementary Signals}
+\begin{itemize}
+    \item \textbf{Unit impulse}: $\delta[n] = \begin{cases} 1 & n = 0 \\ 0 & n \neq 0 \end{cases}$
+    \item \textbf{Unit step}: $u[n] = \begin{cases} 1 & n \geq 0 \\ 0 & n < 0 \end{cases}$
+    \item \textbf{Complex exponential}: $e^{j\omega_0 n}$
+    \item \textbf{Sinusoid}: $\cos(\omega_0 n + \phi)$
+\end{itemize}
+
+\subsection{Signal Properties}
+\begin{definition}
+A signal is \textbf{periodic} with period $N$ if $x[n] = x[n + N]$ for all $n$.
+\end{definition}
+
+\begin{definition}
+The \textbf{energy} of a signal is $E_x = \sum_{n=-\infty}^{\infty} |x[n]|^2$.
+\end{definition}
+
+\begin{definition}
+The \textbf{power} of a periodic signal with period $N$ is $P_x = \frac{1}{N} \sum_{n=0}^{N-1} |x[n]|^2$.
+\end{definition}
+
+\section{Linear Time-Invariant Systems}
+
+\subsection{System Properties}
+\begin{definition}
+A system is \textbf{linear} if $T[ax_1[n] + bx_2[n]] = aT[x_1[n]] + bT[x_2[n]]$.
+\end{definition}
+
+\begin{definition}
+A system is \textbf{time-invariant} if $T[x[n-k]] = y[n-k]$ for any $k$.
+\end{definition}
+
+\subsection{Impulse Response}
+\begin{definition}
+The \textbf{impulse response} of an LTI system is $h[n] = T[\delta[n]]$.
+\end{definition}
+
+\begin{theorem}[Convolution Sum]
+For an LTI system with impulse response $h[n]$, the output is:
+$$y[n] = x[n] * h[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k]$$
+\end{theorem}
+
+\subsection{System Properties from Impulse Response}
+\begin{itemize}
+    \item \textbf{Causal}: $h[n] = 0$ for $n < 0$
+    \item \textbf{Stable}: $\sum_{n=-\infty}^{\infty} |h[n]| < \infty$
+    \item \textbf{FIR}: Finite impulse response (finite length)
+    \item \textbf{IIR}: Infinite impulse response (infinite length)
+\end{itemize}
+
+\section{Discrete Fourier Transform}
+
+\subsection{Definition}
+\begin{definition}
+The \textbf{Discrete Fourier Transform} (DFT) of a length-$N$ sequence $x[n]$ is:
+$$X[k] = \sum_{n=0}^{N-1} x[n] e^{-j2\pi kn/N}, \quad k = 0, 1, \ldots, N-1$$
+\end{definition}
+
+\begin{definition}
+The \textbf{Inverse DFT} is:
+$$x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{j2\pi kn/N}, \quad n = 0, 1, \ldots, N-1$$
+\end{definition}
+
+\subsection{DFT Properties}
+\begin{itemize}
+    \item \textbf{Linearity}: $\text{DFT}[ax[n] + by[n]] = aX[k] + bY[k]$
+    \item \textbf{Circular shift}: $\text{DFT}[x[(n-m)_N]] = X[k]e^{-j2\pi km/N}$
+    \item \textbf{Parseval's theorem}: $\sum_{n=0}^{N-1} |x[n]|^2 = \frac{1}{N} \sum_{k=0}^{N-1} |X[k]|^2$
+    \item \textbf{Circular convolution}: $\text{DFT}[x[n] \circledast y[n]] = X[k]Y[k]$
+\end{itemize}
+
+\subsection{Fast Fourier Transform}
+\begin{theorem}[FFT Algorithm]
+The DFT can be computed in $O(N \log N)$ operations using the FFT algorithm.
+\end{theorem}
+
+\section{Z-Transform}
+
+\subsection{Definition}
+\begin{definition}
+The \textbf{Z-transform} of a sequence $x[n]$ is:
+$$X(z) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}$$
+\end{definition}
+
+\subsection{Region of Convergence}
+\begin{definition}
+The \textbf{Region of Convergence} (ROC) is the set of $z$ values for which the Z-transform converges.
+\end{definition}
+
+\subsection{Z-Transform Properties}
+\begin{itemize}
+    \item \textbf{Linearity}: $\mathcal{Z}[ax[n] + by[n]] = aX(z) + bY(z)$
+    \item \textbf{Time shift}: $\mathcal{Z}[x[n-k]] = z^{-k}X(z)$
+    \item \textbf{Convolution}: $\mathcal{Z}[x[n] * y[n]] = X(z)Y(z)$
+    \item \textbf{Multiplication by $n$}: $\mathcal{Z}[nx[n]] = -z \frac{dX(z)}{dz}$
+\end{itemize}
+
+\subsection{Inverse Z-Transform}
+\begin{itemize}
+    \item \textbf{Partial fraction expansion}
+    \item \textbf{Power series expansion}
+    \item \textbf{Contour integration}: $x[n] = \frac{1}{2\pi j} \oint_C X(z) z^{n-1} dz$
+\end{itemize}
+
+\section{Digital Filters}
+
+\subsection{FIR Filters}
+\begin{definition}
+A \textbf{Finite Impulse Response} filter has impulse response:
+$$h[n] = \begin{cases} b_n & 0 \leq n \leq M \\ 0 & \text{otherwise} \end{cases}$$
+\end{definition}
+
+The system function is:
+$$H(z) = \sum_{n=0}^{M} b_n z^{-n}$$
+
+\subsection{IIR Filters}
+\begin{definition}
+An \textbf{Infinite Impulse Response} filter has system function:
+$$H(z) = \frac{\sum_{k=0}^{M} b_k z^{-k}}{1 + \sum_{k=1}^{N} a_k z^{-k}}$$
+\end{definition}
+
+The difference equation is:
+$$y[n] = \sum_{k=0}^{M} b_k x[n-k] - \sum_{k=1}^{N} a_k y[n-k]$$
+
+\subsection{Filter Design}
+\begin{itemize}
+    \item \textbf{Window method} for FIR filters
+    \item \textbf{Impulse invariance} for IIR filters
+    \item \textbf{Bilinear transform} for IIR filters
+    \item \textbf{Least squares} design
+\end{itemize}
+
+\section{Frequency Response}
+
+\subsection{Definition}
+\begin{definition}
+The \textbf{frequency response} of an LTI system is:
+$$H(e^{j\omega}) = \sum_{n=-\infty}^{\infty} h[n] e^{-j\omega n}$$
+\end{definition}
+
+\subsection{Magnitude and Phase}
+$$H(e^{j\omega}) = |H(e^{j\omega})| e^{j\angle H(e^{j\omega})}$$
+
+\subsection{Filter Types}
+\begin{itemize}
+    \item \textbf{Lowpass}: Passes low frequencies, attenuates high frequencies
+    \item \textbf{Highpass}: Passes high frequencies, attenuates low frequencies
+    \item \textbf{Bandpass}: Passes frequencies in a specific band
+    \item \textbf{Bandstop}: Attenuates frequencies in a specific band
+\end{itemize}
+
+\section{Sampling Theory}
+
+\subsection{Nyquist-Shannon Sampling Theorem}
+\begin{theorem}[Sampling Theorem]
+A bandlimited signal with maximum frequency $f_m$ can be perfectly reconstructed from its samples if the sampling rate $f_s \geq 2f_m$.
+\end{theorem}
+
+\subsection{Aliasing}
+\begin{definition}
+\textbf{Aliasing} occurs when the sampling rate is insufficient, causing high-frequency components to appear as low-frequency components.
+\end{definition}
+
+\subsection{Anti-aliasing Filter}
+An anti-aliasing filter is a lowpass filter applied before sampling to prevent aliasing.
+
+\section{Multirate Signal Processing}
+
+\subsection{Downsampling}
+\begin{definition}
+\textbf{Downsampling} by factor $M$: $y[n] = x[Mn]$
+\end{definition}
+
+In frequency domain:
+$$Y(e^{j\omega}) = \frac{1}{M} \sum_{k=0}^{M-1} X(e^{j(\omega-2\pi k)/M})$$
+
+\subsection{Upsampling}
+\begin{definition}
+\textbf{Upsampling} by factor $L$: $y[n] = \begin{cases} x[n/L] & n = 0, \pm L, \pm 2L, \ldots \\ 0 & \text{otherwise} \end{cases}$
+\end{definition}
+
+In frequency domain:
+$$Y(e^{j\omega}) = X(e^{jL\omega})$$
+
+\subsection{Rational Sampling Rate Conversion}
+To change sampling rate by factor $L/M$:
+\begin{enumerate}
+    \item Upsample by $L$
+    \item Filter to prevent aliasing
+    \item Downsample by $M$
+\end{enumerate}
+
+\section{Adaptive Filters}
+
+\subsection{Least Mean Squares (LMS)}
+\begin{definition}
+The \textbf{LMS algorithm} updates filter coefficients as:
+$$\mathbf{w}[n+1] = \mathbf{w}[n] + \mu e[n] \mathbf{x}[n]$$
+where $\mu$ is the step size and $e[n]$ is the error signal.
+\end{definition}
+
+\subsection{Recursive Least Squares (RLS)}
+\begin{definition}
+The \textbf{RLS algorithm} minimizes the weighted least squares cost function:
+$$J[n] = \sum_{i=0}^{n} \lambda^{n-i} |d[i] - \mathbf{w}^T[n] \mathbf{x}[i]|^2$$
+where $\lambda$ is the forgetting factor.
+\end{definition}
+
+\section{Statistical Signal Processing}
+
+\subsection{Power Spectral Density}
+\begin{definition}
+The \textbf{power spectral density} of a wide-sense stationary process is:
+$$S_{xx}(e^{j\omega}) = \sum_{m=-\infty}^{\infty} R_{xx}[m] e^{-j\omega m}$$
+where $R_{xx}[m] = E[x[n]x^*[n-m]]$ is the autocorrelation function.
+\end{definition}
+
+\subsection{Wiener Filter}
+\begin{definition}
+The \textbf{Wiener filter} minimizes the mean-square error between the desired signal and filter output.
+\end{definition}
+
+For FIR Wiener filter:
+$$\mathbf{w}_{\text{opt}} = \mathbf{R}_{xx}^{-1} \mathbf{r}_{xd}$$
+where $\mathbf{R}_{xx}$ is the autocorrelation matrix and $\mathbf{r}_{xd}$ is the cross-correlation vector.
+
+\section{Image Processing}
+
+\subsection{2D Discrete Fourier Transform}
+\begin{definition}
+The \textbf{2D DFT} of an $M \times N$ image $f[m,n]$ is:
+$$F[u,v] = \sum_{m=0}^{M-1} \sum_{n=0}^{N-1} f[m,n] e^{-j2\pi(um/M + vn/N)}$$
+\end{definition}
+
+\subsection{Image Filtering}
+\begin{itemize}
+    \item \textbf{Spatial domain}: Convolution with filter kernel
+    \item \textbf{Frequency domain}: Multiplication with frequency response
+    \item \textbf{Edge detection}: Sobel, Prewitt, Laplacian operators
+    \item \textbf{Smoothing}: Gaussian, median filtering
+\end{itemize}
+
+\section{Compression}
+
+\subsection{Lossless Compression}
+\begin{itemize}
+    \item \textbf{Huffman coding}: Variable-length coding based on symbol probabilities
+    \item \textbf{Lempel-Ziv}: Dictionary-based compression
+    \item \textbf{Predictive coding}: Encode prediction errors
+\end{itemize}
+
+\subsection{Lossy Compression}
+\begin{itemize}
+    \item \textbf{Transform coding}: DCT, wavelet transforms
+    \item \textbf{Quantization}: Reduce precision of coefficients
+    \item \textbf{JPEG}: DCT-based image compression
+    \item \textbf{MPEG}: Motion-compensated video compression
+\end{itemize}
+
+\section{Applications}
+
+\subsection{Communication Systems}
+\begin{itemize}
+    \item Modulation and demodulation
+    \item Channel equalization
+    \item Error correction coding
+    \item Synchronization
+\end{itemize}
+
+\subsection{Audio Processing}
+\begin{itemize}
+    \item Speech recognition
+    \item Audio compression (MP3, AAC)
+    \item Noise reduction
+    \item Echo cancellation
+\end{itemize}
+
+\subsection{Biomedical Signal Processing}
+\begin{itemize}
+    \item ECG analysis
+    \item EEG signal processing
+    \item Medical image analysis
+    \item Heart rate variability
+\end{itemize}
+
+\subsection{Radar and Sonar}
+\begin{itemize}
+    \item Target detection
+    \item Range and velocity estimation
+    \item Beamforming
+    \item Clutter suppression
+\end{itemize}
+
+\section{Important Algorithms}
+
+\subsection{Fast Convolution}
+\begin{itemize}
+    \item \textbf{Overlap-add method}
+    \item \textbf{Overlap-save method}
+    \item Use FFT for efficient computation
+\end{itemize}
+
+\subsection{Filter Banks}
+\begin{itemize}
+    \item \textbf{Analysis filter bank}: Decompose signal into subbands
+    \item \textbf{Synthesis filter bank}: Reconstruct signal from subbands
+    \item \textbf{Perfect reconstruction}: Input equals output
+\end{itemize}
+
+\subsection{Wavelets}
+\begin{itemize}
+    \item \textbf{Continuous wavelet transform}
+    \item \textbf{Discrete wavelet transform}
+    \item \textbf{Wavelet packet decomposition}
+    \item Applications in compression and denoising
+\end{itemize}
+
+\section{Implementation Considerations}
+
+\subsection{Finite Wordlength Effects}
+\begin{itemize}
+    \item \textbf{Quantization noise}
+    \item \textbf{Overflow and underflow}
+    \item \textbf{Limit cycles}
+    \item \textbf{Coefficient sensitivity}
+\end{itemize}
+
+\subsection{Computational Complexity}
+\begin{itemize}
+    \item \textbf{FIR filters}: $O(N)$ per output sample
+    \item \textbf{IIR filters}: $O(N)$ per output sample
+    \item \textbf{FFT}: $O(N \log N)$ for length-$N$ transform
+    \item \textbf{Convolution}: $O(NM)$ for length-$N$ and length-$M$ sequences
+\end{itemize}
+
+\section{Key Theorems}
+
+\subsection{Parseval's Theorem}
+\begin{theorem}
+$$\sum_{n=-\infty}^{\infty} |x[n]|^2 = \frac{1}{2\pi} \int_{-\pi}^{\pi} |X(e^{j\omega})|^2 d\omega$$
+\end{theorem}
+
+\subsection{Convolution Theorem}
+\begin{theorem}
+$$\mathcal{F}[x[n] * y[n]] = X(e^{j\omega}) Y(e^{j\omega})$$
+\end{theorem}
+
+\subsection{Modulation Theorem}
+\begin{theorem}
+$$\mathcal{F}[x[n] e^{j\omega_0 n}] = X(e^{j(\omega - \omega_0)})$$
+\end{theorem}
+
+\section{Important Transforms}
+
+\subsection{Discrete Cosine Transform}
+\begin{definition}
+The \textbf{DCT} is defined as:
+$$X[k] = \sum_{n=0}^{N-1} x[n] \cos\left(\frac{\pi(2n+1)k}{2N}\right)$$
+\end{definition}
+
+\subsection{Walsh-Hadamard Transform}
+\begin{definition}
+The \textbf{WHT} uses Walsh functions as basis functions and is computationally efficient.
+\end{definition}
+
+\subsection{Karhunen-Loève Transform}
+\begin{definition}
+The \textbf{KLT} is the optimal transform for decorrelating signals with known statistics.
+\end{definition}
+
+\end{document}

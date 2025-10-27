@@ -1,0 +1,444 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Complex Analysis Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Complex Numbers}
+
+\subsection{Definition and Basic Properties}
+\begin{definition}
+A \textbf{complex number} is an expression of the form $z = x + iy$ where $x, y \in \mathbb{R}$ and $i^2 = -1$. The set of all complex numbers is denoted $\mathbb{C}$.
+\end{definition}
+
+\subsection{Algebraic Operations}
+For $z_1 = x_1 + iy_1$ and $z_2 = x_2 + iy_2$:
+\begin{itemize}
+    \item \textbf{Addition}: $z_1 + z_2 = (x_1 + x_2) + i(y_1 + y_2)$
+    \item \textbf{Multiplication}: $z_1 z_2 = (x_1 x_2 - y_1 y_2) + i(x_1 y_2 + x_2 y_1)$
+    \item \textbf{Conjugate}: $\overline{z} = x - iy$
+    \item \textbf{Modulus}: $|z| = \sqrt{x^2 + y^2}$
+\end{itemize}
+
+\subsection{Polar Form}
+\begin{definition}
+For $z = x + iy \neq 0$, we can write $z = r(\cos\theta + i\sin\theta) = re^{i\theta}$ where:
+\begin{itemize}
+    \item $r = |z| = \sqrt{x^2 + y^2}$ (modulus)
+    \item $\theta = \arg z$ (argument)
+\end{itemize}
+\end{definition}
+
+\subsection{De Moivre's Theorem}
+\begin{theorem}
+For any integer $n$ and complex number $z = r(\cos\theta + i\sin\theta)$:
+$$z^n = r^n(\cos(n\theta) + i\sin(n\theta)) = r^n e^{in\theta}$$
+\end{theorem}
+
+\subsection{Roots of Unity}
+The $n$-th roots of unity are:
+$$\omega_k = e^{2\pi ik/n} = \cos\left(\frac{2\pi k}{n}\right) + i\sin\left(\frac{2\pi k}{n}\right)$$
+for $k = 0, 1, \ldots, n-1$.
+
+\section{Complex Functions}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{complex function} is a function $f: D \to \mathbb{C}$ where $D \subseteq \mathbb{C}$.
+\end{definition}
+
+\subsection{Representation}
+A complex function $f(z) = f(x + iy)$ can be written as:
+$$f(z) = u(x,y) + iv(x,y)$$
+where $u$ and $v$ are real-valued functions of two real variables.
+
+\subsection{Limits}
+\begin{definition}
+$\lim_{z \to z_0} f(z) = L$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|f(z) - L| < \epsilon$ whenever $0 < |z - z_0| < \delta$.
+\end{definition}
+
+\subsection{Continuity}
+\begin{definition}
+A function $f$ is \textbf{continuous} at $z_0$ if $\lim_{z \to z_0} f(z) = f(z_0)$.
+\end{definition}
+
+\section{Analytic Functions}
+
+\subsection{Complex Differentiability}
+\begin{definition}
+A function $f$ is \textbf{complex differentiable} at $z_0$ if the limit
+$$\lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}$$
+exists. This limit is called the \textbf{derivative} of $f$ at $z_0$, denoted $f'(z_0)$.
+\end{definition}
+
+\subsection{Analyticity}
+\begin{definition}
+A function $f$ is \textbf{analytic} (or \textbf{holomorphic}) at $z_0$ if it is complex differentiable in some neighborhood of $z_0$. A function is \textbf{entire} if it is analytic on all of $\mathbb{C}$.
+\end{definition}
+
+\subsection{Cauchy-Riemann Equations}
+\begin{theorem}
+Let $f(z) = u(x,y) + iv(x,y)$ be defined in a neighborhood of $z_0 = x_0 + iy_0$. Then $f$ is complex differentiable at $z_0$ if and only if:
+\begin{enumerate}
+    \item $u$ and $v$ are differentiable at $(x_0, y_0)$
+    \item The Cauchy-Riemann equations hold:
+    $$\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \quad \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Properties of Analytic Functions}
+\begin{theorem}
+If $f$ is analytic at $z_0$, then $f$ is continuous at $z_0$.
+\end{theorem}
+
+\begin{theorem}
+If $f$ and $g$ are analytic at $z_0$, then so are $f + g$, $f - g$, $fg$, and $f/g$ (if $g(z_0) \neq 0$).
+\end{theorem}
+
+\begin{theorem}[Chain Rule]
+If $f$ is analytic at $z_0$ and $g$ is analytic at $f(z_0)$, then $g \circ f$ is analytic at $z_0$ and $(g \circ f)'(z_0) = g'(f(z_0))f'(z_0)$.
+\end{theorem}
+
+\section{Harmonic Functions}
+
+\subsection{Definition}
+\begin{definition}
+A real-valued function $u(x,y)$ is \textbf{harmonic} if it satisfies Laplace's equation:
+$$\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0$$
+\end{definition}
+
+\subsection{Relationship to Analytic Functions}
+\begin{theorem}
+If $f(z) = u(x,y) + iv(x,y)$ is analytic, then both $u$ and $v$ are harmonic functions.
+\end{theorem}
+
+\begin{definition}
+If $f = u + iv$ is analytic, then $v$ is called a \textbf{harmonic conjugate} of $u$.
+\end{definition}
+
+\section{Power Series}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{power series} centered at $z_0$ is a series of the form:
+$$\sum_{n=0}^{\infty} a_n (z - z_0)^n$$
+\end{definition}
+
+\subsection{Radius of Convergence}
+\begin{theorem}
+For any power series $\sum a_n (z - z_0)^n$, there exists $R \in [0, \infty]$ such that:
+\begin{itemize}
+    \item The series converges absolutely for $|z - z_0| < R$
+    \item The series diverges for $|z - z_0| > R$
+\end{itemize}
+$R$ is called the \textbf{radius of convergence}.
+\end{theorem}
+
+\subsection{Analyticity of Power Series}
+\begin{theorem}
+A power series defines an analytic function within its radius of convergence.
+\end{theorem}
+
+\subsection{Taylor Series}
+\begin{theorem}
+If $f$ is analytic in a disk $|z - z_0| < R$, then $f$ has a Taylor series expansion:
+$$f(z) = \sum_{n=0}^{\infty} \frac{f^{(n)}(z_0)}{n!} (z - z_0)^n$$
+valid for $|z - z_0| < R$.
+\end{theorem}
+
+\section{Complex Integration}
+
+\subsection{Contours}
+\begin{definition}
+A \textbf{contour} (or \textbf{path}) is a continuous function $\gamma: [a,b] \to \mathbb{C}$.
+\end{definition}
+
+\begin{definition}
+A contour is \textbf{smooth} if $\gamma'(t)$ exists and is continuous on $[a,b]$.
+\end{definition}
+
+\begin{definition}
+A contour is \textbf{closed} if $\gamma(a) = \gamma(b)$.
+\end{definition}
+
+\subsection{Line Integrals}
+\begin{definition}
+The \textbf{line integral} of $f$ along contour $\gamma$ is:
+$$\int_\gamma f(z) \, dz = \int_a^b f(\gamma(t)) \gamma'(t) \, dt$$
+\end{definition}
+
+\subsection{Properties}
+\begin{theorem}
+If $f$ and $g$ are continuous on $\gamma$ and $c \in \mathbb{C}$, then:
+\begin{itemize}
+    \item $\int_\gamma [f(z) + g(z)] \, dz = \int_\gamma f(z) \, dz + \int_\gamma g(z) \, dz$
+    \item $\int_\gamma cf(z) \, dz = c \int_\gamma f(z) \, dz$
+    \item $\int_{-\gamma} f(z) \, dz = -\int_\gamma f(z) \, dz$ (where $-\gamma$ is the reverse path)
+\end{itemize}
+\end{theorem}
+
+\section{Cauchy's Theorem}
+
+\subsection{Simply Connected Domains}
+\begin{definition}
+A domain $D$ is \textbf{simply connected} if every closed contour in $D$ can be continuously deformed to a point within $D$.
+\end{definition}
+
+\subsection{Cauchy's Theorem}
+\begin{theorem}[Cauchy's Theorem]
+If $f$ is analytic in a simply connected domain $D$ and $\gamma$ is a closed contour in $D$, then:
+$$\oint_\gamma f(z) \, dz = 0$$
+\end{theorem}
+
+\subsection{Independence of Path}
+\begin{theorem}
+If $f$ is analytic in a simply connected domain $D$, then $\int_\gamma f(z) \, dz$ depends only on the endpoints of $\gamma$, not on the path itself.
+\end{theorem}
+
+\section{Cauchy's Integral Formula}
+
+\subsection{Cauchy's Integral Formula}
+\begin{theorem}
+If $f$ is analytic inside and on a simple closed contour $\gamma$, then for any point $a$ inside $\gamma$:
+$$f(a) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z - a} \, dz$$
+\end{theorem}
+
+\subsection{Derivatives of Analytic Functions}
+\begin{theorem}
+If $f$ is analytic inside and on a simple closed contour $\gamma$, then $f$ has derivatives of all orders inside $\gamma$, and:
+$$f^{(n)}(a) = \frac{n!}{2\pi i} \oint_\gamma \frac{f(z)}{(z - a)^{n+1}} \, dz$$
+\end{theorem}
+
+\subsection{Morera's Theorem}
+\begin{theorem}
+If $f$ is continuous in a domain $D$ and $\oint_\gamma f(z) \, dz = 0$ for every closed contour $\gamma$ in $D$, then $f$ is analytic in $D$.
+\end{theorem}
+
+\section{Liouville's Theorem and Maximum Principle}
+
+\subsection{Liouville's Theorem}
+\begin{theorem}
+If $f$ is entire and bounded, then $f$ is constant.
+\end{theorem}
+
+\subsection{Fundamental Theorem of Algebra}
+\begin{theorem}
+Every non-constant polynomial with complex coefficients has at least one complex root.
+\end{theorem}
+
+\subsection{Maximum Modulus Principle}
+\begin{theorem}
+If $f$ is analytic in a domain $D$ and $|f|$ attains its maximum at a point in $D$, then $f$ is constant in $D$.
+\end{theorem}
+
+\subsection{Minimum Modulus Principle}
+\begin{theorem}
+If $f$ is analytic and non-zero in a domain $D$, then $|f|$ cannot attain its minimum at an interior point of $D$.
+\end{theorem}
+
+\section{Singularities}
+
+\subsection{Types of Singularities}
+\begin{definition}
+A point $z_0$ is a \textbf{singularity} of $f$ if $f$ is not analytic at $z_0$ but is analytic in some punctured neighborhood of $z_0$.
+\end{definition}
+
+\begin{definition}
+A singularity $z_0$ is:
+\begin{itemize}
+    \item \textbf{Removable} if $\lim_{z \to z_0} f(z)$ exists
+    \item \textbf{Pole} if $\lim_{z \to z_0} |f(z)| = \infty$
+    \item \textbf{Essential} if $\lim_{z \to z_0} f(z)$ does not exist and is not infinite
+\end{itemize}
+\end{definition}
+
+\subsection{Laurent Series}
+\begin{theorem}
+If $f$ is analytic in an annulus $r < |z - z_0| < R$, then $f$ has a Laurent series expansion:
+$$f(z) = \sum_{n=-\infty}^{\infty} a_n (z - z_0)^n$$
+where
+$$a_n = \frac{1}{2\pi i} \oint_C \frac{f(z)}{(z - z_0)^{n+1}} \, dz$$
+for any circle $C$ in the annulus.
+\end{theorem}
+
+\subsection{Residues}
+\begin{definition}
+The \textbf{residue} of $f$ at an isolated singularity $z_0$ is the coefficient $a_{-1}$ in the Laurent series expansion of $f$ around $z_0$.
+\end{definition}
+
+\subsection{Residue Theorem}
+\begin{theorem}
+If $f$ is analytic inside and on a simple closed contour $\gamma$ except for isolated singularities $z_1, z_2, \ldots, z_n$ inside $\gamma$, then:
+$$\oint_\gamma f(z) \, dz = 2\pi i \sum_{k=1}^n \text{Res}(f, z_k)$$
+\end{theorem}
+
+\section{Conformal Mappings}
+
+\subsection{Definition}
+\begin{definition}
+A function $f$ is \textbf{conformal} at $z_0$ if it preserves angles and orientation at $z_0$.
+\end{definition}
+
+\subsection{Characterization}
+\begin{theorem}
+A function $f$ is conformal at $z_0$ if and only if $f$ is analytic at $z_0$ and $f'(z_0) \neq 0$.
+\end{theorem}
+
+\subsection{Elementary Mappings}
+\begin{itemize}
+    \item \textbf{Translation}: $w = z + c$
+    \item \textbf{Rotation}: $w = e^{i\theta} z$
+    \item \textbf{Scaling}: $w = rz$ where $r > 0$
+    \item \textbf{Inversion}: $w = 1/z$
+    \item \textbf{Linear}: $w = az + b$ where $a \neq 0$
+    \item \textbf{Power}: $w = z^n$
+    \item \textbf{Exponential}: $w = e^z$
+    \item \textbf{Logarithm}: $w = \log z$
+\end{itemize}
+
+\section{Riemann Mapping Theorem}
+
+\subsection{Statement}
+\begin{theorem}[Riemann Mapping Theorem]
+Any simply connected domain $D \subset \mathbb{C}$ (other than $\mathbb{C}$ itself) can be conformally mapped onto the unit disk $|z| < 1$.
+\end{theorem}
+
+\section{Analytic Continuation}
+
+\subsection{Definition}
+\begin{definition}
+If $f_1$ is analytic in domain $D_1$ and $f_2$ is analytic in domain $D_2$ with $D_1 \cap D_2 \neq \emptyset$, and $f_1 = f_2$ on $D_1 \cap D_2$, then $f_2$ is an \textbf{analytic continuation} of $f_1$.
+\end{definition}
+
+\subsection{Uniqueness}
+\begin{theorem}
+Analytic continuations are unique: if $f_1$ and $f_2$ are both analytic continuations of $f$ to a domain $D$, then $f_1 = f_2$ in $D$.
+\end{theorem}
+
+\section{Special Functions}
+
+\subsection{Exponential Function}
+$$e^z = e^x (\cos y + i \sin y)$$
+Properties:
+\begin{itemize}
+    \item $e^{z_1 + z_2} = e^{z_1} e^{z_2}$
+    \item $e^z$ is entire
+    \item $e^z \neq 0$ for any $z$
+    \item $e^{z + 2\pi i} = e^z$ (periodic with period $2\pi i$)
+\end{itemize}
+
+\subsection{Trigonometric Functions}
+$$\sin z = \frac{e^{iz} - e^{-iz}}{2i}, \quad \cos z = \frac{e^{iz} + e^{-iz}}{2}$$
+$$\tan z = \frac{\sin z}{\cos z}, \quad \cot z = \frac{\cos z}{\sin z}$$
+
+\subsection{Hyperbolic Functions}
+$$\sinh z = \frac{e^z - e^{-z}}{2}, \quad \cosh z = \frac{e^z + e^{-z}}{2}$$
+$$\tanh z = \frac{\sinh z}{\cosh z}, \quad \coth z = \frac{\cosh z}{\sinh z}$$
+
+\subsection{Logarithm}
+\begin{definition}
+The \textbf{complex logarithm} is defined as:
+$$\log z = \ln|z| + i \arg z$$
+where $\arg z$ is any argument of $z$.
+\end{definition}
+
+\subsection{Power Functions}
+For $z \neq 0$ and $w \in \mathbb{C}$:
+$$z^w = e^{w \log z}$$
+
+\section{Applications}
+
+\subsection{Evaluation of Real Integrals}
+The residue theorem can be used to evaluate many real integrals:
+\begin{itemize}
+    \item Integrals of rational functions
+    \item Integrals involving trigonometric functions
+    \item Improper integrals
+\end{itemize}
+
+\subsection{Fluid Dynamics}
+Complex analysis is used to study:
+\begin{itemize}
+    \item Potential flow
+    \item Conformal mappings for flow around obstacles
+    \item Stream functions and velocity potentials
+\end{itemize}
+
+\subsection{Electrostatics}
+Applications include:
+\begin{itemize}
+    \item Potential theory
+    \item Conformal mappings for field problems
+    \item Image methods
+\end{itemize}
+
+\subsection{Signal Processing}
+Complex analysis is fundamental to:
+\begin{itemize}
+    \item Fourier transforms
+    \item Laplace transforms
+    \item Z-transforms
+\end{itemize}
+
+\section{Important Theorems}
+
+\subsection{Argument Principle}
+\begin{theorem}
+If $f$ is meromorphic inside and on a simple closed contour $\gamma$ and has no zeros or poles on $\gamma$, then:
+$$\frac{1}{2\pi i} \oint_\gamma \frac{f'(z)}{f(z)} \, dz = N - P$$
+where $N$ is the number of zeros and $P$ is the number of poles of $f$ inside $\gamma$ (counting multiplicities).
+\end{theorem}
+
+\subsection{Rouché's Theorem}
+\begin{theorem}
+If $f$ and $g$ are analytic inside and on a simple closed contour $\gamma$ and $|g(z)| < |f(z)|$ on $\gamma$, then $f$ and $f + g$ have the same number of zeros inside $\gamma$.
+\end{theorem}
+
+\subsection{Hurwitz's Theorem}
+\begin{theorem}
+If $(f_n)$ is a sequence of analytic functions that converges uniformly to $f$ on compact sets, and each $f_n$ has no zeros in a domain $D$, then either $f$ is identically zero or $f$ has no zeros in $D$.
+\end{theorem}
+
+\subsection{Schwarz's Lemma}
+\begin{theorem}
+If $f$ is analytic in the unit disk, $|f(z)| \leq 1$ for $|z| < 1$, and $f(0) = 0$, then $|f(z)| \leq |z|$ for $|z| < 1$ and $|f'(0)| \leq 1$.
+\end{theorem}
+
+\subsection{Picard's Theorems}
+\begin{theorem}[Little Picard]
+If $f$ is entire and non-constant, then $f$ takes every complex value except possibly one.
+\end{theorem}
+
+\begin{theorem}[Great Picard]
+If $f$ has an essential singularity at $z_0$, then in any neighborhood of $z_0$, $f$ takes every complex value except possibly one.
+\end{theorem}
+
+\end{document}

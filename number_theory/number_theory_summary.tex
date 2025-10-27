@@ -1,0 +1,436 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+
+\title{Number Theory Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Divisibility and Primes}
+
+\subsection{Basic Definitions}
+\begin{definition}
+For integers $a$ and $b$ with $b \neq 0$, we say $b$ \textbf{divides} $a$ (written $b \mid a$) if there exists an integer $c$ such that $a = bc$.
+\end{definition}
+
+\begin{definition}
+A \textbf{prime number} is a positive integer $p > 1$ whose only positive divisors are 1 and $p$.
+\end{definition}
+
+\begin{definition}
+A \textbf{composite number} is a positive integer $n > 1$ that is not prime.
+\end{definition}
+
+\subsection{Division Algorithm}
+\begin{theorem}[Division Algorithm]
+For any integers $a$ and $b$ with $b > 0$, there exist unique integers $q$ and $r$ such that:
+$$a = bq + r \quad \text{where} \quad 0 \leq r < b$$
+\end{theorem}
+
+\subsection{Greatest Common Divisor}
+\begin{definition}
+The \textbf{greatest common divisor} of integers $a$ and $b$ (not both zero) is the largest positive integer $d$ such that $d \mid a$ and $d \mid b$. We write $\gcd(a,b) = d$.
+\end{definition}
+
+\begin{theorem}[Euclidean Algorithm]
+To find $\gcd(a,b)$ where $a > b > 0$:
+\begin{enumerate}
+    \item Apply the division algorithm: $a = bq_1 + r_1$ where $0 \leq r_1 < b$
+    \item If $r_1 = 0$, then $\gcd(a,b) = b$
+    \item Otherwise, apply the division algorithm to $b$ and $r_1$: $b = r_1q_2 + r_2$
+    \item Continue until $r_n = 0$. Then $\gcd(a,b) = r_{n-1}$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Extended Euclidean Algorithm}
+\begin{theorem}[Bézout's Identity]
+For any integers $a$ and $b$ (not both zero), there exist integers $x$ and $y$ such that:
+$$\gcd(a,b) = ax + by$$
+\end{theorem}
+
+\subsection{Least Common Multiple}
+\begin{definition}
+The \textbf{least common multiple} of positive integers $a$ and $b$ is the smallest positive integer $m$ such that $a \mid m$ and $b \mid m$. We write $\text{lcm}(a,b) = m$.
+\end{definition}
+
+\begin{theorem}
+For positive integers $a$ and $b$:
+$$\gcd(a,b) \cdot \text{lcm}(a,b) = ab$$
+\end{theorem}
+
+\section{Fundamental Theorem of Arithmetic}
+
+\subsection{Prime Factorization}
+\begin{theorem}[Fundamental Theorem of Arithmetic]
+Every positive integer $n > 1$ can be written uniquely as a product of primes:
+$$n = p_1^{a_1} p_2^{a_2} \cdots p_k^{a_k}$$
+where $p_1 < p_2 < \cdots < p_k$ are primes and $a_1, a_2, \ldots, a_k$ are positive integers.
+\end{theorem}
+
+\subsection{Prime Counting Function}
+\begin{definition}
+The \textbf{prime counting function} $\pi(x)$ counts the number of primes less than or equal to $x$.
+\end{definition}
+
+\begin{theorem}[Prime Number Theorem]
+$$\lim_{x \to \infty} \frac{\pi(x)}{x/\ln x} = 1$$
+\end{theorem}
+
+\subsection{Sieve of Eratosthenes}
+\begin{definition}
+The \textbf{Sieve of Eratosthenes} is an algorithm to find all primes up to a given limit $n$:
+\begin{enumerate}
+    \item List all integers from 2 to $n$
+    \item Start with the first number $p = 2$
+    \item Cross out all multiples of $p$ greater than $p$
+    \item Find the next uncrossed number and repeat
+    \item Continue until $p^2 > n$
+\end{enumerate}
+\end{definition}
+
+\section{Congruences}
+
+\subsection{Basic Properties}
+\begin{definition}
+For integers $a$, $b$, and positive integer $m$, we say $a$ is \textbf{congruent} to $b$ modulo $m$ (written $a \equiv b \pmod{m}$) if $m \mid (a - b)$.
+\end{definition}
+
+\begin{theorem}[Properties of Congruences]
+For integers $a$, $b$, $c$, $d$ and positive integer $m$:
+\begin{enumerate}
+    \item $a \equiv a \pmod{m}$ (reflexive)
+    \item If $a \equiv b \pmod{m}$, then $b \equiv a \pmod{m}$ (symmetric)
+    \item If $a \equiv b \pmod{m}$ and $b \equiv c \pmod{m}$, then $a \equiv c \pmod{m}$ (transitive)
+    \item If $a \equiv b \pmod{m}$ and $c \equiv d \pmod{m}$, then $a + c \equiv b + d \pmod{m}$
+    \item If $a \equiv b \pmod{m}$ and $c \equiv d \pmod{m}$, then $ac \equiv bd \pmod{m}$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Linear Congruences}
+\begin{theorem}
+The linear congruence $ax \equiv b \pmod{m}$ has a solution if and only if $\gcd(a,m) \mid b$. If $\gcd(a,m) = d$ and $d \mid b$, then there are exactly $d$ solutions modulo $m$.
+\end{theorem}
+
+\subsection{Chinese Remainder Theorem}
+\begin{theorem}[Chinese Remainder Theorem]
+Let $m_1, m_2, \ldots, m_k$ be pairwise relatively prime positive integers, and let $a_1, a_2, \ldots, a_k$ be integers. Then the system of congruences:
+\begin{align}
+x &\equiv a_1 \pmod{m_1} \\
+x &\equiv a_2 \pmod{m_2} \\
+&\vdots \\
+x &\equiv a_k \pmod{m_k}
+\end{align}
+has a unique solution modulo $m_1 m_2 \cdots m_k$.
+\end{theorem}
+
+\section{Fermat's Little Theorem and Euler's Theorem}
+
+\subsection{Fermat's Little Theorem}
+\begin{theorem}[Fermat's Little Theorem]
+If $p$ is prime and $\gcd(a,p) = 1$, then:
+$$a^{p-1} \equiv 1 \pmod{p}$$
+\end{theorem}
+
+\subsection{Euler's Totient Function}
+\begin{definition}
+Euler's \textbf{totient function} $\phi(n)$ counts the number of positive integers less than or equal to $n$ that are relatively prime to $n$.
+\end{definition}
+
+\begin{theorem}
+For a prime $p$ and positive integer $k$:
+$$\phi(p^k) = p^k - p^{k-1} = p^{k-1}(p-1)$$
+\end{theorem}
+
+\begin{theorem}
+For relatively prime positive integers $m$ and $n$:
+$$\phi(mn) = \phi(m)\phi(n)$$
+\end{theorem}
+
+\begin{theorem}
+For $n = p_1^{a_1} p_2^{a_2} \cdots p_k^{a_k}$:
+$$\phi(n) = n \prod_{i=1}^k \left(1 - \frac{1}{p_i}\right)$$
+\end{theorem}
+
+\subsection{Euler's Theorem}
+\begin{theorem}[Euler's Theorem]
+If $\gcd(a,n) = 1$, then:
+$$a^{\phi(n)} \equiv 1 \pmod{n}$$
+\end{theorem}
+
+\section{Quadratic Residues}
+
+\subsection{Definition and Basic Properties}
+\begin{definition}
+An integer $a$ is a \textbf{quadratic residue} modulo $m$ if there exists an integer $x$ such that $x^2 \equiv a \pmod{m}$.
+\end{definition}
+
+\begin{definition}
+The \textbf{Legendre symbol} $\left(\frac{a}{p}\right)$ for odd prime $p$ and integer $a$ is defined as:
+$$\left(\frac{a}{p}\right) = \begin{cases}
+0 & \text{if } p \mid a \\
+1 & \text{if } a \text{ is a quadratic residue modulo } p \\
+-1 & \text{if } a \text{ is a quadratic nonresidue modulo } p
+\end{cases}$$
+\end{definition}
+
+\subsection{Quadratic Reciprocity}
+\begin{theorem}[Law of Quadratic Reciprocity]
+For distinct odd primes $p$ and $q$:
+$$\left(\frac{p}{q}\right)\left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2} \cdot \frac{q-1}{2}}$$
+\end{theorem}
+
+\begin{theorem}[Supplemental Laws]
+For odd prime $p$:
+$$\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}$$
+$$\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}$$
+\end{theorem}
+
+\section{Diophantine Equations}
+
+\subsection{Linear Diophantine Equations}
+\begin{definition}
+A \textbf{linear Diophantine equation} in two variables is an equation of the form $ax + by = c$ where $a$, $b$, and $c$ are integers.
+\end{definition}
+
+\begin{theorem}
+The equation $ax + by = c$ has integer solutions if and only if $\gcd(a,b) \mid c$.
+\end{theorem}
+
+\subsection{Pythagorean Triples}
+\begin{definition}
+A \textbf{Pythagorean triple} is a set of three positive integers $(a,b,c)$ such that $a^2 + b^2 = c^2$.
+\end{definition}
+
+\begin{theorem}
+All primitive Pythagorean triples $(a,b,c)$ with $a$ odd are given by:
+$$a = m^2 - n^2, \quad b = 2mn, \quad c = m^2 + n^2$$
+where $m > n > 0$ are relatively prime integers of opposite parity.
+\end{theorem}
+
+\subsection{Fermat's Last Theorem}
+\begin{theorem}[Fermat's Last Theorem]
+For $n > 2$, the equation $x^n + y^n = z^n$ has no positive integer solutions.
+\end{theorem}
+
+\section{Continued Fractions}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{continued fraction} is an expression of the form:
+$$a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{a_3 + \cdots}}}$$
+where $a_0$ is an integer and $a_1, a_2, a_3, \ldots$ are positive integers.
+\end{definition}
+
+\subsection{Convergents}
+\begin{definition}
+The $n$-th \textbf{convergent} of a continued fraction is the rational number obtained by truncating the continued fraction after $n$ terms.
+\end{definition}
+
+\begin{theorem}
+The convergents of a continued fraction provide the best rational approximations to the value of the continued fraction.
+\end{theorem}
+
+\section{Arithmetic Functions}
+
+\subsection{Multiplicative Functions}
+\begin{definition}
+An arithmetic function $f$ is \textbf{multiplicative} if $f(mn) = f(m)f(n)$ whenever $\gcd(m,n) = 1$.
+\end{definition}
+
+\begin{definition}
+An arithmetic function $f$ is \textbf{completely multiplicative} if $f(mn) = f(m)f(n)$ for all positive integers $m$ and $n$.
+\end{definition}
+
+\subsection{Important Arithmetic Functions}
+\begin{itemize}
+    \item \textbf{Divisor function}: $\tau(n) = \sum_{d \mid n} 1$ (number of divisors)
+    \item \textbf{Sum of divisors}: $\sigma(n) = \sum_{d \mid n} d$
+    \item \textbf{Möbius function}: $\mu(n) = \begin{cases} 1 & \text{if } n = 1 \\ (-1)^k & \text{if } n \text{ is square-free with } k \text{ prime factors} \\ 0 & \text{if } n \text{ has a squared prime factor} \end{cases}$
+    \item \textbf{Euler's totient function}: $\phi(n)$
+\end{itemize}
+
+\subsection{Möbius Inversion Formula}
+\begin{theorem}[Möbius Inversion Formula]
+If $f$ and $g$ are arithmetic functions such that:
+$$g(n) = \sum_{d \mid n} f(d)$$
+then:
+$$f(n) = \sum_{d \mid n} \mu(d) g\left(\frac{n}{d}\right)$$
+\end{theorem}
+
+\section{Primitive Roots}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{primitive root} modulo $n$ is an integer $g$ such that the powers of $g$ generate all integers relatively prime to $n$ modulo $n$.
+\end{definition}
+
+\begin{theorem}
+A positive integer $n$ has a primitive root if and only if $n = 2$, $n = 4$, $n = p^k$, or $n = 2p^k$ where $p$ is an odd prime and $k$ is a positive integer.
+\end{theorem}
+
+\subsection{Discrete Logarithm}
+\begin{definition}
+If $g$ is a primitive root modulo $n$ and $\gcd(a,n) = 1$, then the \textbf{discrete logarithm} of $a$ to the base $g$ modulo $n$ is the smallest positive integer $k$ such that $g^k \equiv a \pmod{n}$.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Cryptography}
+\begin{itemize}
+    \item \textbf{RSA encryption}: Based on the difficulty of factoring large integers
+    \item \textbf{Diffie-Hellman key exchange}: Uses discrete logarithms
+    \item \textbf{Elliptic curve cryptography}: Uses elliptic curves over finite fields
+\end{itemize}
+
+\subsection{Error Detection and Correction}
+\begin{itemize}
+    \item \textbf{Check digits}: Using modular arithmetic for error detection
+    \item \textbf{ISBN codes}: Weighted checksums modulo 11
+    \item \textbf{Credit card numbers}: Luhn algorithm
+\end{itemize}
+
+\subsection{Computer Science}
+\begin{itemize}
+    \item \textbf{Hashing}: Using modular arithmetic for hash functions
+    \item \textbf{Random number generation}: Linear congruential generators
+    \item \textbf{Fast exponentiation}: Modular exponentiation algorithms
+\end{itemize}
+
+\section{Analytic Number Theory}
+
+\subsection{Riemann Zeta Function}
+\begin{definition}
+The \textbf{Riemann zeta function} is defined as:
+$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
+for $\text{Re}(s) > 1$.
+\end{definition}
+
+\begin{theorem}[Euler Product]
+For $\text{Re}(s) > 1$:
+$$\zeta(s) = \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}}$$
+\end{theorem}
+
+\subsection{Riemann Hypothesis}
+\begin{conjecture}[Riemann Hypothesis]
+All non-trivial zeros of the Riemann zeta function have real part equal to $\frac{1}{2}$.
+\end{conjecture}
+
+\section{Algebraic Number Theory}
+
+\subsection{Algebraic Integers}
+\begin{definition}
+An \textbf{algebraic integer} is a complex number that is a root of a monic polynomial with integer coefficients.
+\end{definition}
+
+\subsection{Quadratic Fields}
+\begin{definition}
+A \textbf{quadratic field} is $\mathbb{Q}(\sqrt{d})$ where $d$ is a square-free integer.
+\end{definition}
+
+\subsection{Ideal Theory}
+\begin{definition}
+An \textbf{ideal} in a ring $R$ is a subset $I$ such that:
+\begin{enumerate}
+    \item $0 \in I$
+    \item If $a, b \in I$, then $a + b \in I$
+    \item If $a \in I$ and $r \in R$, then $ra \in I$
+\end{enumerate}
+\end{definition}
+
+\section{Important Algorithms}
+
+\subsection{Fast Exponentiation}
+\begin{theorem}[Binary Exponentiation]
+To compute $a^n \bmod m$:
+\begin{enumerate}
+    \item Write $n$ in binary: $n = \sum_{i=0}^k b_i 2^i$
+    \item Compute $a^{2^i} \bmod m$ for $i = 0, 1, \ldots, k$
+    \item Multiply the appropriate powers: $a^n \equiv \prod_{i=0}^k a^{b_i 2^i} \pmod{m}$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Miller-Rabin Primality Test}
+\begin{theorem}
+The Miller-Rabin test is a probabilistic algorithm to test if a number is prime.
+\end{theorem}
+
+\subsection{Pollard's Rho Algorithm}
+\begin{theorem}
+Pollard's rho algorithm is used to find non-trivial factors of composite numbers.
+\end{theorem}
+
+\section{Key Theorems}
+
+\subsection{Wilson's Theorem}
+\begin{theorem}[Wilson's Theorem]
+A positive integer $p > 1$ is prime if and only if:
+$$(p-1)! \equiv -1 \pmod{p}$$
+\end{theorem}
+
+\subsection{Lucas's Theorem}
+\begin{theorem}[Lucas's Theorem]
+For prime $p$ and integers $m$ and $n$:
+$$\binom{m}{n} \equiv \prod_{i=0}^k \binom{m_i}{n_i} \pmod{p}$$
+where $m_i$ and $n_i$ are the digits of $m$ and $n$ in base $p$.
+\end{theorem}
+
+\subsection{Thue's Theorem}
+\begin{theorem}[Thue's Theorem]
+For any integer $a > 1$ and any positive integer $n$, there exist integers $x$ and $y$ such that $0 < |x|, |y| \leq \sqrt{n}$ and $ax \equiv y \pmod{n}$.
+\end{theorem}
+
+\section{Open Problems}
+
+\subsection{Goldbach's Conjecture}
+\begin{conjecture}[Goldbach's Conjecture]
+Every even integer greater than 2 can be expressed as the sum of two primes.
+\end{conjecture}
+
+\subsection{Twin Prime Conjecture}
+\begin{conjecture}[Twin Prime Conjecture]
+There are infinitely many pairs of primes that differ by 2.
+\end{conjecture}
+
+\subsection{Perfect Numbers}
+\begin{conjecture}
+All even perfect numbers are of the form $2^{p-1}(2^p - 1)$ where $2^p - 1$ is prime (Mersenne prime).
+\end{conjecture}
+
+\section{Important Constants}
+
+\begin{itemize}
+    \item \textbf{Euler's constant}: $\gamma \approx 0.5772$
+    \item \textbf{Golden ratio}: $\phi = \frac{1+\sqrt{5}}{2} \approx 1.6180$
+    \item \textbf{Natural logarithm base}: $e \approx 2.7183$
+    \item \textbf{Pi}: $\pi \approx 3.1416$
+    \item \textbf{Square root of 2}: $\sqrt{2} \approx 1.4142$
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,492 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Foundational Data Science Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Statistical Learning Theory}
+
+\subsection{Learning Problem}
+\begin{definition}
+A \textbf{learning problem} consists of:
+\begin{itemize}
+    \item Input space $\mathcal{X}$
+    \item Output space $\mathcal{Y}$
+    \item Training data $S = \{(x_i, y_i)\}_{i=1}^n$ where $(x_i, y_i) \sim P$
+    \item Hypothesis class $\mathcal{H}$
+    \item Loss function $\ell: \mathcal{Y} \times \mathcal{Y} \to \mathbb{R}$
+\end{itemize}
+\end{definition}
+
+\subsection{Empirical Risk Minimization}
+\begin{definition}
+The \textbf{empirical risk} is:
+$$\hat{R}(h) = \frac{1}{n} \sum_{i=1}^n \ell(h(x_i), y_i)$$
+\end{definition}
+
+\begin{definition}
+The \textbf{true risk} is:
+$$R(h) = \mathbb{E}_{(x,y) \sim P}[\ell(h(x), y)]$$
+\end{definition}
+
+\subsection{Generalization Error}
+\begin{definition}
+The \textbf{generalization error} is:
+$$\epsilon(h) = R(h) - \hat{R}(h)$$
+\end{definition}
+
+\subsection{VC Dimension}
+\begin{definition}
+The \textbf{VC dimension} of a hypothesis class $\mathcal{H}$ is the largest number $d$ such that $\mathcal{H}$ can shatter any set of $d$ points.
+\end{definition}
+
+\begin{theorem}[VC Bound]
+With probability at least $1-\delta$:
+$$R(h) \leq \hat{R}(h) + \sqrt{\frac{d \log(2n/d) + \log(1/\delta)}{n}}$$
+where $d$ is the VC dimension of $\mathcal{H}$.
+\end{theorem}
+
+\section{Exponential Families}
+
+\subsection{Definition}
+\begin{definition}
+A probability distribution belongs to an \textbf{exponential family} if its density can be written as:
+$$p(x|\theta) = h(x) \exp(\eta(\theta)^T T(x) - A(\theta))$$
+where:
+\begin{itemize}
+    \item $h(x)$ is the base measure
+    \item $\eta(\theta)$ is the natural parameter
+    \item $T(x)$ is the sufficient statistic
+    \item $A(\theta)$ is the log-partition function
+\end{itemize}
+\end{definition}
+
+\subsection{Canonical Form}
+\begin{definition}
+The \textbf{canonical form} of an exponential family is:
+$$p(x|\eta) = h(x) \exp(\eta^T T(x) - A(\eta))$$
+\end{definition}
+
+\subsection{Properties}
+\begin{theorem}
+For exponential families:
+\begin{itemize}
+    \item $\mathbb{E}[T(X)] = \nabla A(\eta)$
+    \item $\text{Cov}[T(X)] = \nabla^2 A(\eta)$
+    \item $A(\eta)$ is convex
+\end{itemize}
+\end{theorem}
+
+\subsection{Examples}
+\begin{itemize}
+    \item \textbf{Bernoulli}: $p(x|p) = p^x(1-p)^{1-x}$
+    \item \textbf{Poisson}: $p(x|\lambda) = \frac{\lambda^x e^{-\lambda}}{x!}$
+    \item \textbf{Gaussian}: $p(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{(x-\mu)^2}{2\sigma^2})$
+    \item \textbf{Multinomial}: $p(x|p) = \frac{n!}{x_1!\cdots x_k!} p_1^{x_1} \cdots p_k^{x_k}$
+\end{itemize}
+
+\section{Maximum Likelihood Estimation}
+
+\subsection{Likelihood Function}
+\begin{definition}
+The \textbf{likelihood function} is:
+$$L(\theta) = \prod_{i=1}^n p(x_i|\theta)$$
+\end{definition}
+
+\begin{definition}
+The \textbf{log-likelihood function} is:
+$$\ell(\theta) = \log L(\theta) = \sum_{i=1}^n \log p(x_i|\theta)$$
+\end{definition}
+
+\subsection{MLE for Exponential Families}
+\begin{theorem}
+For exponential families, the MLE satisfies:
+$$\nabla A(\hat{\eta}) = \frac{1}{n} \sum_{i=1}^n T(x_i)$$
+\end{theorem}
+
+\subsection{Fisher Information}
+\begin{definition}
+The \textbf{Fisher information matrix} is:
+$$I(\theta) = \mathbb{E}\left[-\frac{\partial^2 \log p(X|\theta)}{\partial \theta \partial \theta^T}\right]$$
+\end{definition}
+
+\begin{theorem}[Cramér-Rao Lower Bound]
+For any unbiased estimator $\hat{\theta}$:
+$$\text{Var}(\hat{\theta}) \geq I(\theta)^{-1}$$
+\end{theorem}
+
+\section{Bayesian Inference}
+
+\subsection{Bayes' Theorem}
+\begin{theorem}[Bayes' Theorem]
+$$p(\theta|x) = \frac{p(x|\theta) p(\theta)}{p(x)} = \frac{p(x|\theta) p(\theta)}{\int p(x|\theta) p(\theta) d\theta}$$
+\end{theorem}
+
+\subsection{Conjugate Priors}
+\begin{definition}
+A prior $p(\theta)$ is \textbf{conjugate} to a likelihood $p(x|\theta)$ if the posterior $p(\theta|x)$ belongs to the same family as the prior.
+\end{definition}
+
+\subsection{Examples of Conjugate Pairs}
+\begin{itemize}
+    \item \textbf{Beta-Bernoulli}: Beta prior for Bernoulli likelihood
+    \item \textbf{Dirichlet-Multinomial}: Dirichlet prior for multinomial likelihood
+    \item \textbf{Normal-Normal}: Normal prior for normal likelihood
+    \item \textbf{Gamma-Poisson}: Gamma prior for Poisson likelihood
+\end{itemize}
+
+\subsection{Posterior Predictive Distribution}
+\begin{definition}
+The \textbf{posterior predictive distribution} is:
+$$p(x_{new}|x) = \int p(x_{new}|\theta) p(\theta|x) d\theta$$
+\end{definition}
+
+\section{Multi-Armed Bandits}
+
+\subsection{Problem Setup}
+\begin{definition}
+A \textbf{multi-armed bandit} problem consists of:
+\begin{itemize}
+    \item $K$ arms (actions)
+    \item At each time $t$, choose arm $a_t \in \{1, \ldots, K\}$
+    \item Receive reward $r_t \sim P_{a_t}$
+    \item Goal: maximize $\sum_{t=1}^T r_t$
+\end{itemize}
+\end{definition}
+
+\subsection{Regret}
+\begin{definition}
+The \textbf{cumulative regret} is:
+$$R_T = \sum_{t=1}^T (\mu^* - \mu_{a_t})$$
+where $\mu^* = \max_i \mu_i$ and $\mu_i = \mathbb{E}[r|a = i]$.
+\end{definition}
+
+\subsection{Upper Confidence Bound (UCB)}
+\begin{definition}
+The \textbf{UCB1 algorithm} selects arm:
+$$a_t = \arg\max_{i} \left(\hat{\mu}_i + c\sqrt{\frac{\log t}{n_i}}\right)$$
+where $\hat{\mu}_i$ is the empirical mean of arm $i$, $n_i$ is the number of times arm $i$ has been pulled, and $c$ is a constant.
+\end{definition}
+
+\begin{theorem}[UCB Regret Bound]
+The UCB1 algorithm achieves:
+$$R_T \leq 8 \sum_{i: \mu_i < \mu^*} \frac{\log T}{\Delta_i} + \left(1 + \frac{\pi^2}{3}\right) \sum_{i=1}^K \Delta_i$$
+where $\Delta_i = \mu^* - \mu_i$.
+\end{theorem}
+
+\subsection{Thompson Sampling}
+\begin{definition}
+\textbf{Thompson sampling} selects arm $a_t$ according to:
+$$a_t \sim \text{argmax}_i \theta_i^{(t)}$$
+where $\theta_i^{(t)} \sim p(\theta_i|\mathcal{H}_{i,t})$ is sampled from the posterior distribution of arm $i$.
+\end{definition}
+
+\subsection{Contextual Bandits}
+\begin{definition}
+In \textbf{contextual bandits}, at each time $t$:
+\begin{itemize}
+    \item Observe context $x_t \in \mathbb{R}^d$
+    \item Choose arm $a_t \in \{1, \ldots, K\}$
+    \item Receive reward $r_t = f_{a_t}(x_t) + \epsilon_t$
+\end{itemize}
+\end{definition}
+
+\subsection{Linear Contextual Bandits}
+\begin{definition}
+In \textbf{linear contextual bandits}, the expected reward is:
+$$\mathbb{E}[r_t|a_t, x_t] = \theta_{a_t}^T x_t$$
+where $\theta_{a_t} \in \mathbb{R}^d$ is the parameter vector for arm $a_t$.
+\end{definition}
+
+\section{Online Learning}
+
+\subsection{Online Convex Optimization}
+\begin{definition}
+In \textbf{online convex optimization}:
+\begin{itemize}
+    \item At time $t$, choose $w_t \in \mathcal{W}$
+    \item Observe convex loss function $f_t: \mathcal{W} \to \mathbb{R}$
+    \item Suffer loss $f_t(w_t)$
+    \item Goal: minimize $\sum_{t=1}^T f_t(w_t)$
+\end{itemize}
+\end{definition}
+
+\subsection{Regret in Online Learning}
+\begin{definition}
+The \textbf{regret} is:
+$$R_T = \sum_{t=1}^T f_t(w_t) - \min_{w \in \mathcal{W}} \sum_{t=1}^T f_t(w)$$
+\end{definition}
+
+\subsection{Gradient Descent}
+\begin{theorem}[Online Gradient Descent]
+For convex functions with bounded gradients, online gradient descent with step size $\eta_t = \frac{1}{\sqrt{t}}$ achieves:
+$$R_T \leq O(\sqrt{T})$$
+\end{theorem}
+
+\subsection{Follow the Regularized Leader (FTRL)}
+\begin{definition}
+\textbf{FTRL} chooses:
+$$w_{t+1} = \arg\min_{w \in \mathcal{W}} \left(\sum_{s=1}^t f_s(w) + R(w)\right)$$
+where $R(w)$ is a regularization term.
+\end{definition}
+
+\section{Information Theory}
+
+\subsection{Entropy}
+\begin{definition}
+The \textbf{Shannon entropy} of a discrete random variable $X$ is:
+$$H(X) = -\sum_{x} p(x) \log p(x)$$
+\end{definition}
+
+\begin{definition}
+The \textbf{differential entropy} of a continuous random variable $X$ is:
+$$h(X) = -\int p(x) \log p(x) dx$$
+\end{definition}
+
+\subsection{Mutual Information}
+\begin{definition}
+The \textbf{mutual information} between random variables $X$ and $Y$ is:
+$$I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)$$
+\end{definition}
+
+\subsection{Kullback-Leibler Divergence}
+\begin{definition}
+The \textbf{KL divergence} between distributions $P$ and $Q$ is:
+$$D_{KL}(P||Q) = \sum_x p(x) \log \frac{p(x)}{q(x)}$$
+\end{definition}
+
+\subsection{Cross-Entropy}
+\begin{definition}
+The \textbf{cross-entropy} between distributions $P$ and $Q$ is:
+$$H(P,Q) = -\sum_x p(x) \log q(x) = H(P) + D_{KL}(P||Q)$$
+\end{definition}
+
+\section{Dimension Reduction}
+
+\subsection{Principal Component Analysis (PCA)}
+\begin{definition}
+\textbf{PCA} finds the linear transformation that maximizes the variance of the projected data:
+$$\max_{\mathbf{w}} \mathbf{w}^T \mathbf{S} \mathbf{w} \quad \text{subject to} \quad \|\mathbf{w}\| = 1$$
+where $\mathbf{S}$ is the covariance matrix.
+\end{definition}
+
+\subsection{Singular Value Decomposition}
+\begin{theorem}
+Any matrix $A \in \mathbb{R}^{m \times n}$ can be decomposed as:
+$$A = U \Sigma V^T$$
+where $U \in \mathbb{R}^{m \times m}$ and $V \in \mathbb{R}^{n \times n}$ are orthogonal, and $\Sigma \in \mathbb{R}^{m \times n}$ is diagonal.
+\end{theorem}
+
+\subsection{Linear Discriminant Analysis (LDA)}
+\begin{definition}
+\textbf{LDA} finds the linear transformation that maximizes the ratio of between-class to within-class variance:
+$$\max_{\mathbf{w}} \frac{\mathbf{w}^T \mathbf{S}_B \mathbf{w}}{\mathbf{w}^T \mathbf{S}_W \mathbf{w}}$$
+where $\mathbf{S}_B$ is the between-class scatter matrix and $\mathbf{S}_W$ is the within-class scatter matrix.
+\end{definition}
+
+\section{Clustering}
+
+\subsection{K-Means}
+\begin{definition}
+\textbf{K-means} minimizes:
+$$J = \sum_{i=1}^n \sum_{k=1}^K w_{ik} \|\mathbf{x}_i - \boldsymbol{\mu}_k\|^2$$
+where $w_{ik} = 1$ if $\mathbf{x}_i$ belongs to cluster $k$, 0 otherwise.
+\end{definition}
+
+\subsection{Gaussian Mixture Models}
+\begin{definition}
+A \textbf{Gaussian mixture model} has density:
+$$p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$$
+where $\pi_k$ are mixing weights and $\sum_{k=1}^K \pi_k = 1$.
+\end{definition}
+
+\subsection{Expectation-Maximization (EM)}
+\begin{theorem}[EM Algorithm]
+For mixture models, EM alternates between:
+\begin{itemize}
+    \item \textbf{E-step}: Compute $q(z_{ik}) = p(z_i = k|\mathbf{x}_i, \theta^{(t)})$
+    \item \textbf{M-step}: Update $\theta^{(t+1)} = \arg\max_\theta \sum_{i,k} q(z_{ik}) \log p(\mathbf{x}_i, z_i = k|\theta)$
+\end{itemize}
+\end{theorem}
+
+\section{Graphical Models}
+
+\subsection{Bayesian Networks}
+\begin{definition}
+A \textbf{Bayesian network} is a directed acyclic graph where each node represents a random variable and edges represent conditional dependencies.
+\end{definition}
+
+\begin{theorem}[Factorization]
+For a Bayesian network, the joint probability factors as:
+$$p(x_1, \ldots, x_n) = \prod_{i=1}^n p(x_i|\text{pa}(x_i))$$
+where $\text{pa}(x_i)$ are the parents of $x_i$.
+\end{theorem}
+
+\subsection{Markov Random Fields}
+\begin{definition}
+A \textbf{Markov random field} is an undirected graph where each node represents a random variable and edges represent dependencies.
+\end{definition}
+
+\subsection{Inference}
+\begin{itemize}
+    \item \textbf{Variable elimination}
+    \item \textbf{Belief propagation}
+    \item \textbf{Markov chain Monte Carlo (MCMC)}
+    \item \textbf{Variational inference}
+\end{itemize}
+
+\section{Time Series Analysis}
+
+\subsection{Stationarity}
+\begin{definition}
+A time series $\{X_t\}$ is \textbf{weakly stationary} if:
+\begin{itemize}
+    \item $\mathbb{E}[X_t] = \mu$ (constant mean)
+    \item $\text{Cov}(X_t, X_{t+h}) = \gamma(h)$ (covariance depends only on lag $h$)
+\end{itemize}
+\end{definition}
+
+\subsection{ARIMA Models}
+\begin{definition}
+An \textbf{ARIMA}(p,d,q) model is:
+$$\phi(B)(1-B)^d X_t = \theta(B) \epsilon_t$$
+where $B$ is the backshift operator, $\phi(B) = 1 - \phi_1 B - \cdots - \phi_p B^p$, and $\theta(B) = 1 + \theta_1 B + \cdots + \theta_q B^q$.
+\end{definition}
+
+\subsection{Kalman Filter}
+\begin{definition}
+The \textbf{Kalman filter} provides optimal estimates for linear state-space models:
+\begin{align}
+\mathbf{x}_t &= F \mathbf{x}_{t-1} + G \mathbf{u}_t + \mathbf{w}_t \\
+\mathbf{y}_t &= H \mathbf{x}_t + \mathbf{v}_t
+\end{align}
+where $\mathbf{w}_t \sim \mathcal{N}(0, Q)$ and $\mathbf{v}_t \sim \mathcal{N}(0, R)$.
+\end{definition}
+
+\section{Causal Inference}
+
+\subsection{Rubin Causal Model}
+\begin{definition}
+The \textbf{Rubin causal model} defines:
+\begin{itemize}
+    \item Potential outcomes: $Y_i(1)$ and $Y_i(0)$
+    \item Treatment indicator: $T_i \in \{0, 1\}$
+    \item Observed outcome: $Y_i = T_i Y_i(1) + (1-T_i) Y_i(0)$
+\end{itemize}
+\end{definition}
+
+\subsection{Average Treatment Effect}
+\begin{definition}
+The \textbf{average treatment effect} is:
+$$\text{ATE} = \mathbb{E}[Y_i(1) - Y_i(0)]$$
+\end{definition}
+
+\subsection{Instrumental Variables}
+\begin{definition}
+An \textbf{instrumental variable} $Z$ satisfies:
+\begin{itemize}
+    \item Relevance: $\text{Cov}(Z, T) \neq 0$
+    \item Exogeneity: $\text{Cov}(Z, U) = 0$ where $U$ contains unobserved confounders
+\end{itemize}
+\end{definition}
+
+\section{Applications}
+
+\subsection{Recommendation Systems}
+\begin{itemize}
+    \item Collaborative filtering
+    \item Content-based filtering
+    \item Matrix factorization
+    \item Deep learning approaches
+\end{itemize}
+
+\subsection{A/B Testing}
+\begin{itemize}
+    \item Statistical significance testing
+    \item Power analysis
+    \item Multiple testing corrections
+    \item Sequential testing
+\end{itemize}
+
+\subsection{Anomaly Detection}
+\begin{itemize}
+    \item Statistical methods
+    \item Machine learning approaches
+    \item Time series methods
+    \item Graph-based methods
+\end{itemize}
+
+\section{Important Algorithms}
+
+\subsection{Optimization}
+\begin{itemize}
+    \item Gradient descent
+    \item Stochastic gradient descent
+    \item Adam optimizer
+    \item Newton's method
+\end{itemize}
+
+\subsection{Sampling}
+\begin{itemize}
+    \item Metropolis-Hastings
+    \item Gibbs sampling
+    \item Importance sampling
+    \item Rejection sampling
+\end{itemize}
+
+\subsection{Regularization}
+\begin{itemize}
+    \item Ridge regression
+    \item Lasso regression
+    \item Elastic net
+    \item Dropout
+\end{itemize}
+
+\section{Key Theorems}
+
+\subsection{Central Limit Theorem}
+\begin{theorem}[Central Limit Theorem]
+If $X_1, X_2, \ldots$ are i.i.d. with mean $\mu$ and variance $\sigma^2$, then:
+$$\frac{\sqrt{n}(\bar{X}_n - \mu)}{\sigma} \xrightarrow{d} \mathcal{N}(0,1)$$
+\end{theorem}
+
+\subsection{Law of Large Numbers}
+\begin{theorem}[Strong Law of Large Numbers]
+If $X_1, X_2, \ldots$ are i.i.d. with $\mathbb{E}[X_i] = \mu < \infty$, then:
+$$\bar{X}_n \xrightarrow{a.s.} \mu$$
+\end{theorem}
+
+\subsection{Universal Approximation Theorem}
+\begin{theorem}
+A feedforward neural network with a single hidden layer can approximate any continuous function on a compact set, given sufficient hidden units.
+\end{theorem}
+
+\end{document}

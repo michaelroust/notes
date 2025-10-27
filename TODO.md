@@ -1,0 +1,3 @@
+- hyperref
+- Remove mathematical notes subheading
+- Illustrations for graphs

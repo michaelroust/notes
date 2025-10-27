@@ -1,0 +1,403 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Relativity and Quantum Physics Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Special Relativity}
+
+\subsection{Postulates}
+\begin{enumerate}
+    \item \textbf{Principle of Relativity}: The laws of physics are the same in all inertial reference frames.
+    \item \textbf{Constancy of Light Speed}: The speed of light in vacuum is constant ($c = 2.998 \times 10^8$ m/s) in all inertial frames.
+\end{enumerate}
+
+\subsection{Lorentz Transformations}
+For frames moving with relative velocity $v$ along $x$-axis:
+\begin{align}
+    x' &= \gamma(x - vt) \\
+    t' &= \gamma\left(t - \frac{vx}{c^2}\right) \\
+    y' &= y \\
+    z' &= z
+\end{align}
+where $\gamma = \frac{1}{\sqrt{1-\beta^2}}$ and $\beta = \frac{v}{c}$.
+
+\subsection{Time Dilation and Length Contraction}
+\begin{theorem}[Time Dilation]
+$$\Delta t = \gamma \Delta t_0$$
+where $\Delta t_0$ is the proper time (time in the rest frame).
+\end{theorem}
+
+\begin{theorem}[Length Contraction]
+$$L = \frac{L_0}{\gamma}$$
+where $L_0$ is the proper length (length in the rest frame).
+\end{theorem}
+
+\subsection{Relativistic Velocity Addition}
+For velocities $u$ and $v$ along the same direction:
+$$u' = \frac{u + v}{1 + \frac{uv}{c^2}}$$
+
+\subsection{Relativistic Energy and Momentum}
+\begin{itemize}
+    \item \textbf{Relativistic momentum}: $\vec{p} = \gamma m \vec{v}$
+    \item \textbf{Total energy}: $E = \gamma mc^2$
+    \item \textbf{Rest energy}: $E_0 = mc^2$
+    \item \textbf{Kinetic energy}: $K = (\gamma - 1)mc^2$
+    \item \textbf{Energy-momentum relation}: $E^2 = (pc)^2 + (mc^2)^2$
+\end{itemize}
+
+\subsection{Four-Vectors}
+\begin{definition}
+A \textbf{four-vector} is a quantity that transforms under Lorentz transformations like $(ct, x, y, z)$.
+\end{definition}
+
+\begin{itemize}
+    \item \textbf{Position four-vector}: $x^\mu = (ct, \vec{r})$
+    \item \textbf{Energy-momentum four-vector}: $p^\mu = (E/c, \vec{p})$
+    \item \textbf{Four-velocity}: $u^\mu = \gamma(c, \vec{v})$
+    \item \textbf{Four-force}: $F^\mu = \gamma(\vec{F} \cdot \vec{v}/c, \vec{F})$
+\end{itemize}
+
+\section{General Relativity}
+
+\subsection{Equivalence Principle}
+\begin{definition}
+The \textbf{weak equivalence principle} states that the gravitational and inertial masses are equivalent.
+\end{definition}
+
+\begin{definition}
+The \textbf{strong equivalence principle} states that the effects of gravity are locally indistinguishable from acceleration.
+\end{definition}
+
+\subsection{Spacetime Curvature}
+\begin{definition}
+\textbf{Spacetime} is a four-dimensional manifold with metric tensor $g_{\mu\nu}$.
+\end{definition}
+
+The line element is:
+$$ds^2 = g_{\mu\nu} dx^\mu dx^\nu$$
+
+\subsection{Einstein Field Equations}
+\begin{theorem}[Einstein Field Equations]
+$$G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}$$
+where:
+\begin{itemize}
+    \item $G_{\mu\nu}$ is the Einstein tensor
+    \item $\Lambda$ is the cosmological constant
+    \item $T_{\mu\nu}$ is the stress-energy tensor
+\end{itemize}
+\end{theorem}
+
+\subsection{Schwarzschild Metric}
+For a spherically symmetric mass $M$:
+$$ds^2 = -\left(1 - \frac{2GM}{c^2r}\right)c^2dt^2 + \left(1 - \frac{2GM}{c^2r}\right)^{-1}dr^2 + r^2(d\theta^2 + \sin^2\theta d\phi^2)$$
+
+\subsection{Black Holes}
+\begin{definition}
+The \textbf{Schwarzschild radius} is $r_s = \frac{2GM}{c^2}$.
+\end{definition}
+
+\begin{definition}
+An \textbf{event horizon} is a boundary beyond which events cannot affect an outside observer.
+\end{definition}
+
+\section{Quantum Mechanics Fundamentals}
+
+\subsection{Wave-Particle Duality}
+\begin{definition}
+\textbf{de Broglie wavelength}: $\lambda = \frac{h}{p}$ where $h$ is Planck's constant.
+\end{definition}
+
+\begin{definition}
+\textbf{Photoelectric effect}: $E_k = h\nu - \phi$ where $\phi$ is the work function.
+\end{definition}
+
+\subsection{Uncertainty Principle}
+\begin{theorem}[Heisenberg Uncertainty Principle]
+$$\Delta x \Delta p \geq \frac{\hbar}{2}$$
+$$\Delta E \Delta t \geq \frac{\hbar}{2}$$
+where $\hbar = \frac{h}{2\pi}$.
+\end{theorem}
+
+\subsection{Schrödinger Equation}
+\begin{theorem}[Time-Dependent Schrödinger Equation]
+$$i\hbar \frac{\partial \psi}{\partial t} = \hat{H}\psi$$
+where $\hat{H} = -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r},t)$ is the Hamiltonian operator.
+\end{theorem}
+
+\begin{theorem}[Time-Independent Schrödinger Equation]
+$$\hat{H}\psi = E\psi$$
+for stationary states with energy $E$.
+\end{theorem}
+
+\subsection{Quantum States and Operators}
+\begin{definition}
+A \textbf{quantum state} is represented by a wave function $\psi(\vec{r},t)$ normalized as $\int |\psi|^2 d^3r = 1$.
+\end{definition}
+
+\begin{definition}
+An \textbf{observable} is represented by a Hermitian operator $\hat{A}$ with eigenvalues $a_n$ and eigenstates $|n\rangle$.
+\end{definition}
+
+\subsection{Measurement and Collapse}
+\begin{definition}
+Upon measurement of observable $\hat{A}$, the state collapses to an eigenstate $|n\rangle$ with probability $|\langle n|\psi\rangle|^2$.
+\end{definition}
+
+\section{Quantum Systems}
+
+\subsection{Particle in a Box}
+For a particle in a one-dimensional box of length $L$:
+$$\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right)$$
+$$E_n = \frac{n^2\pi^2\hbar^2}{2mL^2}$$
+
+\subsection{Harmonic Oscillator}
+\begin{definition}
+The \textbf{quantum harmonic oscillator} has energy levels:
+$$E_n = \hbar\omega\left(n + \frac{1}{2}\right)$$
+where $n = 0, 1, 2, \ldots$
+\end{definition}
+
+The wave functions involve Hermite polynomials:
+$$\psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-\frac{m\omega x^2}{2\hbar}}$$
+
+\subsection{Hydrogen Atom}
+\begin{theorem}[Bohr Model]
+$$r_n = \frac{n^2\hbar^2}{me^2} \frac{4\pi\epsilon_0}{e^2}$$
+$$E_n = -\frac{me^4}{2\hbar^2(4\pi\epsilon_0)^2} \frac{1}{n^2}$$
+\end{theorem}
+
+\begin{theorem}[Quantum Mechanical Solution]
+The wave function is $\psi_{nlm}(r,\theta,\phi) = R_{nl}(r)Y_l^m(\theta,\phi)$ where:
+\begin{itemize}
+    \item $n$ is the principal quantum number
+    \item $l$ is the orbital angular momentum quantum number
+    \item $m$ is the magnetic quantum number
+\end{itemize}
+\end{theorem}
+
+\section{Angular Momentum}
+
+\subsection{Orbital Angular Momentum}
+\begin{definition}
+The \textbf{orbital angular momentum operator} is $\hat{\vec{L}} = \hat{\vec{r}} \times \hat{\vec{p}}$.
+\end{definition}
+
+\begin{itemize}
+    \item $\hat{L}^2 |l,m\rangle = l(l+1)\hbar^2 |l,m\rangle$
+    \item $\hat{L}_z |l,m\rangle = m\hbar |l,m\rangle$
+    \item $l = 0, 1, 2, \ldots$ and $m = -l, -l+1, \ldots, l-1, l$
+\end{itemize}
+
+\subsection{Spin}
+\begin{definition}
+\textbf{Spin} is an intrinsic angular momentum property of particles.
+\end{definition}
+
+For spin-1/2 particles:
+$$\hat{S}^2 |s,m_s\rangle = s(s+1)\hbar^2 |s,m_s\rangle = \frac{3}{4}\hbar^2 |s,m_s\rangle$$
+$$\hat{S}_z |s,m_s\rangle = m_s\hbar |s,m_s\rangle$$
+where $m_s = \pm\frac{1}{2}$.
+
+\subsection{Pauli Matrices}
+$$\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad \sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad \sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$$
+
+\section{Identical Particles}
+
+\subsection{Symmetrization Postulate}
+\begin{definition}
+For identical particles, the wave function must be either:
+\begin{itemize}
+    \item \textbf{Symmetric} (bosons): $\psi(1,2) = \psi(2,1)$
+    \item \textbf{Antisymmetric} (fermions): $\psi(1,2) = -\psi(2,1)$
+\end{itemize}
+\end{definition}
+
+\subsection{Pauli Exclusion Principle}
+\begin{theorem}
+No two identical fermions can occupy the same quantum state.
+\end{theorem}
+
+\subsection{Exchange Symmetry}
+\begin{itemize}
+    \item \textbf{Bosons} (integer spin): Follow Bose-Einstein statistics
+    \item \textbf{Fermions} (half-integer spin): Follow Fermi-Dirac statistics
+\end{itemize}
+
+\section{Quantum Field Theory}
+
+\subsection{Field Quantization}
+\begin{definition}
+A \textbf{quantum field} is an operator-valued function $\hat{\phi}(x)$ that creates and annihilates particles.
+\end{definition}
+
+\subsection{Creation and Annihilation Operators}
+\begin{itemize}
+    \item $\hat{a}^\dagger$ creates a particle
+    \item $\hat{a}$ annihilates a particle
+    \item $[\hat{a}, \hat{a}^\dagger] = 1$ (bosons)
+    \item $\{\hat{a}, \hat{a}^\dagger\} = 1$ (fermions)
+\end{itemize}
+
+\subsection{Feynman Diagrams}
+\begin{definition}
+\textbf{Feynman diagrams} are graphical representations of particle interactions in quantum field theory.
+\end{definition}
+
+\section{Relativistic Quantum Mechanics}
+
+\subsection{Klein-Gordon Equation}
+For spin-0 particles:
+$$\left(\frac{1}{c^2}\frac{\partial^2}{\partial t^2} - \nabla^2 + \frac{m^2c^2}{\hbar^2}\right)\psi = 0$$
+
+\subsection{Dirac Equation}
+For spin-1/2 particles:
+$$(i\gamma^\mu\partial_\mu - m)\psi = 0$$
+where $\gamma^\mu$ are the Dirac matrices.
+
+\subsection{Antimatter}
+\begin{definition}
+\textbf{Antiparticles} have the same mass but opposite charge and quantum numbers as their corresponding particles.
+\end{definition}
+
+\section{Quantum Entanglement}
+
+\subsection{Bell States}
+The maximally entangled two-qubit states:
+\begin{align}
+|\Phi^+\rangle &= \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle) \\
+|\Phi^-\rangle &= \frac{1}{\sqrt{2}}(|00\rangle - |11\rangle) \\
+|\Psi^+\rangle &= \frac{1}{\sqrt{2}}(|01\rangle + |10\rangle) \\
+|\Psi^-\rangle &= \frac{1}{\sqrt{2}}(|01\rangle - |10\rangle)
+\end{align}
+
+\subsection{Bell's Theorem}
+\begin{theorem}
+No local hidden variable theory can reproduce all the predictions of quantum mechanics.
+\end{theorem}
+
+\subsection{EPR Paradox}
+The Einstein-Podolsky-Rosen paradox questions the completeness of quantum mechanics and introduces the concept of "spooky action at a distance."
+
+\section{Applications}
+
+\subsection{Quantum Computing}
+\begin{itemize}
+    \item Quantum gates and circuits
+    \item Quantum algorithms (Shor's, Grover's)
+    \item Quantum error correction
+\end{itemize}
+
+\subsection{Quantum Cryptography}
+\begin{itemize}
+    \item Quantum key distribution (BB84 protocol)
+    \item Quantum teleportation
+    \item Quantum secure communication
+\end{itemize}
+
+\subsection{Quantum Sensing}
+\begin{itemize}
+    \item Quantum metrology
+    \item Gravitational wave detection
+    \item Quantum magnetometry
+\end{itemize}
+
+\subsection{Cosmology}
+\begin{itemize}
+    \item Big Bang theory
+    \item Cosmic microwave background
+    \item Dark matter and dark energy
+    \item Inflation theory
+\end{itemize}
+
+\section{Important Constants}
+
+\begin{itemize}
+    \item Speed of light: $c = 2.998 \times 10^8$ m/s
+    \item Planck constant: $h = 6.626 \times 10^{-34}$ J·s
+    \item Reduced Planck constant: $\hbar = 1.055 \times 10^{-34}$ J·s
+    \item Gravitational constant: $G = 6.674 \times 10^{-11}$ N·m²/kg²
+    \item Electron charge: $e = 1.602 \times 10^{-19}$ C
+    \item Electron mass: $m_e = 9.109 \times 10^{-31}$ kg
+    \item Proton mass: $m_p = 1.673 \times 10^{-27}$ kg
+    \item Fine structure constant: $\alpha = \frac{e^2}{4\pi\epsilon_0\hbar c} \approx \frac{1}{137}$
+    \item Bohr radius: $a_0 = \frac{4\pi\epsilon_0\hbar^2}{me^2} = 5.292 \times 10^{-11}$ m
+    \item Rydberg constant: $R_\infty = \frac{me^4}{8\epsilon_0^2h^3c} = 1.097 \times 10^7$ m$^{-1}$
+\end{itemize}
+
+\section{Key Theorems}
+
+\subsection{No-Cloning Theorem}
+\begin{theorem}
+It is impossible to create an identical copy of an arbitrary unknown quantum state.
+\end{theorem}
+
+\subsection{Unitarity}
+\begin{theorem}
+Quantum evolution is unitary: $\hat{U}^\dagger\hat{U} = \hat{I}$.
+\end{theorem}
+
+\subsection{Conservation Laws}
+\begin{itemize}
+    \item Energy conservation
+    \item Momentum conservation
+    \item Angular momentum conservation
+    \item Charge conservation
+    \item Baryon and lepton number conservation
+\end{itemize}
+
+\section{Modern Developments}
+
+\subsection{Quantum Field Theory}
+\begin{itemize}
+    \item Standard Model of particle physics
+    \item Quantum electrodynamics (QED)
+    \item Quantum chromodynamics (QCD)
+    \item Electroweak theory
+\end{itemize}
+
+\subsection{Quantum Gravity}
+\begin{itemize}
+    \item String theory
+    \item Loop quantum gravity
+    \item Causal dynamical triangulation
+    \item Asymptotic safety
+\end{itemize}
+
+\subsection{Quantum Information}
+\begin{itemize}
+    \item Quantum error correction
+    \item Quantum communication
+    \item Quantum simulation
+    \item Quantum machine learning
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,320 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Differential Equations Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Ordinary Differential Equations}
+
+\subsection{First-Order ODEs}
+\begin{definition}
+A first-order ODE has the form:
+$$\frac{dy}{dx} = f(x, y)$$
+\end{definition}
+
+\subsubsection{Separable Equations}
+\begin{definition}
+A separable equation has the form:
+$$\frac{dy}{dx} = g(x)h(y)$$
+Solution: $\int \frac{dy}{h(y)} = \int g(x) \, dx + C$
+\end{definition}
+
+\subsubsection{Linear Equations}
+\begin{definition}
+A linear first-order ODE has the form:
+$$\frac{dy}{dx} + P(x)y = Q(x)$$
+Solution: $y = e^{-\int P(x) \, dx} \left[\int Q(x) e^{\int P(x) \, dx} \, dx + C\right]$
+\end{definition}
+
+\subsubsection{Exact Equations}
+\begin{definition}
+An equation $M(x,y) \, dx + N(x,y) \, dy = 0$ is exact if $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$.
+\end{definition}
+
+\subsection{Second-Order Linear ODEs}
+\begin{definition}
+A second-order linear ODE has the form:
+$$a(x)\frac{d^2y}{dx^2} + b(x)\frac{dy}{dx} + c(x)y = f(x)$$
+\end{definition}
+
+\subsubsection{Homogeneous Case}
+For $f(x) = 0$, the general solution is:
+$$y = c_1 y_1(x) + c_2 y_2(x)$$
+where $y_1$ and $y_2$ are linearly independent solutions.
+
+\subsubsection{Characteristic Equation}
+For constant coefficients $ay'' + by' + cy = 0$:
+$$ar^2 + br + c = 0$$
+\begin{itemize}
+    \item Two real roots: $y = c_1 e^{r_1 x} + c_2 e^{r_2 x}$
+    \item One real root: $y = (c_1 + c_2 x) e^{r x}$
+    \item Complex roots: $y = e^{\alpha x}(c_1 \cos \beta x + c_2 \sin \beta x)$
+\end{itemize}
+
+\subsection{Systems of ODEs}
+\begin{definition}
+A system of first-order ODEs:
+$$\frac{d\mathbf{x}}{dt} = \mathbf{f}(t, \mathbf{x})$$
+where $\mathbf{x} = (x_1, \ldots, x_n)^T$.
+\end{definition}
+
+\subsubsection{Linear Systems}
+For $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$:
+$$\mathbf{x}(t) = e^{At}\mathbf{x}_0$$
+where $e^{At}$ is the matrix exponential.
+
+% Illustration of phase portraits
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[
+        axis lines = center,
+        xlabel = $x$,
+        ylabel = $y$,
+        xmin=-3, xmax=3,
+        ymin=-3, ymax=3,
+    ]
+    
+    % Stable node
+    \addplot[blue, thick, ->] coordinates {(-2,-2) (-1.5,-1.5)};
+    \addplot[blue, thick, ->] coordinates {(2,2) (1.5,1.5)};
+    \addplot[blue, thick, ->] coordinates {(-2,2) (-1.5,1.5)};
+    \addplot[blue, thick, ->] coordinates {(2,-2) (1.5,-1.5)};
+    
+    % Saddle point
+    \addplot[red, thick, ->] coordinates {(-1,0.5) (-0.5,0.25)};
+    \addplot[red, thick, ->] coordinates {(1,-0.5) (0.5,-0.25)};
+    \addplot[red, thick, ->] coordinates {(-0.5,-1) (-0.25,-0.5)};
+    \addplot[red, thick, ->] coordinates {(0.5,1) (0.25,0.5)};
+    
+    \node[blue, above] at (0,2.5) {Stable Node};
+    \node[red, below] at (0,-2.5) {Saddle Point};
+    
+    \end{axis}
+\end{tikzpicture}
+\caption{Phase portraits for linear systems}
+\end{figure}
+
+\section{Existence and Uniqueness}
+
+\subsection{Picard-Lindelöf Theorem}
+\begin{theorem}
+If $f(t,y)$ is continuous and Lipschitz in $y$ on a rectangle $R$, then the IVP:
+$$\frac{dy}{dt} = f(t,y), \quad y(t_0) = y_0$$
+has a unique solution on some interval containing $t_0$.
+\end{theorem}
+
+\subsection{Lipschitz Condition}
+\begin{definition}
+A function $f(t,y)$ satisfies a Lipschitz condition if:
+$$|f(t,y_1) - f(t,y_2)| \leq L|y_1 - y_2|$$
+for some constant $L > 0$.
+\end{definition}
+
+\section{Stability Theory}
+
+\subsection{Equilibrium Points}
+\begin{definition}
+An equilibrium point of $\frac{dx}{dt} = f(x)$ is a point $x^*$ such that $f(x^*) = 0$.
+\end{definition}
+
+\subsection{Linear Stability Analysis}
+\begin{definition}
+For a linear system $\frac{dx}{dt} = Ax$, the stability is determined by the eigenvalues of $A$:
+\begin{itemize}
+    \item All eigenvalues have negative real parts: asymptotically stable
+    \item Any eigenvalue has positive real part: unstable
+    \item Zero real parts: need further analysis
+\end{itemize}
+\end{definition}
+
+\subsection{Lyapunov Stability}
+\begin{definition}
+An equilibrium point $x^*$ is:
+\begin{itemize}
+    \item \textbf{Stable} if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|x(0) - x^*| < \delta$ implies $|x(t) - x^*| < \epsilon$ for all $t \geq 0$
+    \item \textbf{Asymptotically stable} if it's stable and $\lim_{t \to \infty} x(t) = x^*$
+\end{itemize}
+\end{definition}
+
+\subsection{Lyapunov's Method}
+\begin{theorem}
+If there exists a Lyapunov function $V(x)$ such that:
+\begin{itemize}
+    \item $V(x^*) = 0$ and $V(x) > 0$ for $x \neq x^*$
+    \item $\dot{V}(x) \leq 0$ for all $x$
+\end{itemize}
+then $x^*$ is stable. If $\dot{V}(x) < 0$ for $x \neq x^*$, then $x^*$ is asymptotically stable.
+\end{theorem}
+
+\section{Partial Differential Equations}
+
+\subsection{Classification}
+\begin{definition}
+A second-order linear PDE in two variables:
+$$A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial y} + C \frac{\partial^2 u}{\partial y^2} + D \frac{\partial u}{\partial x} + E \frac{\partial u}{\partial y} + Fu = G$$
+is classified by the discriminant $\Delta = B^2 - 4AC$:
+\begin{itemize}
+    \item $\Delta > 0$: Hyperbolic
+    \item $\Delta = 0$: Parabolic
+    \item $\Delta < 0$: Elliptic
+\end{itemize}
+\end{definition}
+
+\subsection{Wave Equation}
+\begin{definition}
+The wave equation:
+$$\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}$$
+General solution: $u(x,t) = f(x-ct) + g(x+ct)$
+\end{definition}
+
+\subsection{Heat Equation}
+\begin{definition}
+The heat equation:
+$$\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}$$
+Solution by separation of variables: $u(x,t) = X(x)T(t)$
+\end{definition}
+
+\subsection{Laplace's Equation}
+\begin{definition}
+Laplace's equation:
+$$\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0$$
+Solutions are harmonic functions.
+\end{definition}
+
+\section{Method of Characteristics}
+
+\subsection{First-Order PDEs}
+\begin{definition}
+For the PDE $a(x,y,u) \frac{\partial u}{\partial x} + b(x,y,u) \frac{\partial u}{\partial y} = c(x,y,u)$, the characteristic equations are:
+$$\frac{dx}{ds} = a, \quad \frac{dy}{ds} = b, \quad \frac{du}{ds} = c$$
+\end{definition}
+
+\section{Green's Functions}
+
+\subsection{Definition}
+\begin{definition}
+A Green's function $G(x,\xi)$ for the operator $L$ satisfies:
+$$LG(x,\xi) = \delta(x-\xi)$$
+where $\delta$ is the Dirac delta function.
+\end{definition}
+
+\subsection{Solution Representation}
+\begin{theorem}
+If $Lu = f$ with homogeneous boundary conditions, then:
+$$u(x) = \int G(x,\xi) f(\xi) \, d\xi$$
+\end{theorem}
+
+\section{Fourier Methods}
+
+\subsection{Fourier Series}
+\begin{definition}
+For a periodic function $f(x)$ with period $2L$:
+$$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left(a_n \cos \frac{n\pi x}{L} + b_n \sin \frac{n\pi x}{L}\right)$$
+where:
+$$a_n = \frac{1}{L} \int_{-L}^L f(x) \cos \frac{n\pi x}{L} \, dx$$
+$$b_n = \frac{1}{L} \int_{-L}^L f(x) \sin \frac{n\pi x}{L} \, dx$$
+\end{definition}
+
+\subsection{Fourier Transform}
+\begin{definition}
+The Fourier transform of $f(x)$ is:
+$$\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x) e^{-2\pi i \xi x} \, dx$$
+Inverse transform:
+$$f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x} \, d\xi$$
+\end{definition}
+
+\section{Applications}
+
+\subsection{Physics}
+Differential equations model:
+\begin{itemize}
+    \item Classical mechanics (Newton's laws)
+    \item Electromagnetism (Maxwell's equations)
+    \item Quantum mechanics (Schrödinger equation)
+    \item Fluid dynamics (Navier-Stokes equations)
+\end{itemize}
+
+\subsection{Biology}
+Applications include:
+\begin{itemize}
+    \item Population dynamics
+    \item Epidemiology
+    \item Chemical kinetics
+    \item Neural networks
+\end{itemize}
+
+\subsection{Engineering}
+Used in:
+\begin{itemize}
+    \item Control systems
+    \item Signal processing
+    \item Heat transfer
+    \item Structural analysis
+\end{itemize}
+
+\section{Important Theorems}
+
+\subsection{Existence and Uniqueness for Systems}
+\begin{theorem}
+If $\mathbf{f}(t,\mathbf{x})$ is continuous and satisfies a Lipschitz condition in $\mathbf{x}$ on a domain $D$, then the IVP $\frac{d\mathbf{x}}{dt} = \mathbf{f}(t,\mathbf{x})$, $\mathbf{x}(t_0) = \mathbf{x}_0$ has a unique solution.
+\end{theorem}
+
+\subsection{Sturm-Liouville Theory}
+\begin{theorem}
+For the Sturm-Liouville problem:
+$$-\frac{d}{dx}\left[p(x)\frac{dy}{dx}\right] + q(x)y = \lambda w(x)y$$
+with appropriate boundary conditions, the eigenvalues are real and the eigenfunctions are orthogonal.
+\end{theorem}
+
+\subsection{Maximum Principle}
+\begin{theorem}
+For Laplace's equation in a bounded domain, the maximum and minimum values occur on the boundary.
+\end{theorem}
+
+\section{Numerical Methods}
+
+\subsection{Finite Differences}
+\begin{definition}
+Finite difference approximations:
+\begin{itemize}
+    \item Forward: $f'(x) \approx \frac{f(x+h) - f(x)}{h}$
+    \item Backward: $f'(x) \approx \frac{f(x) - f(x-h)}{h}$
+    \item Central: $f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}$
+\end{itemize}
+\end{definition}
+
+\subsection{Finite Elements}
+\begin{definition}
+The finite element method approximates the solution by piecewise polynomial functions on a mesh.
+\end{definition}
+
+\end{document}

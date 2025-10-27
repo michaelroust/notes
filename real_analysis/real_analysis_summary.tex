@@ -1,0 +1,477 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Real Analysis Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{The Real Numbers}
+
+\subsection{Field Axioms}
+The real numbers $\mathbb{R}$ form a field with operations $+$ and $\cdot$ satisfying:
+\begin{itemize}
+    \item \textbf{Associativity}: $(a+b)+c = a+(b+c)$, $(ab)c = a(bc)$
+    \item \textbf{Commutativity}: $a+b = b+a$, $ab = ba$
+    \item \textbf{Identity}: $a+0 = a$, $a \cdot 1 = a$
+    \item \textbf{Inverses}: $a+(-a) = 0$, $a \cdot a^{-1} = 1$ for $a \neq 0$
+    \item \textbf{Distributivity}: $a(b+c) = ab + ac$
+\end{itemize}
+
+\subsection{Order Axioms}
+There exists a relation $<$ on $\mathbb{R}$ such that:
+\begin{itemize}
+    \item \textbf{Trichotomy}: For any $a,b \in \mathbb{R}$, exactly one of $a < b$, $a = b$, or $b < a$ holds
+    \item \textbf{Transitivity}: If $a < b$ and $b < c$, then $a < c$
+    \item \textbf{Addition}: If $a < b$, then $a + c < b + c$
+    \item \textbf{Multiplication}: If $a < b$ and $c > 0$, then $ac < bc$
+\end{itemize}
+
+\subsection{Completeness Axiom}
+\begin{definition}
+A set $S \subseteq \mathbb{R}$ is \textbf{bounded above} if there exists $M \in \mathbb{R}$ such that $s \leq M$ for all $s \in S$. Such an $M$ is called an \textbf{upper bound}.
+\end{definition}
+
+\begin{definition}
+The \textbf{supremum} (least upper bound) of $S$, denoted $\sup S$, is the smallest upper bound of $S$.
+\end{definition}
+
+\begin{theorem}[Completeness Axiom]
+Every non-empty subset of $\mathbb{R}$ that is bounded above has a supremum in $\mathbb{R}$.
+\end{theorem}
+
+\subsection{Archimedean Property}
+\begin{theorem}
+For any $x \in \mathbb{R}$, there exists $n \in \mathbb{N}$ such that $n > x$.
+\end{theorem}
+
+\subsection{Density of Rationals}
+\begin{theorem}
+Between any two real numbers, there exists a rational number.
+\end{theorem}
+
+\section{Sequences}
+
+\subsection{Definition and Convergence}
+\begin{definition}
+A \textbf{sequence} is a function $a: \mathbb{N} \to \mathbb{R}$, denoted $(a_n)$.
+\end{definition}
+
+\begin{definition}
+A sequence $(a_n)$ \textbf{converges} to $L \in \mathbb{R}$ if for every $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that $|a_n - L| < \epsilon$ for all $n \geq N$. We write $\lim_{n \to \infty} a_n = L$.
+\end{definition}
+
+\subsection{Properties of Convergent Sequences}
+\begin{theorem}
+If $(a_n)$ converges to $L$, then $L$ is unique.
+\end{theorem}
+
+\begin{theorem}
+If $(a_n)$ converges, then $(a_n)$ is bounded.
+\end{theorem}
+
+\begin{theorem}
+If $\lim_{n \to \infty} a_n = L$ and $\lim_{n \to \infty} b_n = M$, then:
+\begin{itemize}
+    \item $\lim_{n \to \infty} (a_n + b_n) = L + M$
+    \item $\lim_{n \to \infty} (a_n b_n) = LM$
+    \item $\lim_{n \to \infty} (a_n / b_n) = L/M$ (if $M \neq 0$)
+\end{itemize}
+\end{theorem}
+
+\subsection{Monotone Sequences}
+\begin{definition}
+A sequence $(a_n)$ is \textbf{monotone increasing} if $a_{n+1} \geq a_n$ for all $n$.
+\end{definition}
+
+\begin{theorem}[Monotone Convergence Theorem]
+A monotone sequence converges if and only if it is bounded.
+\end{theorem}
+
+\subsection{Subsequences}
+\begin{definition}
+A \textbf{subsequence} of $(a_n)$ is a sequence $(a_{n_k})$ where $(n_k)$ is a strictly increasing sequence of natural numbers.
+\end{definition}
+
+\begin{theorem}[Bolzano-Weierstrass]
+Every bounded sequence has a convergent subsequence.
+\end{theorem}
+
+\subsection{Cauchy Sequences}
+\begin{definition}
+A sequence $(a_n)$ is \textbf{Cauchy} if for every $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that $|a_n - a_m| < \epsilon$ for all $n,m \geq N$.
+\end{definition}
+
+\begin{theorem}
+A sequence converges if and only if it is Cauchy.
+\end{theorem}
+
+\section{Limits of Functions}
+
+\subsection{Definition}
+\begin{definition}
+Let $f: A \to \mathbb{R}$ where $A \subseteq \mathbb{R}$, and let $c$ be a limit point of $A$. We say $\lim_{x \to c} f(x) = L$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|f(x) - L| < \epsilon$ whenever $0 < |x - c| < \delta$ and $x \in A$.
+\end{definition}
+
+\subsection{Sequential Characterization}
+\begin{theorem}
+$\lim_{x \to c} f(x) = L$ if and only if for every sequence $(x_n)$ in $A \setminus \{c\}$ that converges to $c$, we have $\lim_{n \to \infty} f(x_n) = L$.
+\end{theorem}
+
+\subsection{One-Sided Limits}
+\begin{definition}
+$\lim_{x \to c^+} f(x) = L$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|f(x) - L| < \epsilon$ whenever $0 < x - c < \delta$.
+\end{definition}
+
+\subsection{Limit Laws}
+\begin{theorem}
+If $\lim_{x \to c} f(x) = L$ and $\lim_{x \to c} g(x) = M$, then:
+\begin{itemize}
+    \item $\lim_{x \to c} [f(x) + g(x)] = L + M$
+    \item $\lim_{x \to c} [f(x)g(x)] = LM$
+    \item $\lim_{x \to c} [f(x)/g(x)] = L/M$ (if $M \neq 0$)
+\end{itemize}
+\end{theorem}
+
+\section{Continuity}
+
+\subsection{Definition}
+\begin{definition}
+A function $f: A \to \mathbb{R}$ is \textbf{continuous} at $c \in A$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|f(x) - f(c)| < \epsilon$ whenever $|x - c| < \delta$ and $x \in A$.
+\end{definition}
+
+\subsection{Equivalent Characterizations}
+\begin{theorem}
+The following are equivalent for $f: A \to \mathbb{R}$ at $c \in A$:
+\begin{enumerate}
+    \item $f$ is continuous at $c$
+    \item $\lim_{x \to c} f(x) = f(c)$
+    \item For every sequence $(x_n)$ in $A$ converging to $c$, $\lim_{n \to \infty} f(x_n) = f(c)$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Properties of Continuous Functions}
+\begin{theorem}
+If $f$ and $g$ are continuous at $c$, then so are $f + g$, $f - g$, $fg$, and $f/g$ (if $g(c) \neq 0$).
+\end{theorem}
+
+\begin{theorem}[Composition]
+If $f$ is continuous at $c$ and $g$ is continuous at $f(c)$, then $g \circ f$ is continuous at $c$.
+\end{theorem}
+
+\subsection{Continuity on Intervals}
+\begin{definition}
+A function $f$ is \textbf{continuous on an interval} $I$ if it is continuous at every point in $I$.
+\end{definition}
+
+\begin{theorem}[Intermediate Value Theorem]
+If $f$ is continuous on $[a,b]$ and $f(a) < k < f(b)$ (or $f(b) < k < f(a)$), then there exists $c \in (a,b)$ such that $f(c) = k$.
+\end{theorem}
+
+\begin{theorem}[Extreme Value Theorem]
+If $f$ is continuous on $[a,b]$, then $f$ attains its maximum and minimum values on $[a,b]$.
+\end{theorem}
+
+\section{Uniform Continuity}
+
+\subsection{Definition}
+\begin{definition}
+A function $f: A \to \mathbb{R}$ is \textbf{uniformly continuous} on $A$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that $|f(x) - f(y)| < \epsilon$ whenever $|x - y| < \delta$ and $x,y \in A$.
+\end{definition}
+
+\subsection{Properties}
+\begin{theorem}
+If $f$ is uniformly continuous on $A$, then $f$ is continuous on $A$.
+\end{theorem}
+
+\begin{theorem}[Uniform Continuity Theorem]
+If $f$ is continuous on a closed and bounded interval $[a,b]$, then $f$ is uniformly continuous on $[a,b]$.
+\end{theorem}
+
+\section{Differentiation}
+
+\subsection{Definition}
+\begin{definition}
+A function $f: A \to \mathbb{R}$ is \textbf{differentiable} at $c \in A$ if the limit
+$$\lim_{x \to c} \frac{f(x) - f(c)}{x - c}$$
+exists. This limit is called the \textbf{derivative} of $f$ at $c$, denoted $f'(c)$.
+\end{definition}
+
+\subsection{Properties}
+\begin{theorem}
+If $f$ is differentiable at $c$, then $f$ is continuous at $c$.
+\end{theorem}
+
+\begin{theorem}[Product Rule]
+If $f$ and $g$ are differentiable at $c$, then $(fg)'(c) = f'(c)g(c) + f(c)g'(c)$.
+\end{theorem}
+
+\begin{theorem}[Chain Rule]
+If $f$ is differentiable at $c$ and $g$ is differentiable at $f(c)$, then $(g \circ f)'(c) = g'(f(c))f'(c)$.
+\end{theorem}
+
+\subsection{Mean Value Theorems}
+\begin{theorem}[Rolle's Theorem]
+If $f$ is continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a) = f(b)$, then there exists $c \in (a,b)$ such that $f'(c) = 0$.
+\end{theorem}
+
+\begin{theorem}[Mean Value Theorem]
+If $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then there exists $c \in (a,b)$ such that
+$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+\end{theorem}
+
+\begin{theorem}[Cauchy's Mean Value Theorem]
+If $f$ and $g$ are continuous on $[a,b]$ and differentiable on $(a,b)$, and $g'(x) \neq 0$ for all $x \in (a,b)$, then there exists $c \in (a,b)$ such that
+$$\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}$$
+\end{theorem}
+
+\section{Integration}
+
+\subsection{Riemann Sums}
+\begin{definition}
+Let $f: [a,b] \to \mathbb{R}$ be bounded. A \textbf{partition} of $[a,b]$ is a finite set $P = \{x_0, x_1, \ldots, x_n\}$ where $a = x_0 < x_1 < \cdots < x_n = b$.
+\end{definition}
+
+\begin{definition}
+The \textbf{upper Riemann sum} is $U(f,P) = \sum_{i=1}^n M_i \Delta x_i$ where $M_i = \sup_{x \in [x_{i-1}, x_i]} f(x)$.
+
+The \textbf{lower Riemann sum} is $L(f,P) = \sum_{i=1}^n m_i \Delta x_i$ where $m_i = \inf_{x \in [x_{i-1}, x_i]} f(x)$.
+\end{definition}
+
+\subsection{Riemann Integrability}
+\begin{definition}
+A function $f: [a,b] \to \mathbb{R}$ is \textbf{Riemann integrable} if
+$$\sup_P L(f,P) = \inf_P U(f,P)$$
+This common value is called the \textbf{Riemann integral} of $f$ over $[a,b]$, denoted $\int_a^b f(x) \, dx$.
+\end{definition}
+
+\subsection{Properties of Integrable Functions}
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then $f$ is Riemann integrable on $[a,b]$.
+\end{theorem}
+
+\begin{theorem}
+If $f$ is monotone on $[a,b]$, then $f$ is Riemann integrable on $[a,b]$.
+\end{theorem}
+
+\begin{theorem}
+If $f$ is bounded and has only finitely many discontinuities on $[a,b]$, then $f$ is Riemann integrable on $[a,b]$.
+\end{theorem}
+
+\subsection{Fundamental Theorem of Calculus}
+\begin{theorem}[FTC Part 1]
+If $f$ is continuous on $[a,b]$ and $F(x) = \int_a^x f(t) \, dt$, then $F$ is differentiable on $[a,b]$ and $F'(x) = f(x)$.
+\end{theorem}
+
+\begin{theorem}[FTC Part 2]
+If $f$ is continuous on $[a,b]$ and $F$ is any antiderivative of $f$, then
+$$\int_a^b f(x) \, dx = F(b) - F(a)$$
+\end{theorem}
+
+\section{Series}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{series} is an expression of the form $\sum_{n=1}^{\infty} a_n$ where $(a_n)$ is a sequence.
+\end{definition}
+
+\begin{definition}
+The \textbf{partial sums} of the series are $S_n = \sum_{k=1}^n a_k$. The series \textbf{converges} to $S$ if $\lim_{n \to \infty} S_n = S$.
+\end{definition}
+
+\subsection{Convergence Tests}
+\begin{theorem}[Divergence Test]
+If $\sum a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
+\end{theorem}
+
+\begin{theorem}[Comparison Test]
+If $0 \leq a_n \leq b_n$ for all $n$ and $\sum b_n$ converges, then $\sum a_n$ converges.
+\end{theorem}
+
+\begin{theorem}[Ratio Test]
+If $\lim_{n \to \infty} |a_{n+1}/a_n| = L$, then:
+\begin{itemize}
+    \item If $L < 1$, then $\sum a_n$ converges absolutely
+    \item If $L > 1$, then $\sum a_n$ diverges
+    \item If $L = 1$, the test is inconclusive
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Root Test]
+If $\lim_{n \to \infty} |a_n|^{1/n} = L$, then:
+\begin{itemize}
+    \item If $L < 1$, then $\sum a_n$ converges absolutely
+    \item If $L > 1$, then $\sum a_n$ diverges
+    \item If $L = 1$, the test is inconclusive
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Integral Test]
+If $f$ is positive, continuous, and decreasing on $[1,\infty)$, then $\sum_{n=1}^{\infty} f(n)$ converges if and only if $\int_1^{\infty} f(x) \, dx$ converges.
+\end{theorem}
+
+\subsection{Absolute and Conditional Convergence}
+\begin{definition}
+A series $\sum a_n$ \textbf{converges absolutely} if $\sum |a_n|$ converges.
+\end{definition}
+
+\begin{definition}
+A series \textbf{converges conditionally} if it converges but does not converge absolutely.
+\end{definition}
+
+\begin{theorem}
+If a series converges absolutely, then it converges.
+\end{theorem}
+
+\section{Power Series}
+
+\subsection{Definition}
+\begin{definition}
+A \textbf{power series} is a series of the form $\sum_{n=0}^{\infty} a_n (x-c)^n$.
+\end{definition}
+
+\subsection{Radius of Convergence}
+\begin{theorem}
+For any power series $\sum a_n (x-c)^n$, there exists $R \in [0,\infty]$ such that:
+\begin{itemize}
+    \item The series converges absolutely for $|x-c| < R$
+    \item The series diverges for $|x-c| > R$
+\end{itemize}
+$R$ is called the \textbf{radius of convergence}.
+\end{theorem}
+
+\subsection{Properties}
+\begin{theorem}
+A power series converges uniformly on any closed interval contained in its interval of convergence.
+\end{theorem}
+
+\begin{theorem}
+A power series can be differentiated and integrated term by term within its radius of convergence.
+\end{theorem}
+
+\section{Uniform Convergence}
+
+\subsection{Definition}
+\begin{definition}
+A sequence of functions $(f_n)$ \textbf{converges uniformly} to $f$ on $A$ if for every $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that $|f_n(x) - f(x)| < \epsilon$ for all $n \geq N$ and all $x \in A$.
+\end{definition}
+
+\subsection{Properties}
+\begin{theorem}[Uniform Limit Theorem]
+If $(f_n)$ is a sequence of continuous functions that converges uniformly to $f$ on $A$, then $f$ is continuous on $A$.
+\end{theorem}
+
+\begin{theorem}
+If $(f_n)$ converges uniformly to $f$ on $[a,b]$ and each $f_n$ is Riemann integrable, then $f$ is Riemann integrable and
+$$\lim_{n \to \infty} \int_a^b f_n(x) \, dx = \int_a^b f(x) \, dx$$
+\end{theorem}
+
+\begin{theorem}
+If $(f_n)$ converges pointwise to $f$ on $[a,b]$, each $f_n$ is differentiable, and $(f_n')$ converges uniformly on $[a,b]$, then $f$ is differentiable and $f' = \lim_{n \to \infty} f_n'$.
+\end{theorem}
+
+\section{Compactness}
+
+\subsection{Definition}
+\begin{definition}
+A set $K \subseteq \mathbb{R}$ is \textbf{compact} if every open cover of $K$ has a finite subcover.
+\end{definition}
+
+\subsection{Heine-Borel Theorem}
+\begin{theorem}
+A subset of $\mathbb{R}$ is compact if and only if it is closed and bounded.
+\end{theorem}
+
+\subsection{Properties}
+\begin{theorem}
+If $f$ is continuous on a compact set $K$, then $f$ is uniformly continuous on $K$.
+\end{theorem}
+
+\begin{theorem}
+If $f$ is continuous on a compact set $K$, then $f$ attains its maximum and minimum values on $K$.
+\end{theorem}
+
+\section{Connectedness}
+
+\subsection{Definition}
+\begin{definition}
+A set $A \subseteq \mathbb{R}$ is \textbf{connected} if there do not exist disjoint open sets $U$ and $V$ such that $A \subseteq U \cup V$ and $A \cap U \neq \emptyset$, $A \cap V \neq \emptyset$.
+\end{definition}
+
+\subsection{Characterization}
+\begin{theorem}
+A subset of $\mathbb{R}$ is connected if and only if it is an interval.
+\end{theorem}
+
+\section{Important Theorems}
+
+\subsection{Weierstrass Approximation Theorem}
+\begin{theorem}
+Every continuous function on $[a,b]$ can be uniformly approximated by polynomials.
+\end{theorem}
+
+\subsection{Stone-Weierstrass Theorem}
+\begin{theorem}
+Let $A$ be an algebra of continuous functions on a compact set $K$ that separates points and contains the constant functions. Then $A$ is dense in $C(K)$.
+\end{theorem}
+
+\subsection{Baire Category Theorem}
+\begin{theorem}
+The intersection of countably many dense open sets in $\mathbb{R}$ is dense in $\mathbb{R}$.
+\end{theorem}
+
+\subsection{Arzelà-Ascoli Theorem}
+\begin{theorem}
+A sequence of functions in $C[a,b]$ has a uniformly convergent subsequence if and only if it is uniformly bounded and equicontinuous.
+\end{theorem}
+
+\section{Applications}
+
+\subsection{Existence Theorems}
+\begin{itemize}
+    \item Fixed point theorems (Brouwer, Banach)
+    \item Existence of solutions to differential equations
+    \item Existence of optima in constrained optimization
+\end{itemize}
+
+\subsection{Approximation Theory}
+\begin{itemize}
+    \item Polynomial approximation
+    \item Fourier series and transforms
+    \item Numerical analysis foundations
+\end{itemize}
+
+\subsection{Analysis of Functions}
+\begin{itemize}
+    \item Differentiability and smoothness
+    \item Integration theory
+    \item Measure theory foundations
+\end{itemize}
+
+\end{document}

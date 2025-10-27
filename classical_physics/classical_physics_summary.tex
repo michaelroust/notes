@@ -1,0 +1,408 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Classical Physics Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Classical Mechanics}
+
+\subsection{Newton's Laws}
+\begin{enumerate}
+    \item \textbf{First Law}: A body at rest remains at rest, and a body in motion continues in uniform motion, unless acted upon by an external force.
+    \item \textbf{Second Law}: $\vec{F} = m\vec{a}$ or $\vec{F} = \frac{d\vec{p}}{dt}$ where $\vec{p} = m\vec{v}$ is momentum.
+    \item \textbf{Third Law}: For every action, there is an equal and opposite reaction.
+\end{enumerate}
+
+\subsection{Kinematics}
+For constant acceleration:
+\begin{align}
+    \vec{v} &= \vec{v}_0 + \vec{a}t \\
+    \vec{r} &= \vec{r}_0 + \vec{v}_0 t + \frac{1}{2}\vec{a}t^2 \\
+    v^2 &= v_0^2 + 2\vec{a} \cdot (\vec{r} - \vec{r}_0)
+\end{align}
+
+\subsection{Work and Energy}
+\begin{definition}
+The \textbf{work} done by a force $\vec{F}$ over a displacement $d\vec{r}$ is:
+$$W = \int \vec{F} \cdot d\vec{r}$$
+\end{definition}
+
+\begin{definition}
+The \textbf{kinetic energy} is $T = \frac{1}{2}mv^2$.
+\end{definition}
+
+\begin{definition}
+The \textbf{potential energy} $U$ is defined such that $\vec{F} = -\nabla U$ for conservative forces.
+\end{definition}
+
+\begin{theorem}[Work-Energy Theorem]
+$$W = \Delta T = T_f - T_i$$
+\end{theorem}
+
+\begin{theorem}[Conservation of Energy]
+For conservative forces: $T + U = \text{constant}$.
+\end{theorem}
+
+\subsection{Angular Motion}
+\begin{itemize}
+    \item Angular velocity: $\vec{\omega} = \frac{d\theta}{dt}\hat{n}$
+    \item Angular acceleration: $\vec{\alpha} = \frac{d\vec{\omega}}{dt}$
+    \item Torque: $\vec{\tau} = \vec{r} \times \vec{F}$
+    \item Angular momentum: $\vec{L} = \vec{r} \times \vec{p}$
+    \item Moment of inertia: $I = \sum_i m_i r_i^2$ (discrete) or $I = \int r^2 dm$ (continuous)
+\end{itemize}
+
+\subsection{Rotational Dynamics}
+\begin{itemize}
+    \item $\vec{\tau} = I\vec{\alpha}$
+    \item $\vec{L} = I\vec{\omega}$
+    \item Rotational kinetic energy: $T_{\text{rot}} = \frac{1}{2}I\omega^2$
+\end{itemize}
+
+\subsection{Lagrangian Mechanics}
+\begin{definition}
+The \textbf{Lagrangian} is $L = T - U$ where $T$ is kinetic energy and $U$ is potential energy.
+\end{definition}
+
+\begin{theorem}[Euler-Lagrange Equations]
+For generalized coordinates $q_i$:
+$$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right) - \frac{\partial L}{\partial q_i} = 0$$
+\end{theorem}
+
+\subsection{Hamiltonian Mechanics}
+\begin{definition}
+The \textbf{generalized momentum} is $p_i = \frac{\partial L}{\partial \dot{q}_i}$.
+\end{definition}
+
+\begin{definition}
+The \textbf{Hamiltonian} is $H = \sum_i p_i \dot{q}_i - L$.
+\end{definition}
+
+\begin{theorem}[Hamilton's Equations]
+$$\dot{q}_i = \frac{\partial H}{\partial p_i}, \quad \dot{p}_i = -\frac{\partial H}{\partial q_i}$$
+\end{theorem}
+
+\section{Thermodynamics}
+
+\subsection{Zeroth Law}
+\begin{definition}
+If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.
+\end{definition}
+
+\subsection{First Law}
+\begin{theorem}[First Law of Thermodynamics]
+$$\Delta U = Q - W$$
+where $U$ is internal energy, $Q$ is heat added, and $W$ is work done by the system.
+\end{theorem}
+
+\subsection{Second Law}
+\begin{theorem}[Second Law of Thermodynamics]
+Heat cannot spontaneously flow from a colder body to a hotter body. In terms of entropy:
+$$\Delta S \geq \frac{Q}{T}$$
+with equality for reversible processes.
+\end{theorem}
+
+\subsection{Entropy}
+\begin{definition}
+The \textbf{entropy} change for a reversible process is:
+$$\Delta S = \int \frac{dQ_{\text{rev}}}{T}$$
+\end{definition}
+
+\subsection{Thermodynamic Potentials}
+\begin{itemize}
+    \item \textbf{Internal Energy}: $U = TS - PV + \mu N$
+    \item \textbf{Helmholtz Free Energy}: $F = U - TS$
+    \item \textbf{Gibbs Free Energy}: $G = H - TS = U + PV - TS$
+    \item \textbf{Enthalpy}: $H = U + PV$
+\end{itemize}
+
+\subsection{Ideal Gas Law}
+$$PV = nRT = Nk_B T$$
+where $R = 8.314$ J/mol·K is the gas constant and $k_B = 1.381 \times 10^{-23}$ J/K is Boltzmann's constant.
+
+\subsection{Kinetic Theory}
+For an ideal gas:
+\begin{itemize}
+    \item Average kinetic energy per molecule: $\langle K \rangle = \frac{3}{2}k_B T$
+    \item Root-mean-square speed: $v_{\text{rms}} = \sqrt{\frac{3k_B T}{m}}$
+    \item Mean free path: $\lambda = \frac{1}{\sqrt{2}\pi d^2 n}$
+\end{itemize}
+
+\section{Electromagnetism}
+
+\subsection{Coulomb's Law}
+\begin{theorem}[Coulomb's Law]
+The force between two point charges is:
+$$\vec{F} = k_e \frac{q_1 q_2}{r^2} \hat{r}$$
+where $k_e = \frac{1}{4\pi\epsilon_0} = 8.99 \times 10^9$ N·m²/C².
+\end{theorem}
+
+\subsection{Electric Field}
+\begin{definition}
+The \textbf{electric field} is $\vec{E} = \frac{\vec{F}}{q}$.
+\end{definition}
+
+For a point charge: $\vec{E} = k_e \frac{q}{r^2} \hat{r}$
+
+\subsection{Gauss's Law}
+\begin{theorem}[Gauss's Law]
+$$\oint \vec{E} \cdot d\vec{A} = \frac{Q_{\text{enclosed}}}{\epsilon_0}$$
+\end{theorem}
+
+\subsection{Electric Potential}
+\begin{definition}
+The \textbf{electric potential} is $V = \frac{U}{q}$ where $U$ is electric potential energy.
+\end{definition}
+
+$$\vec{E} = -\nabla V$$
+
+\subsection{Capacitance}
+\begin{definition}
+The \textbf{capacitance} is $C = \frac{Q}{V}$.
+\end{definition}
+
+For a parallel plate capacitor: $C = \frac{\epsilon_0 A}{d}$
+
+\subsection{Current and Resistance}
+\begin{itemize}
+    \item Current: $I = \frac{dQ}{dt}$
+    \item Current density: $\vec{J} = nq\vec{v}_d$
+    \item Ohm's Law: $V = IR$
+    \item Resistance: $R = \frac{\rho L}{A}$
+\end{itemize}
+
+\subsection{Magnetic Field}
+\begin{definition}
+The \textbf{magnetic force} on a moving charge is $\vec{F} = q\vec{v} \times \vec{B}$.
+\end{definition}
+
+\subsection{Biot-Savart Law}
+\begin{theorem}[Biot-Savart Law]
+$$d\vec{B} = \frac{\mu_0}{4\pi} \frac{I \, d\vec{l} \times \hat{r}}{r^2}$$
+\end{theorem}
+
+\subsection{Ampère's Law}
+\begin{theorem}[Ampère's Law]
+$$\oint \vec{B} \cdot d\vec{l} = \mu_0 I_{\text{enclosed}}$$
+\end{theorem}
+
+\subsection{Faraday's Law}
+\begin{theorem}[Faraday's Law of Induction]
+$$\mathcal{E} = -\frac{d\Phi_B}{dt}$$
+where $\Phi_B = \int \vec{B} \cdot d\vec{A}$ is magnetic flux.
+\end{theorem}
+
+\subsection{Maxwell's Equations}
+\begin{align}
+    \nabla \cdot \vec{E} &= \frac{\rho}{\epsilon_0} \quad \text{(Gauss's Law)} \\
+    \nabla \cdot \vec{B} &= 0 \quad \text{(Gauss's Law for Magnetism)} \\
+    \nabla \times \vec{E} &= -\frac{\partial \vec{B}}{\partial t} \quad \text{(Faraday's Law)} \\
+    \nabla \times \vec{B} &= \mu_0 \vec{J} + \mu_0 \epsilon_0 \frac{\partial \vec{E}}{\partial t} \quad \text{(Ampère-Maxwell Law)}
+\end{align}
+
+\section{Waves and Oscillations}
+
+\subsection{Simple Harmonic Motion}
+\begin{definition}
+A system undergoes \textbf{simple harmonic motion} if it satisfies:
+$$\frac{d^2 x}{dt^2} + \omega^2 x = 0$$
+\end{definition}
+
+The solution is $x(t) = A\cos(\omega t + \phi)$ where:
+\begin{itemize}
+    \item $A$ is amplitude
+    \item $\omega = \sqrt{\frac{k}{m}}$ is angular frequency
+    \item $\phi$ is phase constant
+\end{itemize}
+
+\subsection{Wave Equation}
+\begin{theorem}[Wave Equation]
+$$\frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial x^2}$$
+where $v$ is wave speed.
+\end{theorem}
+
+\subsection{Wave Properties}
+\begin{itemize}
+    \item Wavelength: $\lambda$
+    \item Frequency: $f = \frac{\omega}{2\pi}$
+    \item Wave speed: $v = f\lambda = \frac{\omega}{k}$
+    \item Wave number: $k = \frac{2\pi}{\lambda}$
+\end{itemize}
+
+\subsection{Standing Waves}
+For a string fixed at both ends:
+$$y(x,t) = A\sin(kx)\cos(\omega t)$$
+with boundary conditions $y(0,t) = y(L,t) = 0$ giving:
+$$f_n = \frac{nv}{2L} = \frac{n}{2L}\sqrt{\frac{T}{\mu}}$$
+
+\subsection{Sound Waves}
+\begin{itemize}
+    \item Speed of sound: $v = \sqrt{\frac{B}{\rho}}$ where $B$ is bulk modulus
+    \item Intensity: $I = \frac{P}{A} = \frac{1}{2}\rho v \omega^2 A^2$
+    \item Decibel level: $\beta = 10 \log_{10}\left(\frac{I}{I_0}\right)$ where $I_0 = 10^{-12}$ W/m²
+\end{itemize}
+
+\subsection{Doppler Effect}
+For a moving source and stationary observer:
+$$f' = f \frac{v}{v \pm v_s}$$
+where $v_s$ is source velocity (positive for approaching).
+
+\section{Fluid Mechanics}
+
+\subsection{Fluid Statics}
+\begin{theorem}[Pascal's Principle]
+Pressure applied to an enclosed fluid is transmitted undiminished to every portion of the fluid and walls of the container.
+\end{theorem}
+
+\begin{theorem}[Archimedes' Principle]
+The buoyant force on a submerged object equals the weight of the displaced fluid.
+\end{theorem}
+
+\subsection{Fluid Dynamics}
+\begin{theorem}[Continuity Equation]
+For incompressible flow: $A_1 v_1 = A_2 v_2$
+\end{theorem}
+
+\begin{theorem}[Bernoulli's Equation]
+For steady, incompressible, non-viscous flow:
+$$P + \frac{1}{2}\rho v^2 + \rho g h = \text{constant}$$
+\end{theorem}
+
+\subsection{Viscosity}
+\begin{definition}
+The \textbf{viscous force} is $F = \eta A \frac{dv}{dy}$ where $\eta$ is viscosity.
+\end{definition}
+
+\section{Optics}
+
+\subsection{Geometric Optics}
+\begin{itemize}
+    \item Law of reflection: $\theta_i = \theta_r$
+    \item Snell's law: $n_1 \sin \theta_1 = n_2 \sin \theta_2$
+    \item Critical angle: $\sin \theta_c = \frac{n_2}{n_1}$ (for $n_1 > n_2$)
+\end{itemize}
+
+\subsection{Lens Equation}
+$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}$$
+where $f$ is focal length, $d_o$ is object distance, and $d_i$ is image distance.
+
+\subsection{Magnification}
+$$m = -\frac{d_i}{d_o} = \frac{h_i}{h_o}$$
+
+\subsection{Thin Lens Formula}
+$$\frac{1}{f} = (n-1)\left(\frac{1}{R_1} - \frac{1}{R_2}\right)$$
+
+\subsection{Wave Optics}
+\begin{itemize}
+    \item Constructive interference: $\Delta \phi = 2\pi n$
+    \item Destructive interference: $\Delta \phi = \pi(2n+1)$
+    \item Path difference: $\Delta = d\sin\theta$
+\end{itemize}
+
+\subsection{Diffraction}
+For single slit diffraction:
+$$\sin \theta = \frac{m\lambda}{a}$$
+where $a$ is slit width and $m$ is order number.
+
+\section{Special Relativity}
+
+\subsection{Postulates}
+\begin{enumerate}
+    \item The laws of physics are the same in all inertial reference frames.
+    \item The speed of light in vacuum is constant in all inertial frames.
+\end{enumerate}
+
+\subsection{Lorentz Transformations}
+For frames moving with relative velocity $v$ along $x$-axis:
+\begin{align}
+    x' &= \gamma(x - vt) \\
+    t' &= \gamma\left(t - \frac{vx}{c^2}\right) \\
+    y' &= y \\
+    z' &= z
+\end{align}
+where $\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$.
+
+\subsection{Time Dilation and Length Contraction}
+\begin{itemize}
+    \item Time dilation: $\Delta t = \gamma \Delta t_0$
+    \item Length contraction: $L = \frac{L_0}{\gamma}$
+\end{itemize}
+
+\subsection{Relativistic Energy and Momentum}
+\begin{itemize}
+    \item Relativistic momentum: $\vec{p} = \gamma m \vec{v}$
+    \item Total energy: $E = \gamma mc^2$
+    \item Rest energy: $E_0 = mc^2$
+    \item Kinetic energy: $K = (\gamma - 1)mc^2$
+    \item Energy-momentum relation: $E^2 = (pc)^2 + (mc^2)^2$
+\end{itemize}
+
+\section{Applications}
+
+\subsection{Mechanics Applications}
+\begin{itemize}
+    \item Planetary motion and Kepler's laws
+    \item Rigid body dynamics
+    \item Collision analysis
+    \item Central force problems
+\end{itemize}
+
+\subsection{Thermodynamics Applications}
+\begin{itemize}
+    \item Heat engines and refrigerators
+    \item Phase transitions
+    \item Statistical mechanics foundations
+    \item Entropy and information theory
+\end{itemize}
+
+\subsection{Electromagnetism Applications}
+\begin{itemize}
+    \item Circuit analysis
+    \item Electromagnetic waves
+    \item Antenna theory
+    \item Plasma physics
+\end{itemize}
+
+\section{Important Constants}
+
+\begin{itemize}
+    \item Speed of light: $c = 2.998 \times 10^8$ m/s
+    \item Gravitational constant: $G = 6.674 \times 10^{-11}$ N·m²/kg²
+    \item Electron charge: $e = 1.602 \times 10^{-19}$ C
+    \item Electron mass: $m_e = 9.109 \times 10^{-31}$ kg
+    \item Proton mass: $m_p = 1.673 \times 10^{-27}$ kg
+    \item Permittivity of free space: $\epsilon_0 = 8.854 \times 10^{-12}$ F/m
+    \item Permeability of free space: $\mu_0 = 4\pi \times 10^{-7}$ H/m
+    \item Boltzmann constant: $k_B = 1.381 \times 10^{-23}$ J/K
+    \item Avogadro's number: $N_A = 6.022 \times 10^{23}$ mol$^{-1}$
+\end{itemize}
+
+\end{document}

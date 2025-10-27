@@ -1,0 +1,333 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\geometry{margin=1in}
+
+\title{Calculus Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Limits}
+
+\subsection{Definition}
+The limit of $f(x)$ as $x$ approaches $a$ is $L$ if:
+$$\lim_{x \to a} f(x) = L$$
+For every $\epsilon > 0$, there exists $\delta > 0$ such that:
+$$0 < |x - a| < \delta \Rightarrow |f(x) - L| < \epsilon$$
+
+\subsection{Limit Laws}
+If $\lim_{x \to a} f(x) = L$ and $\lim_{x \to a} g(x) = M$, then:
+\begin{itemize}
+    \item $\lim_{x \to a} [f(x) + g(x)] = L + M$
+    \item $\lim_{x \to a} [f(x) - g(x)] = L - M$
+    \item $\lim_{x \to a} [cf(x)] = cL$
+    \item $\lim_{x \to a} [f(x)g(x)] = LM$
+    \item $\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{L}{M}$ (if $M \neq 0$)
+\end{itemize}
+
+\subsection{One-Sided Limits}
+\begin{itemize}
+    \item $\lim_{x \to a^-} f(x)$: limit from the left
+    \item $\lim_{x \to a^+} f(x)$: limit from the right
+    \item $\lim_{x \to a} f(x) = L$ if and only if $\lim_{x \to a^-} f(x) = \lim_{x \to a^+} f(x) = L$
+\end{itemize}
+
+\subsection{Infinite Limits}
+\begin{itemize}
+    \item $\lim_{x \to a} f(x) = \infty$: $f(x)$ grows without bound
+    \item $\lim_{x \to \infty} f(x) = L$: horizontal asymptote at $y = L$
+\end{itemize}
+
+\section{Continuity}
+
+\subsection{Definition}
+A function $f$ is continuous at $a$ if:
+$$\lim_{x \to a} f(x) = f(a)$$
+
+\subsection{Continuity on an Interval}
+$f$ is continuous on $[a,b]$ if it's continuous at every point in $(a,b)$ and:
+\begin{itemize}
+    \item $\lim_{x \to a^+} f(x) = f(a)$ (continuous from the right at $a$)
+    \item $\lim_{x \to b^-} f(x) = f(b)$ (continuous from the left at $b$)
+\end{itemize}
+
+\subsection{Intermediate Value Theorem}
+If $f$ is continuous on $[a,b]$ and $N$ is between $f(a)$ and $f(b)$, then there exists $c \in (a,b)$ such that $f(c) = N$.
+
+\section{Derivatives}
+
+\subsection{Definition}
+The derivative of $f$ at $a$ is:
+$$f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h} = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}$$
+
+\subsection{Notation}
+\begin{itemize}
+    \item $f'(x)$ or $\frac{df}{dx}$: first derivative
+    \item $f''(x)$ or $\frac{d^2f}{dx^2}$: second derivative
+    \item $f^{(n)}(x)$ or $\frac{d^nf}{dx^n}$: $n$-th derivative
+\end{itemize}
+
+\subsection{Basic Differentiation Rules}
+\begin{itemize}
+    \item $\frac{d}{dx}[c] = 0$ (constant rule)
+    \item $\frac{d}{dx}[x^n] = nx^{n-1}$ (power rule)
+    \item $\frac{d}{dx}[cf(x)] = cf'(x)$ (constant multiple rule)
+    \item $\frac{d}{dx}[f(x) + g(x)] = f'(x) + g'(x)$ (sum rule)
+    \item $\frac{d}{dx}[f(x) - g(x)] = f'(x) - g'(x)$ (difference rule)
+\end{itemize}
+
+\subsection{Product and Quotient Rules}
+\begin{itemize}
+    \item Product rule: $\frac{d}{dx}[f(x)g(x)] = f'(x)g(x) + f(x)g'(x)$
+    \item Quotient rule: $\frac{d}{dx}\left[\frac{f(x)}{g(x)}\right] = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2}$
+\end{itemize}
+
+\subsection{Chain Rule}
+$$\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)$$
+
+\subsection{Implicit Differentiation}
+To find $\frac{dy}{dx}$ when $y$ is implicitly defined by $F(x,y) = 0$:
+$$\frac{\partial F}{\partial x} + \frac{\partial F}{\partial y} \frac{dy}{dx} = 0$$
+
+\subsection{Derivatives of Common Functions}
+\begin{align}
+\frac{d}{dx}[\sin x] &= \cos x \\
+\frac{d}{dx}[\cos x] &= -\sin x \\
+\frac{d}{dx}[\tan x] &= \sec^2 x \\
+\frac{d}{dx}[\ln x] &= \frac{1}{x} \\
+\frac{d}{dx}[e^x] &= e^x \\
+\frac{d}{dx}[a^x] &= a^x \ln a \\
+\frac{d}{dx}[\arcsin x] &= \frac{1}{\sqrt{1-x^2}} \\
+\frac{d}{dx}[\arctan x] &= \frac{1}{1+x^2}
+\end{align}
+
+\section{Applications of Derivatives}
+
+\subsection{Tangent Lines}
+The equation of the tangent line to $y = f(x)$ at $(a, f(a))$ is:
+$$y - f(a) = f'(a)(x - a)$$
+
+\subsection{Related Rates}
+When two or more quantities are related by an equation, their rates of change are also related.
+
+\subsection{Linear Approximation}
+$$f(x) \approx f(a) + f'(a)(x - a)$$
+for $x$ near $a$.
+
+\subsection{Newton's Method}
+To approximate a root of $f(x) = 0$:
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+\section{Extreme Values}
+
+\subsection{Critical Points}
+A critical point of $f$ is a number $c$ where $f'(c) = 0$ or $f'(c)$ doesn't exist.
+
+\subsection{First Derivative Test}
+If $c$ is a critical point:
+\begin{itemize}
+    \item If $f'$ changes from positive to negative at $c$, then $f(c)$ is a local maximum
+    \item If $f'$ changes from negative to positive at $c$, then $f(c)$ is a local minimum
+\end{itemize}
+
+\subsection{Second Derivative Test}
+If $f'(c) = 0$ and $f''(c)$ exists:
+\begin{itemize}
+    \item If $f''(c) > 0$, then $f(c)$ is a local minimum
+    \item If $f''(c) < 0$, then $f(c)$ is a local maximum
+    \item If $f''(c) = 0$, the test is inconclusive
+\end{itemize}
+
+\subsection{Extreme Value Theorem}
+If $f$ is continuous on $[a,b]$, then $f$ attains both an absolute maximum and absolute minimum on $[a,b]$.
+
+\section{Concavity and Inflection Points}
+
+\subsection{Concavity}
+\begin{itemize}
+    \item $f$ is concave upward on $(a,b)$ if $f''(x) > 0$ for all $x \in (a,b)$
+    \item $f$ is concave downward on $(a,b)$ if $f''(x) < 0$ for all $x \in (a,b)$
+\end{itemize}
+
+\subsection{Inflection Points}
+An inflection point is a point where the concavity changes, i.e., where $f''(x) = 0$ or $f''(x)$ doesn't exist.
+
+\section{L'Hôpital's Rule}
+
+If $\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{0}{0}$ or $\frac{\pm\infty}{\pm\infty}$, then:
+$$\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}$$
+provided the limit on the right exists.
+
+\section{Antiderivatives and Indefinite Integrals}
+
+\subsection{Definition}
+An antiderivative of $f$ is a function $F$ such that $F'(x) = f(x)$.
+
+\subsection{Indefinite Integral}
+$$\int f(x) \, dx = F(x) + C$$
+where $C$ is the constant of integration.
+
+\subsection{Basic Integration Rules}
+\begin{align}
+\int k \, dx &= kx + C \\
+\int x^n \, dx &= \frac{x^{n+1}}{n+1} + C \quad (n \neq -1) \\
+\int \frac{1}{x} \, dx &= \ln|x| + C \\
+\int e^x \, dx &= e^x + C \\
+\int \sin x \, dx &= -\cos x + C \\
+\int \cos x \, dx &= \sin x + C \\
+\int \sec^2 x \, dx &= \tan x + C
+\end{align}
+
+\section{Definite Integrals}
+
+\subsection{Definition}
+$$\int_a^b f(x) \, dx = \lim_{n \to \infty} \sum_{i=1}^n f(x_i^*) \Delta x$$
+where $\Delta x = \frac{b-a}{n}$ and $x_i^*$ is any point in the $i$-th subinterval.
+
+\subsection{Fundamental Theorem of Calculus}
+\begin{itemize}
+    \item Part 1: If $F(x) = \int_a^x f(t) \, dt$, then $F'(x) = f(x)$
+    \item Part 2: $\int_a^b f(x) \, dx = F(b) - F(a)$ where $F$ is any antiderivative of $f$
+\end{itemize}
+
+\subsection{Properties of Definite Integrals}
+\begin{itemize}
+    \item $\int_a^a f(x) \, dx = 0$
+    \item $\int_a^b f(x) \, dx = -\int_b^a f(x) \, dx$
+    \item $\int_a^b [f(x) + g(x)] \, dx = \int_a^b f(x) \, dx + \int_a^b g(x) \, dx$
+    \item $\int_a^b cf(x) \, dx = c\int_a^b f(x) \, dx$
+    \item $\int_a^c f(x) \, dx = \int_a^b f(x) \, dx + \int_b^c f(x) \, dx$
+\end{itemize}
+
+\section{Integration Techniques}
+
+\subsection{Substitution Rule}
+$$\int f(g(x))g'(x) \, dx = \int f(u) \, du$$
+where $u = g(x)$.
+
+\subsection{Integration by Parts}
+$$\int u \, dv = uv - \int v \, du$$
+
+\subsection{Partial Fractions}
+For rational functions, decompose into simpler fractions:
+$$\frac{P(x)}{Q(x)} = \frac{A}{x-a} + \frac{B}{(x-a)^2} + \frac{Cx+D}{x^2+bx+c} + \cdots$$
+
+\subsection{Trigonometric Substitution}
+\begin{itemize}
+    \item For $\sqrt{a^2-x^2}$: use $x = a\sin\theta$
+    \item For $\sqrt{a^2+x^2}$: use $x = a\tan\theta$
+    \item For $\sqrt{x^2-a^2}$: use $x = a\sec\theta$
+\end{itemize}
+
+\section{Applications of Integration}
+
+\subsection{Area Between Curves}
+$$A = \int_a^b |f(x) - g(x)| \, dx$$
+
+\subsection{Volume of Revolution}
+\begin{itemize}
+    \item Disk method: $V = \pi \int_a^b [f(x)]^2 \, dx$
+    \item Washer method: $V = \pi \int_a^b ([f(x)]^2 - [g(x)]^2) \, dx$
+    \item Shell method: $V = 2\pi \int_a^b x f(x) \, dx$
+\end{itemize}
+
+\subsection{Arc Length}
+$$L = \int_a^b \sqrt{1 + [f'(x)]^2} \, dx$$
+
+\subsection{Surface Area}
+$$S = 2\pi \int_a^b f(x)\sqrt{1 + [f'(x)]^2} \, dx$$
+
+\section{Sequences and Series}
+
+\subsection{Sequences}
+A sequence $\{a_n\}$ converges to $L$ if:
+$$\lim_{n \to \infty} a_n = L$$
+
+\subsection{Series}
+The series $\sum_{n=1}^{\infty} a_n$ converges if the sequence of partial sums $\{S_n\}$ converges, where:
+$$S_n = \sum_{k=1}^n a_k$$
+
+\subsection{Geometric Series}
+$$\sum_{n=0}^{\infty} ar^n = \frac{a}{1-r} \quad \text{if } |r| < 1$$
+
+\subsection{Convergence Tests}
+\begin{itemize}
+    \item Divergence test: If $\lim_{n \to \infty} a_n \neq 0$, then $\sum a_n$ diverges
+    \item Integral test: If $f$ is positive, continuous, and decreasing, then $\sum_{n=1}^{\infty} f(n)$ and $\int_1^{\infty} f(x) \, dx$ both converge or both diverge
+    \item Comparison test: If $0 \leq a_n \leq b_n$ and $\sum b_n$ converges, then $\sum a_n$ converges
+    \item Ratio test: If $\lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right| = L < 1$, then $\sum a_n$ converges
+    \item Root test: If $\lim_{n \to \infty} \sqrt[n]{|a_n|} = L < 1$, then $\sum a_n$ converges
+\end{itemize}
+
+\section{Power Series}
+
+\subsection{Definition}
+A power series centered at $a$ is:
+$$\sum_{n=0}^{\infty} c_n(x-a)^n$$
+
+\subsection{Radius of Convergence}
+The radius of convergence $R$ is such that the series converges for $|x-a| < R$ and diverges for $|x-a| > R$.
+
+\subsection{Taylor Series}
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n$$
+
+\subsection{Maclaurin Series}
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n$$
+
+\subsection{Common Maclaurin Series}
+\begin{align}
+e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} \\
+\sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} \\
+\cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} \\
+\frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n \quad (|x| < 1) \\
+\ln(1+x) &= \sum_{n=1}^{\infty} \frac{(-1)^{n-1} x^n}{n} \quad (|x| < 1)
+\end{align}
+
+\section{Multivariable Calculus}
+
+\subsection{Partial Derivatives}
+$$\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h,y) - f(x,y)}{h}$$
+
+\subsection{Gradient}
+$$\nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right)$$
+
+\subsection{Directional Derivative}
+$$D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}$$
+where $\mathbf{u}$ is a unit vector.
+
+\subsection{Multiple Integrals}
+$$\iint_R f(x,y) \, dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \, dy \, dx$$
+
+\subsection{Change of Variables}
+$$\iint_R f(x,y) \, dA = \iint_S f(x(u,v), y(u,v)) \left|\frac{\partial(x,y)}{\partial(u,v)}\right| \, du \, dv$$
+
+\section{Vector Calculus}
+
+\subsection{Line Integrals}
+$$\int_C f(x,y) \, ds = \int_a^b f(x(t), y(t)) \sqrt{[x'(t)]^2 + [y'(t)]^2} \, dt$$
+
+\subsection{Green's Theorem}
+$$\oint_C P \, dx + Q \, dy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) \, dA$$
+
+\subsection{Divergence Theorem}
+$$\iint_S \mathbf{F} \cdot \mathbf{n} \, dS = \iiint_E \nabla \cdot \mathbf{F} \, dV$$
+
+\subsection{Stokes' Theorem}
+$$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot \mathbf{n} \, dS$$
+
+\end{document}

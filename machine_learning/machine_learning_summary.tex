@@ -1,0 +1,358 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Machine Learning Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Supervised Learning}
+
+\subsection{Problem Formulation}
+\begin{definition}
+Given training data $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ where $\mathbf{x}_i \in \mathbb{R}^d$ are features and $y_i$ are labels, find a function $f: \mathbb{R}^d \to \mathcal{Y}$ that generalizes well to unseen data.
+\end{definition}
+
+\subsection{Linear Regression}
+\begin{definition}
+\textbf{Linear regression} assumes $f(\mathbf{x}) = \mathbf{w}^T\mathbf{x} + b$ and minimizes:
+$$\mathcal{L}(\mathbf{w}, b) = \frac{1}{2n}\sum_{i=1}^n (y_i - \mathbf{w}^T\mathbf{x}_i - b)^2$$
+\end{definition}
+
+The closed-form solution is:
+$$\mathbf{w}^* = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$$
+
+\subsection{Logistic Regression}
+\begin{definition}
+\textbf{Logistic regression} uses the sigmoid function $\sigma(z) = \frac{1}{1+e^{-z}}$ and minimizes:
+$$\mathcal{L}(\mathbf{w}) = -\frac{1}{n}\sum_{i=1}^n [y_i \log p_i + (1-y_i)\log(1-p_i)]$$
+where $p_i = \sigma(\mathbf{w}^T\mathbf{x}_i)$.
+\end{definition}
+
+\subsection{Regularization}
+\begin{itemize}
+    \item \textbf{L1 (Lasso)}: $\mathcal{L} + \lambda \sum_{j=1}^d |w_j|$
+    \item \textbf{L2 (Ridge)}: $\mathcal{L} + \lambda \sum_{j=1}^d w_j^2$
+    \item \textbf{Elastic Net}: $\mathcal{L} + \lambda_1 \sum_{j=1}^d |w_j| + \lambda_2 \sum_{j=1}^d w_j^2$
+\end{itemize}
+
+\section{Neural Networks}
+
+\subsection{Feedforward Networks}
+\begin{definition}
+A \textbf{feedforward neural network} with $L$ layers computes:
+$$\mathbf{h}^{(l)} = \sigma(\mathbf{W}^{(l)}\mathbf{h}^{(l-1)} + \mathbf{b}^{(l)})$$
+for $l = 1, \ldots, L$ where $\mathbf{h}^{(0)} = \mathbf{x}$.
+\end{definition}
+
+\subsection{Activation Functions}
+\begin{itemize}
+    \item \textbf{Sigmoid}: $\sigma(z) = \frac{1}{1+e^{-z}}$
+    \item \textbf{Hyperbolic tangent}: $\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$
+    \item \textbf{ReLU}: $\text{ReLU}(z) = \max(0, z)$
+    \item \textbf{Leaky ReLU}: $\text{LeakyReLU}(z) = \max(0.01z, z)$
+    \item \textbf{Softmax}: $\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}$
+\end{itemize}
+
+\subsection{Backpropagation}
+\begin{theorem}[Backpropagation Algorithm]
+The gradient of the loss with respect to weights is:
+$$\frac{\partial \mathcal{L}}{\partial w_{ij}^{(l)}} = \frac{\partial \mathcal{L}}{\partial z_j^{(l)}} \frac{\partial z_j^{(l)}}{\partial w_{ij}^{(l)}} = \delta_j^{(l)} h_i^{(l-1)}$$
+where $\delta_j^{(l)}$ is the error signal.
+\end{theorem}
+
+\subsection{Optimization Algorithms}
+\begin{itemize}
+    \item \textbf{SGD}: $\mathbf{w}_{t+1} = \mathbf{w}_t - \eta \nabla \mathcal{L}(\mathbf{w}_t)$
+    \item \textbf{Momentum}: $\mathbf{v}_{t+1} = \mu \mathbf{v}_t - \eta \nabla \mathcal{L}(\mathbf{w}_t)$, $\mathbf{w}_{t+1} = \mathbf{w}_t + \mathbf{v}_{t+1}$
+    \item \textbf{Adam}: Adaptive learning rates with momentum
+    \item \textbf{RMSprop}: Root mean square propagation
+\end{itemize}
+
+\section{Deep Learning}
+
+\subsection{Convolutional Neural Networks}
+\begin{definition}
+A \textbf{convolutional layer} applies filters $\mathbf{F}$ to input $\mathbf{X}$:
+$$(\mathbf{X} * \mathbf{F})_{i,j} = \sum_{m,n} \mathbf{X}_{i+m,j+n} \mathbf{F}_{m,n}$$
+\end{definition}
+
+\subsection{Recurrent Neural Networks}
+\begin{definition}
+An \textbf{RNN} maintains hidden state $\mathbf{h}_t$:
+$$\mathbf{h}_t = \sigma(\mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b}_h)$$
+$$\mathbf{y}_t = \mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y$$
+\end{definition}
+
+\subsection{Long Short-Term Memory (LSTM)}
+\begin{align}
+\mathbf{f}_t &= \sigma(\mathbf{W}_f[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f) \quad \text{(forget gate)} \\
+\mathbf{i}_t &= \sigma(\mathbf{W}_i[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_i) \quad \text{(input gate)} \\
+\tilde{\mathbf{C}}_t &= \tanh(\mathbf{W}_C[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_C) \quad \text{(candidate values)} \\
+\mathbf{C}_t &= \mathbf{f}_t * \mathbf{C}_{t-1} + \mathbf{i}_t * \tilde{\mathbf{C}}_t \quad \text{(cell state)} \\
+\mathbf{o}_t &= \sigma(\mathbf{W}_o[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_o) \quad \text{(output gate)} \\
+\mathbf{h}_t &= \mathbf{o}_t * \tanh(\mathbf{C}_t) \quad \text{(hidden state)}
+\end{align}
+
+\subsection{Attention Mechanisms}
+\begin{definition}
+\textbf{Self-attention} computes:
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$
+\end{definition}
+
+\subsection{Transformers}
+\begin{definition}
+A \textbf{transformer} uses multi-head self-attention and feedforward layers without recurrence.
+\end{definition}
+
+\section{Unsupervised Learning}
+
+\subsection{Clustering}
+\begin{definition}
+\textbf{K-means} minimizes:
+$$J = \sum_{i=1}^n \sum_{k=1}^K w_{ik} \|\mathbf{x}_i - \boldsymbol{\mu}_k\|^2$$
+where $w_{ik} = 1$ if $\mathbf{x}_i$ belongs to cluster $k$, 0 otherwise.
+\end{definition}
+
+\subsection{Dimensionality Reduction}
+\begin{definition}
+\textbf{Principal Component Analysis (PCA)} finds orthogonal directions of maximum variance by solving:
+$$\max_{\mathbf{w}} \mathbf{w}^T\mathbf{S}\mathbf{w} \quad \text{subject to} \quad \|\mathbf{w}\| = 1$$
+where $\mathbf{S}$ is the covariance matrix.
+\end{definition}
+
+\subsection{Autoencoders}
+\begin{definition}
+An \textbf{autoencoder} learns to reconstruct input through an encoder-decoder architecture:
+$$\mathbf{h} = f(\mathbf{x}), \quad \hat{\mathbf{x}} = g(\mathbf{h})$$
+\end{definition}
+
+\subsection{Generative Models}
+\begin{itemize}
+    \item \textbf{Generative Adversarial Networks (GANs)}
+    \item \textbf{Variational Autoencoders (VAEs)}
+    \item \textbf{Flow-based models}
+    \item \textbf{Diffusion models}
+\end{itemize}
+
+\section{Ensemble Methods}
+
+\subsection{Random Forest}
+\begin{definition}
+A \textbf{random forest} combines multiple decision trees trained on bootstrap samples with random feature selection.
+\end{definition}
+
+\subsection{Gradient Boosting}
+\begin{definition}
+\textbf{Gradient boosting} iteratively fits weak learners to the negative gradient:
+$$F_m(\mathbf{x}) = F_{m-1}(\mathbf{x}) + \gamma_m h_m(\mathbf{x})$$
+where $h_m$ minimizes the residual errors.
+\end{definition}
+
+\subsection{AdaBoost}
+\begin{definition}
+\textbf{AdaBoost} adaptively weights training examples based on previous errors.
+\end{definition}
+
+\section{Model Evaluation}
+
+\subsection{Classification Metrics}
+\begin{itemize}
+    \item \textbf{Accuracy}: $\frac{TP + TN}{TP + TN + FP + FN}$
+    \item \textbf{Precision}: $\frac{TP}{TP + FP}$
+    \item \textbf{Recall}: $\frac{TP}{TP + FN}$
+    \item \textbf{F1-score}: $\frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$
+    \item \textbf{AUC-ROC}: Area under the receiver operating characteristic curve
+\end{itemize}
+
+\subsection{Regression Metrics}
+\begin{itemize}
+    \item \textbf{Mean Squared Error}: $\text{MSE} = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2$
+    \item \textbf{Mean Absolute Error}: $\text{MAE} = \frac{1}{n}\sum_{i=1}^n |y_i - \hat{y}_i|$
+    \item \textbf{R-squared}: $R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}$
+\end{itemize}
+
+\subsection{Cross-Validation}
+\begin{definition}
+\textbf{k-fold cross-validation} splits data into $k$ folds, trains on $k-1$ folds, and validates on the remaining fold.
+\end{definition}
+
+\section{Support Vector Machines}
+
+\subsection{Linear SVM}
+\begin{definition}
+\textbf{Linear SVM} finds the hyperplane that maximizes the margin between classes:
+$$\min_{\mathbf{w}, b} \frac{1}{2}\|\mathbf{w}\|^2 \quad \text{subject to} \quad y_i(\mathbf{w}^T\mathbf{x}_i + b) \geq 1$$
+\end{definition}
+
+\subsection{Kernel Trick}
+\begin{definition}
+The \textbf{kernel trick} allows SVMs to work in high-dimensional feature spaces without explicitly computing the transformation.
+\end{definition}
+
+Common kernels:
+\begin{itemize}
+    \item \textbf{Linear}: $K(\mathbf{x}, \mathbf{x}') = \mathbf{x}^T\mathbf{x}'$
+    \item \textbf{Polynomial}: $K(\mathbf{x}, \mathbf{x}') = (\mathbf{x}^T\mathbf{x}' + c)^d$
+    \item \textbf{RBF}: $K(\mathbf{x}, \mathbf{x}') = \exp(-\gamma\|\mathbf{x} - \mathbf{x}'\|^2)$
+\end{itemize}
+
+\section{Decision Trees}
+
+\subsection{Splitting Criteria}
+\begin{itemize}
+    \item \textbf{Gini impurity}: $G = 1 - \sum_{i=1}^c p_i^2$
+    \item \textbf{Entropy}: $H = -\sum_{i=1}^c p_i \log_2 p_i$
+    \item \textbf{Information gain}: $\text{IG} = H(S) - \sum_{v \in \text{Values}} \frac{|S_v|}{|S|} H(S_v)$
+\end{itemize}
+
+\subsection{Random Forest}
+\begin{definition}
+\textbf{Random Forest} combines multiple decision trees with bagging and random feature selection.
+\end{definition}
+
+\section{Reinforcement Learning}
+
+\subsection{Markov Decision Process}
+\begin{definition}
+An \textbf{MDP} is defined by $(S, A, P, R, \gamma)$ where:
+\begin{itemize}
+    \item $S$ is the state space
+    \item $A$ is the action space
+    \item $P(s'|s,a)$ is the transition probability
+    \item $R(s,a)$ is the reward function
+    \item $\gamma$ is the discount factor
+\end{itemize}
+\end{definition}
+
+\subsection{Q-Learning}
+\begin{definition}
+\textbf{Q-learning} updates the Q-function:
+$$Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
+\end{definition}
+
+\subsection{Policy Gradient}
+\begin{definition}
+\textbf{Policy gradient} methods directly optimize the policy using gradient ascent on the expected return.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Computer Vision}
+\begin{itemize}
+    \item Image classification
+    \item Object detection
+    \item Image segmentation
+    \item Face recognition
+    \item Medical imaging
+\end{itemize}
+
+\subsection{Natural Language Processing}
+\begin{itemize}
+    \item Sentiment analysis
+    \item Machine translation
+    \item Question answering
+    \item Text generation
+    \item Named entity recognition
+\end{itemize}
+
+\subsection{Speech Processing}
+\begin{itemize}
+    \item Speech recognition
+    \item Speech synthesis
+    \item Speaker identification
+    \item Emotion recognition
+\end{itemize}
+
+\subsection{Recommendation Systems}
+\begin{itemize}
+    \item Collaborative filtering
+    \item Content-based filtering
+    \item Hybrid approaches
+    \item Matrix factorization
+\end{itemize}
+
+\section{Important Theorems}
+
+\subsection{Universal Approximation Theorem}
+\begin{theorem}
+A feedforward neural network with a single hidden layer can approximate any continuous function on a compact set, given sufficient hidden units.
+\end{theorem}
+
+\subsection{No-Free-Lunch Theorem}
+\begin{theorem}
+No learning algorithm can be universally better than any other across all possible learning problems.
+\end{theorem}
+
+\subsection{Bias-Variance Decomposition}
+\begin{theorem}
+The expected prediction error can be decomposed as:
+$$\mathbb{E}[(y - \hat{f}(x))^2] = \text{Bias}^2[\hat{f}(x)] + \text{Var}[\hat{f}(x)] + \sigma^2$$
+\end{theorem}
+
+\subsection{VC Dimension}
+\begin{definition}
+The \textbf{VC dimension} of a hypothesis class is the maximum number of points that can be shattered by the class.
+\end{definition}
+
+\section{Regularization Techniques}
+
+\subsection{Dropout}
+\begin{definition}
+\textbf{Dropout} randomly sets a fraction of input units to 0 during training to prevent overfitting.
+\end{definition}
+
+\subsection{Batch Normalization}
+\begin{definition}
+\textbf{Batch normalization} normalizes the inputs to each layer to reduce internal covariate shift.
+\end{definition}
+
+\subsection{Early Stopping}
+\begin{definition}
+\textbf{Early stopping} terminates training when validation performance stops improving.
+\end{definition}
+
+\section{Hyperparameter Tuning}
+
+\subsection{Grid Search}
+\begin{definition}
+\textbf{Grid search} exhaustively searches through a specified parameter grid.
+\end{definition}
+
+\subsection{Random Search}
+\begin{definition}
+\textbf{Random search} samples hyperparameters from specified distributions.
+\end{definition}
+
+\subsection{Bayesian Optimization}
+\begin{definition}
+\textbf{Bayesian optimization} uses a probabilistic model to guide the search for optimal hyperparameters.
+\end{definition}
+
+\end{document}

@@ -1,0 +1,207 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\geometry{margin=1in}
+
+\title{Linear Algebra Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Vector Spaces}
+
+\subsection{Definition}
+A vector space $V$ over a field $F$ is a set with two operations:
+\begin{itemize}
+    \item Vector addition: $+ : V \times V \to V$
+    \item Scalar multiplication: $\cdot : F \times V \to V$
+\end{itemize}
+
+\subsection{Axioms}
+For all $\mathbf{u}, \mathbf{v}, \mathbf{w} \in V$ and $a, b \in F$:
+\begin{enumerate}
+    \item $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$ (commutativity)
+    \item $(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})$ (associativity)
+    \item $\exists \mathbf{0} \in V : \mathbf{v} + \mathbf{0} = \mathbf{v}$ (zero vector)
+    \item $\forall \mathbf{v} \exists (-\mathbf{v}) : \mathbf{v} + (-\mathbf{v}) = \mathbf{0}$ (additive inverse)
+    \item $a(\mathbf{u} + \mathbf{v}) = a\mathbf{u} + a\mathbf{v}$ (distributivity)
+    \item $(a + b)\mathbf{v} = a\mathbf{v} + b\mathbf{v}$ (distributivity)
+    \item $(ab)\mathbf{v} = a(b\mathbf{v})$ (associativity)
+    \item $1\mathbf{v} = \mathbf{v}$ (identity)
+\end{enumerate}
+
+\subsection{Subspaces}
+A subset $W \subseteq V$ is a subspace if:
+\begin{itemize}
+    \item $\mathbf{0} \in W$
+    \item $\mathbf{u}, \mathbf{v} \in W \Rightarrow \mathbf{u} + \mathbf{v} \in W$
+    \item $\mathbf{v} \in W, a \in F \Rightarrow a\mathbf{v} \in W$
+\end{itemize}
+
+\section{Linear Independence and Basis}
+
+\subsection{Linear Independence}
+Vectors $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$ are linearly independent if:
+$$c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_n\mathbf{v}_n = \mathbf{0} \Rightarrow c_1 = c_2 = \cdots = c_n = 0$$
+
+\subsection{Span}
+The span of vectors $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$ is:
+$$\text{span}\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n\} = \{c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_n\mathbf{v}_n : c_i \in F\}$$
+
+\subsection{Basis}
+A basis for vector space $V$ is a linearly independent set that spans $V$.
+
+\subsection{Dimension}
+The dimension of $V$ is the number of vectors in any basis for $V$.
+
+\section{Linear Transformations}
+
+\subsection{Definition}
+A function $T: V \to W$ is linear if:
+\begin{itemize}
+    \item $T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$
+    \item $T(a\mathbf{v}) = aT(\mathbf{v})$
+\end{itemize}
+
+\subsection{Kernel and Image}
+\begin{itemize}
+    \item $\ker(T) = \{\mathbf{v} \in V : T(\mathbf{v}) = \mathbf{0}\}$
+    \item $\text{Im}(T) = \{T(\mathbf{v}) : \mathbf{v} \in V\}$
+\end{itemize}
+
+\subsection{Rank-Nullity Theorem}
+$$\dim(\ker(T)) + \dim(\text{Im}(T)) = \dim(V)$$
+
+\section{Matrices}
+
+\subsection{Matrix Operations}
+For matrices $A, B$ and scalar $c$:
+\begin{itemize}
+    \item $(A + B)_{ij} = A_{ij} + B_{ij}$
+    \item $(cA)_{ij} = cA_{ij}$
+    \item $(AB)_{ij} = \sum_k A_{ik}B_{kj}$
+\end{itemize}
+
+\subsection{Special Matrices}
+\begin{itemize}
+    \item Identity: $I_{ij} = \delta_{ij}$
+    \item Transpose: $(A^T)_{ij} = A_{ji}$
+    \item Symmetric: $A = A^T$
+    \item Skew-symmetric: $A = -A^T$
+    \item Orthogonal: $A^T A = I$
+\end{itemize}
+
+\subsection{Matrix Inverses}
+$A^{-1}$ exists if and only if $\det(A) \neq 0$.
+
+\section{Determinants}
+
+\subsection{Definition}
+For $n \times n$ matrix $A$:
+$$\det(A) = \sum_{\sigma \in S_n} \text{sgn}(\sigma) \prod_{i=1}^n A_{i,\sigma(i)}$$
+
+\subsection{Properties}
+\begin{itemize}
+    \item $\det(AB) = \det(A)\det(B)$
+    \item $\det(A^T) = \det(A)$
+    \item $\det(cA) = c^n\det(A)$
+    \item Swapping rows changes sign
+    \item Adding multiple of row to another doesn't change determinant
+\end{itemize}
+
+\section{Eigenvalues and Eigenvectors}
+
+\subsection{Definition}
+For matrix $A$, $\lambda$ is an eigenvalue with eigenvector $\mathbf{v}$ if:
+$$A\mathbf{v} = \lambda\mathbf{v}$$
+
+\subsection{Characteristic Polynomial}
+$$p(\lambda) = \det(A - \lambda I) = 0$$
+
+\subsection{Properties}
+\begin{itemize}
+    \item Sum of eigenvalues = trace of $A$
+    \item Product of eigenvalues = determinant of $A$
+    \item Eigenvectors corresponding to distinct eigenvalues are linearly independent
+\end{itemize}
+
+\section{Diagonalization}
+
+\subsection{Definition}
+Matrix $A$ is diagonalizable if there exists invertible $P$ such that:
+$$P^{-1}AP = D$$
+where $D$ is diagonal.
+
+\subsection{Conditions}
+$A$ is diagonalizable if and only if:
+\begin{itemize}
+    \item $A$ has $n$ linearly independent eigenvectors, or
+    \item Geometric multiplicity = algebraic multiplicity for each eigenvalue
+\end{itemize}
+
+\section{Inner Product Spaces}
+
+\subsection{Definition}
+An inner product on $V$ is a function $\langle \cdot, \cdot \rangle : V \times V \to F$ satisfying:
+\begin{itemize}
+    \item $\langle \mathbf{u}, \mathbf{v} \rangle = \overline{\langle \mathbf{v}, \mathbf{u} \rangle}$
+    \item $\langle a\mathbf{u} + b\mathbf{v}, \mathbf{w} \rangle = a\langle \mathbf{u}, \mathbf{w} \rangle + b\langle \mathbf{v}, \mathbf{w} \rangle$
+    \item $\langle \mathbf{v}, \mathbf{v} \rangle \geq 0$ with equality iff $\mathbf{v} = \mathbf{0}$
+\end{itemize}
+
+\subsection{Norm}
+$$\|\mathbf{v}\| = \sqrt{\langle \mathbf{v}, \mathbf{v} \rangle}$$
+
+\subsection{Orthogonality}
+Vectors $\mathbf{u}, \mathbf{v}$ are orthogonal if $\langle \mathbf{u}, \mathbf{v} \rangle = 0$.
+
+\section{Gram-Schmidt Process}
+
+Given linearly independent vectors $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$:
+\begin{align}
+\mathbf{u}_1 &= \mathbf{v}_1 \\
+\mathbf{u}_k &= \mathbf{v}_k - \sum_{i=1}^{k-1} \frac{\langle \mathbf{v}_k, \mathbf{u}_i \rangle}{\langle \mathbf{u}_i, \mathbf{u}_i \rangle}\mathbf{u}_i
+\end{align}
+
+Then $\{\mathbf{u}_1/\|\mathbf{u}_1\|, \mathbf{u}_2/\|\mathbf{u}_2\|, \ldots, \mathbf{u}_n/\|\mathbf{u}_n\|\}$ is orthonormal.
+
+\section{Singular Value Decomposition}
+
+For any $m \times n$ matrix $A$:
+$$A = U\Sigma V^T$$
+where:
+\begin{itemize}
+    \item $U$ is $m \times m$ orthogonal
+    \item $V$ is $n \times n$ orthogonal  
+    \item $\Sigma$ is $m \times n$ diagonal with non-negative entries
+\end{itemize}
+
+\section{Key Theorems}
+
+\subsection{Fundamental Theorem of Linear Algebra}
+For $m \times n$ matrix $A$:
+$$\mathbb{R}^n = \ker(A) \oplus \text{Im}(A^T)$$
+$$\mathbb{R}^m = \ker(A^T) \oplus \text{Im}(A)$$
+
+\subsection{Cayley-Hamilton Theorem}
+Every square matrix satisfies its own characteristic equation:
+$$p(A) = 0$$
+
+\subsection{Spectral Theorem}
+For symmetric matrix $A$, there exists orthogonal $Q$ such that:
+$$Q^T A Q = D$$
+where $D$ is diagonal.
+
+\end{document}

@@ -1,0 +1,468 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Operations Research Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Linear Programming}
+
+\subsection{Standard Form}
+\begin{definition}
+A \textbf{linear programming problem} in standard form is:
+\begin{align}
+\max \quad & \mathbf{c}^T \mathbf{x} \\
+\text{subject to} \quad & A\mathbf{x} = \mathbf{b} \\
+& \mathbf{x} \geq \mathbf{0}
+\end{align}
+where $\mathbf{x} \in \mathbb{R}^n$, $A \in \mathbb{R}^{m \times n}$, $\mathbf{b} \in \mathbb{R}^m$, and $\mathbf{c} \in \mathbb{R}^n$.
+\end{definition}
+
+\subsection{Duality}
+\begin{definition}
+The \textbf{dual} of the primal problem:
+\begin{align}
+\max \quad & \mathbf{c}^T \mathbf{x} \\
+\text{subject to} \quad & A\mathbf{x} \leq \mathbf{b} \\
+& \mathbf{x} \geq \mathbf{0}
+\end{align}
+is:
+\begin{align}
+\min \quad & \mathbf{b}^T \mathbf{y} \\
+\text{subject to} \quad & A^T \mathbf{y} \geq \mathbf{c} \\
+& \mathbf{y} \geq \mathbf{0}
+\end{align}
+\end{definition}
+
+\subsection{Duality Theorems}
+\begin{theorem}[Weak Duality]
+If $\mathbf{x}$ is feasible for the primal and $\mathbf{y}$ is feasible for the dual, then $\mathbf{c}^T \mathbf{x} \leq \mathbf{b}^T \mathbf{y}$.
+\end{theorem}
+
+\begin{theorem}[Strong Duality]
+If either the primal or dual has an optimal solution, then both have optimal solutions and their optimal values are equal.
+\end{theorem}
+
+\begin{theorem}[Complementary Slackness]
+If $\mathbf{x}^*$ and $\mathbf{y}^*$ are optimal solutions to the primal and dual respectively, then:
+$$x_i^* (A^T \mathbf{y}^* - \mathbf{c})_i = 0 \quad \text{and} \quad y_j^* (\mathbf{b} - A\mathbf{x}^*)_j = 0$$
+\end{theorem}
+
+\subsection{Simplex Method}
+\begin{definition}
+The \textbf{simplex method} is an iterative algorithm that moves from vertex to vertex of the feasible region to find the optimal solution.
+\end{definition}
+
+\subsection{Sensitivity Analysis}
+\begin{definition}
+\textbf{Sensitivity analysis} studies how changes in the problem parameters affect the optimal solution.
+\end{definition}
+
+\section{Integer Programming}
+
+\subsection{Integer Linear Programming}
+\begin{definition}
+An \textbf{integer linear programming problem} is:
+\begin{align}
+\max \quad & \mathbf{c}^T \mathbf{x} \\
+\text{subject to} \quad & A\mathbf{x} \leq \mathbf{b} \\
+& \mathbf{x} \geq \mathbf{0} \\
+& \mathbf{x} \in \mathbb{Z}^n
+\end{align}
+\end{definition}
+
+\subsection{Branch and Bound}
+\begin{definition}
+\textbf{Branch and bound} is a method for solving integer programming problems by systematically exploring the solution space.
+\end{definition}
+
+\subsection{Cutting Plane Method}
+\begin{definition}
+The \textbf{cutting plane method} adds linear inequalities (cuts) to eliminate fractional solutions.
+\end{definition}
+
+\subsection{Gomory Cuts}
+\begin{definition}
+\textbf{Gomory cuts} are cutting planes derived from the simplex tableau for integer programming.
+\end{definition}
+
+\section{Network Optimization}
+
+\subsection{Minimum Cost Flow}
+\begin{definition}
+The \textbf{minimum cost flow problem} is:
+\begin{align}
+\min \quad & \sum_{(i,j) \in E} c_{ij} x_{ij} \\
+\text{subject to} \quad & \sum_{j:(i,j) \in E} x_{ij} - \sum_{j:(j,i) \in E} x_{ji} = b_i \quad \forall i \in V \\
+& l_{ij} \leq x_{ij} \leq u_{ij} \quad \forall (i,j) \in E
+\end{align}
+where $G = (V,E)$ is a directed graph, $c_{ij}$ are costs, $b_i$ are supplies/demands, and $l_{ij}$, $u_{ij}$ are lower and upper bounds.
+\end{definition}
+
+\subsection{Shortest Path Problem}
+\begin{definition}
+The \textbf{shortest path problem} finds the minimum cost path from a source vertex to a destination vertex.
+\end{definition}
+
+\subsection{Dijkstra's Algorithm}
+\begin{theorem}[Dijkstra's Algorithm]
+For non-negative edge weights, Dijkstra's algorithm finds shortest paths in $O(|V|^2)$ time.
+\end{theorem}
+
+\subsection{Maximum Flow Problem}
+\begin{definition}
+The \textbf{maximum flow problem} is:
+\begin{align}
+\max \quad & \sum_{j:(s,j) \in E} x_{sj} \\
+\text{subject to} \quad & \sum_{j:(i,j) \in E} x_{ij} = \sum_{j:(j,i) \in E} x_{ji} \quad \forall i \in V \setminus \{s,t\} \\
+& 0 \leq x_{ij} \leq u_{ij} \quad \forall (i,j) \in E
+\end{align}
+where $s$ is the source and $t$ is the sink.
+\end{definition}
+
+\subsection{Ford-Fulkerson Algorithm}
+\begin{theorem}[Max-Flow Min-Cut Theorem]
+The maximum flow value equals the minimum cut capacity.
+\end{theorem}
+
+\subsection{Assignment Problem}
+\begin{definition}
+The \textbf{assignment problem} assigns $n$ tasks to $n$ workers to minimize total cost:
+\begin{align}
+\min \quad & \sum_{i=1}^n \sum_{j=1}^n c_{ij} x_{ij} \\
+\text{subject to} \quad & \sum_{j=1}^n x_{ij} = 1 \quad \forall i \\
+& \sum_{i=1}^n x_{ij} = 1 \quad \forall j \\
+& x_{ij} \in \{0,1\}
+\end{align}
+\end{definition}
+
+\subsection{Hungarian Algorithm}
+\begin{definition}
+The \textbf{Hungarian algorithm} solves the assignment problem in $O(n^3)$ time.
+\end{definition}
+
+\section{Queuing Theory}
+
+\subsection{Kendall Notation}
+\begin{definition}
+The \textbf{Kendall notation} $A/B/c/K/m/Z$ describes a queuing system where:
+\begin{itemize}
+    \item $A$: arrival process
+    \item $B$: service time distribution
+    \item $c$: number of servers
+    \item $K$: system capacity
+    \item $m$: population size
+    \item $Z$: service discipline
+\end{itemize}
+\end{definition}
+
+\subsection{Poisson Process}
+\begin{definition}
+A \textbf{Poisson process} with rate $\lambda$ has:
+\begin{itemize}
+    \item Inter-arrival times are exponentially distributed with mean $1/\lambda$
+    \item Number of arrivals in time $t$ is Poisson distributed with mean $\lambda t$
+\end{itemize}
+\end{definition}
+
+\subsection{M/M/1 Queue}
+\begin{definition}
+An \textbf{M/M/1 queue} has Poisson arrivals, exponential service times, and one server.
+\end{definition}
+
+For M/M/1 with arrival rate $\lambda$ and service rate $\mu$:
+\begin{itemize}
+    \item Traffic intensity: $\rho = \lambda/\mu$
+    \item Steady-state probability of $n$ customers: $p_n = \rho^n(1-\rho)$
+    \item Average number in system: $L = \rho/(1-\rho)$
+    \item Average waiting time: $W = 1/(\mu-\lambda)$
+\end{itemize}
+
+\subsection{Little's Law}
+\begin{theorem}[Little's Law]
+For a stable queuing system:
+$$L = \lambda W$$
+where $L$ is the average number of customers, $\lambda$ is the arrival rate, and $W$ is the average time in the system.
+\end{theorem}
+
+\subsection{M/M/c Queue}
+\begin{definition}
+An \textbf{M/M/c queue} has $c$ servers with Poisson arrivals and exponential service times.
+\end{definition}
+
+\subsection{Erlang's Loss Formula}
+\begin{theorem}[Erlang's Loss Formula]
+For M/M/c/c (loss system):
+$$P(\text{loss}) = \frac{(\lambda/\mu)^c/c!}{\sum_{k=0}^c (\lambda/\mu)^k/k!}$$
+\end{theorem}
+
+\section{Dynamic Programming}
+
+\subsection{Principle of Optimality}
+\begin{definition}
+The \textbf{principle of optimality} states that an optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.
+\end{definition}
+
+\subsection{Bellman Equation}
+\begin{definition}
+The \textbf{Bellman equation} for dynamic programming is:
+$$V(s) = \max_a \left\{ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V(s') \right\}$$
+where $V(s)$ is the value function, $R(s,a)$ is the reward, and $\gamma$ is the discount factor.
+\end{definition}
+
+\subsection{Inventory Management}
+\begin{definition}
+The \textbf{economic order quantity (EOQ)} model minimizes total inventory costs:
+$$Q^* = \sqrt{\frac{2DS}{H}}$$
+where $D$ is demand rate, $S$ is setup cost, and $H$ is holding cost per unit per time.
+\end{definition}
+
+\subsection{Newsvendor Problem}
+\begin{definition}
+The \textbf{newsvendor problem} determines optimal order quantity when demand is uncertain:
+$$F(Q^*) = \frac{p-c}{p-s}$$
+where $p$ is selling price, $c$ is cost, $s$ is salvage value, and $F$ is the demand distribution function.
+\end{definition}
+
+\section{Game Theory}
+
+\subsection{Normal Form Games}
+\begin{definition}
+A \textbf{normal form game} consists of:
+\begin{itemize}
+    \item Players: $N = \{1, 2, \ldots, n\}$
+    \item Strategy sets: $S_i$ for each player $i$
+    \item Payoff functions: $u_i: S_1 \times S_2 \times \cdots \times S_n \to \mathbb{R}$
+\end{itemize}
+\end{definition}
+
+\subsection{Nash Equilibrium}
+\begin{definition}
+A \textbf{Nash equilibrium} is a strategy profile $(s_1^*, s_2^*, \ldots, s_n^*)$ such that for each player $i$:
+$$u_i(s_i^*, s_{-i}^*) \geq u_i(s_i, s_{-i}^*) \quad \forall s_i \in S_i$$
+\end{definition}
+
+\subsection{Zero-Sum Games}
+\begin{definition}
+A \textbf{zero-sum game} satisfies $\sum_{i=1}^n u_i(s) = 0$ for all strategy profiles $s$.
+\end{definition}
+
+\subsection{Minimax Theorem}
+\begin{theorem}[Minimax Theorem]
+In a zero-sum game, the minimax value equals the maximin value:
+$$\min_{y} \max_{x} x^T A y = \max_{x} \min_{y} x^T A y$$
+\end{theorem}
+
+\section{Stochastic Programming}
+
+\subsection{Two-Stage Stochastic Programming}
+\begin{definition}
+A \textbf{two-stage stochastic program} is:
+\begin{align}
+\min \quad & \mathbf{c}^T \mathbf{x} + \mathbb{E}[Q(\mathbf{x}, \boldsymbol{\xi})] \\
+\text{subject to} \quad & A\mathbf{x} = \mathbf{b} \\
+& \mathbf{x} \geq \mathbf{0}
+\end{align}
+where $Q(\mathbf{x}, \boldsymbol{\xi}) = \min\{\mathbf{q}^T \mathbf{y} : T\mathbf{x} + W\mathbf{y} = \mathbf{h}(\boldsymbol{\xi}), \mathbf{y} \geq \mathbf{0}\}$.
+\end{definition}
+
+\subsection{Sample Average Approximation}
+\begin{definition}
+\textbf{Sample average approximation} replaces the expected value with a sample average:
+$$\mathbb{E}[Q(\mathbf{x}, \boldsymbol{\xi})] \approx \frac{1}{N} \sum_{i=1}^N Q(\mathbf{x}, \boldsymbol{\xi}_i)$$
+\end{definition}
+
+\section{Multi-Objective Optimization}
+
+\subsection{Pareto Optimality}
+\begin{definition}
+A solution $\mathbf{x}^*$ is \textbf{Pareto optimal} if there does not exist another solution $\mathbf{x}$ such that:
+\begin{itemize}
+    \item $f_i(\mathbf{x}) \leq f_i(\mathbf{x}^*)$ for all $i$
+    \item $f_j(\mathbf{x}) < f_j(\mathbf{x}^*)$ for at least one $j$
+\end{itemize}
+\end{definition}
+
+\subsection{Weighted Sum Method}
+\begin{definition}
+The \textbf{weighted sum method} converts multi-objective optimization to single-objective:
+$$\min \sum_{i=1}^k w_i f_i(\mathbf{x})$$
+where $w_i \geq 0$ and $\sum_{i=1}^k w_i = 1$.
+\end{definition}
+
+\subsection{Goal Programming}
+\begin{definition}
+\textbf{Goal programming} minimizes deviations from target values:
+$$\min \sum_{i=1}^k (d_i^+ + d_i^-)$$
+subject to $f_i(\mathbf{x}) + d_i^- - d_i^+ = g_i$ where $g_i$ is the goal for objective $i$.
+\end{definition}
+
+\section{Heuristic Methods}
+
+\subsection{Genetic Algorithms}
+\begin{definition}
+\textbf{Genetic algorithms} use evolutionary principles to find good solutions:
+\begin{enumerate}
+    \item Initialize population
+    \item Evaluate fitness
+    \item Select parents
+    \item Create offspring through crossover and mutation
+    \item Replace population
+    \item Repeat until convergence
+\end{enumerate}
+\end{definition}
+
+\subsection{Simulated Annealing}
+\begin{definition}
+\textbf{Simulated annealing} accepts worse solutions with probability $e^{-\Delta E/T}$ where $\Delta E$ is the energy difference and $T$ is the temperature.
+\end{definition}
+
+\subsection{Tabu Search}
+\begin{definition}
+\textbf{Tabu search} maintains a list of forbidden moves to avoid cycling and explore new regions of the solution space.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Supply Chain Management}
+\begin{itemize}
+    \item Facility location
+    \item Transportation planning
+    \item Inventory optimization
+    \item Production scheduling
+\end{itemize}
+
+\subsection{Finance}
+\begin{itemize}
+    \item Portfolio optimization
+    \item Risk management
+    \item Asset allocation
+    \item Option pricing
+\end{itemize}
+
+\subsection{Healthcare}
+\begin{itemize}
+    \item Resource allocation
+    \item Appointment scheduling
+    \item Emergency response
+    \item Treatment planning
+\end{itemize}
+
+\subsection{Transportation}
+\begin{itemize}
+    \item Vehicle routing
+    \item Traffic flow optimization
+    \item Public transit planning
+    \item Logistics management
+\end{itemize}
+
+\subsection{Energy}
+\begin{itemize}
+    \item Power generation scheduling
+    \item Grid optimization
+    \item Renewable energy integration
+    \item Demand response
+\end{itemize}
+
+\section{Important Algorithms}
+
+\subsection{Linear Programming}
+\begin{itemize}
+    \item Simplex method
+    \item Interior point methods
+    \item Dual simplex method
+    \item Revised simplex method
+\end{itemize}
+
+\subsection{Network Algorithms}
+\begin{itemize}
+    \item Dijkstra's algorithm
+    \item Bellman-Ford algorithm
+    \item Floyd-Warshall algorithm
+    \item Ford-Fulkerson algorithm
+    \item Hungarian algorithm
+\end{itemize}
+
+\subsection{Integer Programming}
+\begin{itemize}
+    \item Branch and bound
+    \item Cutting plane methods
+    \item Branch and cut
+    \item Lagrangian relaxation
+\end{itemize}
+
+\section{Key Theorems}
+
+\subsection{Farkas' Lemma}
+\begin{theorem}[Farkas' Lemma]
+Exactly one of the following systems has a solution:
+\begin{enumerate}
+    \item $A\mathbf{x} = \mathbf{b}$, $\mathbf{x} \geq \mathbf{0}$
+    \item $A^T \mathbf{y} \leq \mathbf{0}$, $\mathbf{b}^T \mathbf{y} > 0$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Carathéodory's Theorem}
+\begin{theorem}[Carathéodory's Theorem]
+If $\mathbf{x}$ is in the convex hull of $S \subset \mathbb{R}^n$, then $\mathbf{x}$ is in the convex hull of at most $n+1$ points of $S$.
+\end{theorem}
+
+\subsection{Separating Hyperplane Theorem}
+\begin{theorem}[Separating Hyperplane Theorem]
+If $C$ and $D$ are disjoint convex sets, then there exists a hyperplane that separates them.
+\end{theorem}
+
+\section{Software and Tools}
+
+\subsection{Commercial Solvers}
+\begin{itemize}
+    \item CPLEX
+    \item Gurobi
+    \item Xpress
+    \item MOSEK
+\end{itemize}
+
+\subsection{Open Source Solvers}
+\begin{itemize}
+    \item GLPK
+    \item COIN-OR
+    \item SCIP
+    \item OR-Tools
+\end{itemize}
+
+\subsection{Modeling Languages}
+\begin{itemize}
+    \item AMPL
+    \item GAMS
+    \item OPL
+    \item Pyomo
+\end{itemize}
+
+\end{document}

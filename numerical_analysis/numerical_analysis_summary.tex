@@ -1,0 +1,343 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\title{Numerical Analysis Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Error Analysis}
+
+\subsection{Sources of Error}
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Modeling Error}: Error in mathematical model
+    \item \textbf{Data Error}: Error in input data
+    \item \textbf{Truncation Error}: Error from finite approximations
+    \item \textbf{Round-off Error}: Error from finite precision arithmetic
+\end{itemize}
+\end{definition}
+
+\subsection{Error Types}
+\begin{definition}
+For approximation $\tilde{x}$ of exact value $x$:
+\begin{itemize}
+    \item \textbf{Absolute Error}: $|x - \tilde{x}|$
+    \item \textbf{Relative Error}: $\frac{|x - \tilde{x}|}{|x|}$ (if $x \neq 0$)
+    \item \textbf{Forward Error}: $|f(x) - f(\tilde{x})|$
+    \item \textbf{Backward Error}: $|\tilde{x} - x|$ where $f(\tilde{x}) = f(x)$
+\end{itemize}
+\end{definition}
+
+\subsection{Conditioning}
+\begin{definition}
+A problem is \textbf{well-conditioned} if small changes in input produce small changes in output. The \textbf{condition number} measures sensitivity:
+$$\kappa = \lim_{\delta \to 0} \sup_{|\Delta x| \leq \delta} \frac{|\Delta f|}{|\Delta x|} \cdot \frac{|x|}{|f(x)|}$$
+\end{definition}
+
+\section{Root Finding}
+
+\subsection{Bisection Method}
+\begin{theorem}
+If $f$ is continuous on $[a,b]$ and $f(a)f(b) < 0$, then the bisection method converges to a root with error bound:
+$$|x_n - x^*| \leq \frac{b-a}{2^{n+1}}$$
+\end{theorem}
+
+\subsection{Newton's Method}
+\begin{definition}
+Newton's method for finding roots of $f(x) = 0$:
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+\end{definition}
+
+\begin{theorem}
+If $f'(x^*) \neq 0$ and $f''$ is continuous near $x^*$, then Newton's method converges quadratically:
+$$|x_{n+1} - x^*| \leq C|x_n - x^*|^2$$
+\end{theorem}
+
+\subsection{Secant Method}
+\begin{definition}
+The secant method uses two previous points:
+$$x_{n+1} = x_n - f(x_n) \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}$$
+\end{definition}
+
+% Illustration of root finding methods
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x$,
+        ylabel = $f(x)$,
+        xmin=-1, xmax=4,
+        ymin=-2, ymax=3,
+    ]
+    
+    % Function
+    \addplot[blue, thick, domain=-1:4, samples=100] {x^2 - 3};
+    
+    % Tangent line (Newton's method)
+    \addplot[red, thick, domain=2:3.5] {4*(x-2) + 1};
+    
+    % Secant line
+    \addplot[green, thick, domain=1:3] {2*(x-1) - 2};
+    
+    % Points
+    \addplot[red, only marks, mark=*] coordinates {(2,1) (2.75,0)};
+    \addplot[green, only marks, mark=square] coordinates {(1,-2) (3,6) (2.33,0)};
+    
+    \node[red, above] at (2,1) {Newton};
+    \node[green, above] at (2.33,0) {Secant};
+    
+    \end{axis}
+\end{tikzpicture}
+\caption{Root finding methods}
+\end{figure}
+
+\section{Interpolation}
+
+\subsection{Lagrange Interpolation}
+\begin{definition}
+Given points $(x_i, y_i)$, the Lagrange interpolating polynomial is:
+$$P_n(x) = \sum_{i=0}^n y_i L_i(x)$$
+where $L_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}$
+\end{definition}
+
+\subsection{Newton's Divided Differences}
+\begin{definition}
+The Newton form of the interpolating polynomial:
+$$P_n(x) = f[x_0] + f[x_0,x_1](x-x_0) + \cdots + f[x_0,\ldots,x_n](x-x_0)\cdots(x-x_{n-1})$$
+where $f[x_i,\ldots,x_j] = \frac{f[x_{i+1},\ldots,x_j] - f[x_i,\ldots,x_{j-1}]}{x_j - x_i}$
+\end{definition}
+
+\subsection{Error in Interpolation}
+\begin{theorem}
+If $f \in C^{n+1}[a,b]$, then for $x \in [a,b]$:
+$$f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^n (x - x_i)$$
+for some $\xi \in [a,b]$.
+\end{theorem}
+
+\section{Numerical Integration}
+
+\subsection{Newton-Cotes Formulas}
+\begin{definition}
+The $n$-point Newton-Cotes formula:
+$$\int_a^b f(x) \, dx \approx \sum_{i=0}^n w_i f(x_i)$$
+where $x_i = a + ih$ and $h = \frac{b-a}{n}$.
+\end{definition}
+
+\subsubsection{Trapezoidal Rule}
+$$\int_a^b f(x) \, dx \approx \frac{h}{2}[f(a) + 2f(a+h) + \cdots + 2f(b-h) + f(b)]$$
+
+\subsubsection{Simpson's Rule}
+$$\int_a^b f(x) \, dx \approx \frac{h}{3}[f(a) + 4f(a+h) + 2f(a+2h) + \cdots + 4f(b-h) + f(b)]$$
+
+\subsection{Gaussian Quadrature}
+\begin{definition}
+Gaussian quadrature uses optimal nodes and weights:
+$$\int_{-1}^1 f(x) \, dx \approx \sum_{i=1}^n w_i f(x_i)$$
+where $x_i$ are roots of Legendre polynomials.
+\end{definition}
+
+\subsection{Error Analysis}
+\begin{theorem}
+For the trapezoidal rule with $f \in C^2[a,b]$:
+$$\left|\int_a^b f(x) \, dx - T_n\right| \leq \frac{(b-a)^3}{12n^2} \max_{x \in [a,b]} |f''(x)|$$
+\end{theorem}
+
+\section{Numerical Differentiation}
+
+\subsection{Finite Differences}
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Forward Difference}: $f'(x) \approx \frac{f(x+h) - f(x)}{h}$
+    \item \textbf{Backward Difference}: $f'(x) \approx \frac{f(x) - f(x-h)}{h}$
+    \item \textbf{Central Difference}: $f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}$
+\end{itemize}
+\end{definition}
+
+\subsection{Error Analysis}
+\begin{theorem}
+For central difference with $f \in C^3$:
+$$f'(x) - \frac{f(x+h) - f(x-h)}{2h} = -\frac{h^2}{6} f'''(\xi)$$
+for some $\xi \in [x-h, x+h]$.
+\end{theorem}
+
+\section{Linear Systems}
+
+\subsection{Gaussian Elimination}
+\begin{definition}
+Gaussian elimination with partial pivoting solves $Ax = b$ by:
+\begin{enumerate}
+    \item Forward elimination with row swaps
+    \item Back substitution
+\end{enumerate}
+\end{definition}
+
+\subsection{LU Factorization}
+\begin{definition}
+If $A$ can be factored as $A = LU$ where $L$ is lower triangular and $U$ is upper triangular, then $Ax = b$ becomes:
+\begin{enumerate}
+    \item Solve $Ly = b$ for $y$
+    \item Solve $Ux = y$ for $x$
+\end{enumerate}
+\end{definition}
+
+\subsection{Iterative Methods}
+
+\subsubsection{Jacobi Method}
+$$x_i^{(k+1)} = \frac{1}{a_{ii}} \left(b_i - \sum_{j \neq i} a_{ij} x_j^{(k)}\right)$$
+
+\subsubsection{Gauss-Seidel Method}
+$$x_i^{(k+1)} = \frac{1}{a_{ii}} \left(b_i - \sum_{j<i} a_{ij} x_j^{(k+1)} - \sum_{j>i} a_{ij} x_j^{(k)}\right)$$
+
+\subsection{Convergence}
+\begin{theorem}
+The Jacobi and Gauss-Seidel methods converge if $A$ is strictly diagonally dominant:
+$$|a_{ii}| > \sum_{j \neq i} |a_{ij}| \quad \forall i$$
+\end{theorem}
+
+\section{Ordinary Differential Equations}
+
+\subsection{Euler's Method}
+\begin{definition}
+For $y' = f(t,y)$, $y(t_0) = y_0$:
+$$y_{n+1} = y_n + h f(t_n, y_n)$$
+where $h$ is the step size.
+\end{definition}
+
+\subsection{Runge-Kutta Methods}
+\begin{definition}
+The fourth-order Runge-Kutta method:
+\begin{align}
+k_1 &= h f(t_n, y_n) \\
+k_2 &= h f(t_n + h/2, y_n + k_1/2) \\
+k_3 &= h f(t_n + h/2, y_n + k_2/2) \\
+k_4 &= h f(t_n + h, y_n + k_3) \\
+y_{n+1} &= y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)
+\end{align}
+\end{definition}
+
+\subsection{Error Analysis}
+\begin{theorem}
+For Euler's method with $f \in C^1$:
+$$|y(t_n) - y_n| \leq \frac{Mh}{2L}(e^{L(t_n-t_0)} - 1)$$
+where $M = \max |f'|$ and $L$ is the Lipschitz constant.
+\end{theorem}
+
+\section{Approximation Theory}
+
+\subsection{Best Approximation}
+\begin{definition}
+The best approximation to $f$ in norm $\|\cdot\|$ from subspace $S$ is $p^* \in S$ such that:
+$$\|f - p^*\| = \min_{p \in S} \|f - p\|$$
+\end{definition}
+
+\subsection{Chebyshev Approximation}
+\begin{theorem}
+For $f \in C[a,b]$, there exists a unique best uniform approximation $p^* \in P_n$ such that:
+$$\|f - p^*\|_\infty = \min_{p \in P_n} \|f - p\|_\infty$$
+\end{theorem}
+
+\subsection{Least Squares Approximation}
+\begin{definition}
+The least squares approximation minimizes:
+$$\sum_{i=1}^m (f(x_i) - p(x_i))^2$$
+for given data points $(x_i, f(x_i))$.
+\end{definition}
+
+\section{Fast Fourier Transform}
+
+\subsection{Discrete Fourier Transform}
+\begin{definition}
+The DFT of sequence $\{x_n\}$ is:
+$$X_k = \sum_{n=0}^{N-1} x_n e^{-2\pi i kn/N}$$
+\end{definition}
+
+\subsection{FFT Algorithm}
+\begin{theorem}
+The FFT computes the DFT in $O(N \log N)$ operations using the divide-and-conquer approach.
+\end{theorem}
+
+\section{Eigenvalue Problems}
+
+\subsection{Power Method}
+\begin{definition}
+For dominant eigenvalue $\lambda_1$ of matrix $A$:
+$$x^{(k+1)} = \frac{Ax^{(k)}}{\|Ax^{(k)}\|}$$
+\end{definition}
+
+\subsection{QR Algorithm}
+\begin{definition}
+The QR algorithm for eigenvalues:
+\begin{enumerate}
+    \item Factor $A_k = Q_k R_k$
+    \item Set $A_{k+1} = R_k Q_k$
+    \item Repeat until convergence
+\end{enumerate}
+\end{definition}
+
+\section{Applications}
+
+\subsection{Scientific Computing}
+Numerical analysis is essential for:
+\begin{itemize}
+    \item Solving differential equations
+    \item Optimization problems
+    \item Signal processing
+    \item Computational fluid dynamics
+\end{itemize}
+
+\subsection{Engineering}
+Applications include:
+\begin{itemize}
+    \item Structural analysis
+    \item Control systems
+    \item Image processing
+    \item Financial modeling
+\end{itemize}
+
+\section{Important Theorems}
+
+\subsection{Weierstrass Approximation Theorem}
+\begin{theorem}
+For any $f \in C[a,b]$ and $\epsilon > 0$, there exists a polynomial $p$ such that:
+$$\|f - p\|_\infty < \epsilon$$
+\end{theorem}
+
+\subsection{Intermediate Value Theorem}
+\begin{theorem}
+If $f$ is continuous on $[a,b]$ and $f(a)f(b) < 0$, then there exists $c \in (a,b)$ such that $f(c) = 0$.
+\end{theorem}
+
+\subsection{Fixed Point Theorem}
+\begin{theorem}
+If $g: [a,b] \to [a,b]$ is continuous and $|g'(x)| < 1$ for all $x \in [a,b]$, then $g$ has a unique fixed point.
+\end{theorem}
+
+\end{document}

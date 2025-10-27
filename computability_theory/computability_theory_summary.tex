@@ -1,0 +1,428 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{pgfplots}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+
+\title{Computability Theory Summary}
+\author{Mathematical Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+Computability theory studies what can and cannot be computed algorithmically. It provides the mathematical foundation for understanding the limits of computation and establishes fundamental concepts that underlie computer science.
+
+\section{Computational Models}
+
+\subsection{Turing Machines}
+\begin{definition}
+A \textbf{Turing machine} consists of:
+\begin{itemize}
+    \item A finite set of states $Q$
+    \item A finite alphabet $\Sigma$ (input symbols)
+    \item A tape alphabet $\Gamma \supseteq \Sigma$ (includes blank symbol $B$)
+    \item A transition function $\delta: Q \times \Gamma \to Q \times \Gamma \times \{L, R\}$
+    \item A start state $q_0 \in Q$
+    \item Accept and reject states $q_{\text{accept}}, q_{\text{reject}} \in Q$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+A language $L$ is \textbf{Turing-recognizable} (recursively enumerable) if there exists a Turing machine that accepts all strings in $L$ and either rejects or loops on strings not in $L$.
+\end{definition}
+
+\begin{definition}
+A language $L$ is \textbf{Turing-decidable} (recursive) if there exists a Turing machine that accepts all strings in $L$ and rejects all strings not in $L$.
+\end{definition}
+
+\subsection{Lambda Calculus}
+\begin{definition}
+The \textbf{lambda calculus} consists of:
+\begin{itemize}
+    \item Variables: $x, y, z, \ldots$
+    \item Lambda abstractions: $\lambda x. M$
+    \item Applications: $M N$
+\end{itemize}
+where $M, N$ are lambda terms.
+\end{definition}
+
+\begin{definition}
+The \textbf{beta reduction} rule is:
+$$(\lambda x. M) N \to_\beta M[x := N]$$
+where $M[x := N]$ denotes substitution of $N$ for $x$ in $M$.
+\end{definition}
+
+\begin{definition}
+A lambda term is in \textbf{normal form} if no beta reduction can be applied to it.
+\end{definition}
+
+\subsection{Church Encoding}
+\begin{definition}
+Natural numbers in lambda calculus:
+\begin{align}
+0 &= \lambda f. \lambda x. x \\
+1 &= \lambda f. \lambda x. f x \\
+2 &= \lambda f. \lambda x. f(f x) \\
+n &= \lambda f. \lambda x. f^n x
+\end{align}
+\end{definition}
+
+\begin{definition}
+The \textbf{successor function}:
+$$\text{succ} = \lambda n. \lambda f. \lambda x. f(n f x)$$
+\end{definition}
+
+\subsection{Recursive Functions}
+\begin{definition}
+The \textbf{primitive recursive functions} are defined inductively:
+\begin{itemize}
+    \item \textbf{Zero function}: $Z(x) = 0$
+    \item \textbf{Successor function}: $S(x) = x + 1$
+    \item \textbf{Projection functions}: $P_i^n(x_1, \ldots, x_n) = x_i$
+    \item \textbf{Composition}: If $g, h_1, \ldots, h_m$ are primitive recursive, then so is $f(x_1, \ldots, x_n) = g(h_1(x_1, \ldots, x_n), \ldots, h_m(x_1, \ldots, x_n))$
+    \item \textbf{Primitive recursion}: If $g$ and $h$ are primitive recursive, then so is $f$ defined by:
+    \begin{align}
+    f(0, x_2, \ldots, x_n) &= g(x_2, \ldots, x_n) \\
+    f(y+1, x_2, \ldots, x_n) &= h(y, f(y, x_2, \ldots, x_n), x_2, \ldots, x_n)
+    \end{align}
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+The \textbf{general recursive functions} (partial recursive functions) extend primitive recursive functions with the \textbf{minimization operator}:
+$$\mu y[g(x_1, \ldots, x_n, y) = 0] = \text{the least } y \text{ such that } g(x_1, \ldots, x_n, y) = 0$$
+\end{definition}
+
+\section{Church-Turing Thesis}
+
+\begin{theorem}[Church-Turing Thesis]
+The class of computable functions is exactly the class of functions computable by:
+\begin{itemize}
+    \item Turing machines
+    \item Lambda calculus
+    \item General recursive functions
+    \item Any other reasonable model of computation
+\end{itemize}
+\end{theorem}
+
+\section{Decidability}
+
+\subsection{Decidable Languages}
+\begin{theorem}
+The following languages are decidable:
+\begin{itemize}
+    \item $A_{DFA} = \{\langle B, w \rangle : B \text{ is a DFA that accepts } w\}$
+    \item $A_{NFA} = \{\langle B, w \rangle : B \text{ is an NFA that accepts } w\}$
+    \item $A_{REX} = \{\langle R, w \rangle : R \text{ is a regular expression that generates } w\}$
+    \item $E_{DFA} = \{\langle A \rangle : A \text{ is a DFA and } L(A) = \emptyset\}$
+    \item $EQ_{DFA} = \{\langle A, B \rangle : A \text{ and } B \text{ are DFAs and } L(A) = L(B)\}$
+\end{itemize}
+\end{theorem}
+
+\subsection{Undecidable Languages}
+\begin{theorem}[Halting Problem]
+The language $A_{TM} = \{\langle M, w \rangle : M \text{ is a TM that accepts } w\}$ is undecidable.
+\end{theorem}
+
+\begin{proof}
+Assume $A_{TM}$ is decidable. Let $H$ be a decider for $A_{TM}$. Construct TM $D$:
+\begin{enumerate}
+    \item On input $\langle M \rangle$:
+    \item Run $H$ on $\langle M, \langle M \rangle \rangle$
+    \item If $H$ accepts, reject; if $H$ rejects, accept
+\end{enumerate}
+Then $D$ on input $\langle D \rangle$ accepts if and only if $D$ rejects $\langle D \rangle$, which is a contradiction.
+\end{proof}
+
+\begin{theorem}
+The following languages are undecidable:
+\begin{itemize}
+    \item $E_{TM} = \{\langle M \rangle : M \text{ is a TM and } L(M) = \emptyset\}$
+    \item $EQ_{TM} = \{\langle M_1, M_2 \rangle : M_1 \text{ and } M_2 \text{ are TMs and } L(M_1) = L(M_2)\}$
+    \item $REGULAR_{TM} = \{\langle M \rangle : M \text{ is a TM and } L(M) \text{ is regular}\}$
+\end{itemize}
+\end{theorem}
+
+\section{Reducibility}
+
+\subsection{Mapping Reducibility}
+\begin{definition}
+Language $A$ is \textbf{mapping reducible} to language $B$ (written $A \leq_m B$) if there exists a computable function $f: \Sigma^* \to \Sigma^*$ such that for every $w$:
+$$w \in A \text{ if and only if } f(w) \in B$$
+\end{definition}
+
+\begin{theorem}
+If $A \leq_m B$ and $B$ is decidable, then $A$ is decidable.
+\end{theorem}
+
+\begin{theorem}
+If $A \leq_m B$ and $A$ is undecidable, then $B$ is undecidable.
+\end{theorem}
+
+\subsection{Rice's Theorem}
+\begin{theorem}[Rice's Theorem]
+Let $P$ be a non-trivial property of Turing-recognizable languages. Then the language $\{\langle M \rangle : L(M) \text{ has property } P\}$ is undecidable.
+\end{theorem}
+
+\section{Complexity Theory Basics}
+
+\subsection{Time Complexity}
+\begin{definition}
+The \textbf{time complexity} of a Turing machine $M$ is the function $f: \mathbb{N} \to \mathbb{N}$ where $f(n)$ is the maximum number of steps that $M$ uses on any input of length $n$.
+\end{definition}
+
+\begin{definition}
+\textbf{TIME}(t(n)) is the class of languages decided by $O(t(n))$ time Turing machines.
+\end{definition}
+
+\begin{definition}
+$$\text{P} = \bigcup_{k} \text{TIME}(n^k)$$
+is the class of languages decidable in polynomial time.
+\end{definition}
+
+\subsection{Space Complexity}
+\begin{definition}
+The \textbf{space complexity} of a Turing machine $M$ is the function $f: \mathbb{N} \to \mathbb{N}$ where $f(n)$ is the maximum number of tape cells that $M$ scans on any input of length $n$.
+\end{definition}
+
+\begin{definition}
+$$\text{PSPACE} = \bigcup_{k} \text{SPACE}(n^k)$$
+is the class of languages decidable in polynomial space.
+\end{definition}
+
+\subsection{NP and NP-Completeness}
+\begin{definition}
+A language $L$ is in \textbf{NP} if there exists a polynomial-time verifier $V$ such that:
+$$L = \{w : \text{there exists } c \text{ such that } V \text{ accepts } \langle w, c \rangle\}$$
+\end{definition}
+
+\begin{definition}
+A language $B$ is \textbf{NP-complete} if:
+\begin{itemize}
+    \item $B \in \text{NP}$
+    \item For every $A \in \text{NP}$, $A \leq_p B$ (polynomial-time reducible)
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Cook-Levin Theorem]
+SAT is NP-complete.
+\end{theorem}
+
+\section{Lambda Calculus Theory}
+
+\subsection{Simply Typed Lambda Calculus}
+\begin{definition}
+Types in simply typed lambda calculus:
+\begin{itemize}
+    \item Base types: $A, B, C, \ldots$
+    \item Function types: $A \to B$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Typing rules:
+\begin{itemize}
+    \item \textbf{Variable}: $\Gamma, x:A \vdash x : A$
+    \item \textbf{Abstraction}: $\frac{\Gamma, x:A \vdash M : B}{\Gamma \vdash \lambda x. M : A \to B}$
+    \item \textbf{Application}: $\frac{\Gamma \vdash M : A \to B \quad \Gamma \vdash N : A}{\Gamma \vdash M N : B}$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Strong Normalization]
+Every well-typed term in simply typed lambda calculus has a normal form.
+\end{theorem}
+
+\subsection{System F (Polymorphic Lambda Calculus)}
+\begin{definition}
+Types in System F:
+\begin{itemize}
+    \item Type variables: $\alpha, \beta, \gamma, \ldots$
+    \item Universal quantification: $\forall \alpha. A$
+    \item Function types: $A \to B$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Additional typing rules for System F:
+\begin{itemize}
+    \item \textbf{Type abstraction}: $\frac{\Gamma \vdash M : A}{\Gamma \vdash \Lambda \alpha. M : \forall \alpha. A}$
+    \item \textbf{Type application}: $\frac{\Gamma \vdash M : \forall \alpha. A}{\Gamma \vdash M B : A[\alpha := B]}$
+\end{itemize}
+\end{definition}
+
+\subsection{Dependent Types}
+\begin{definition}
+In \textbf{dependent type theory}, types can depend on values:
+\begin{itemize}
+    \item Dependent function types: $\Pi_{x:A} B(x)$
+    \item Dependent pair types: $\Sigma_{x:A} B(x)$
+\end{itemize}
+\end{definition}
+
+\section{Curry-Howard Correspondence}
+
+\begin{theorem}[Curry-Howard Correspondence]
+There is a correspondence between:
+\begin{itemize}
+    \item \textbf{Types} in lambda calculus and \textbf{propositions} in logic
+    \item \textbf{Terms} in lambda calculus and \textbf{proofs} in logic
+    \item \textbf{Reduction} in lambda calculus and \textbf{proof normalization}
+\end{itemize}
+\end{theorem}
+
+\begin{example}
+\begin{itemize}
+    \item $A \to B$ corresponds to implication $A \Rightarrow B$
+    \item $A \times B$ corresponds to conjunction $A \land B$
+    \item $A + B$ corresponds to disjunction $A \lor B$
+    \item $\forall \alpha. A$ corresponds to universal quantification $\forall x. A$
+\end{itemize}
+\end{example}
+
+\section{Computational Equivalence}
+
+\subsection{Equivalence of Models}
+\begin{theorem}
+The following computational models are equivalent:
+\begin{itemize}
+    \item Turing machines
+    \item Lambda calculus
+    \item General recursive functions
+    \item Register machines
+    \item Cellular automata
+\end{itemize}
+\end{theorem}
+
+\subsection{Universal Computation}
+\begin{definition}
+A computational model is \textbf{Turing-complete} if it can simulate any Turing machine.
+\end{definition}
+
+\begin{example}
+Turing-complete systems include:
+\begin{itemize}
+    \item Lambda calculus
+    \item Cellular automata (Rule 110)
+    \item Conway's Game of Life
+    \item Most programming languages
+\end{itemize}
+\end{example}
+
+\section{Algorithmic Information Theory}
+
+\subsection{Kolmogorov Complexity}
+\begin{definition}
+The \textbf{Kolmogorov complexity} of a string $s$ is:
+$$K(s) = \min\{|p| : U(p) = s\}$$
+where $U$ is a universal Turing machine and $p$ is a program.
+\end{definition}
+
+\begin{theorem}
+For any computable function $f$, there exists a constant $c$ such that:
+$$K(f(s)) \leq K(s) + c$$
+\end{theorem}
+
+\subsection{Incompressibility}
+\begin{definition}
+A string $s$ is \textbf{incompressible} if $K(s) \geq |s|$.
+\end{definition}
+
+\begin{theorem}
+Most strings are incompressible.
+\end{theorem}
+
+\section{Applications}
+
+\subsection{Programming Language Design}
+\begin{itemize}
+    \item Type systems based on lambda calculus
+    \item Functional programming languages
+    \item Proof assistants and theorem provers
+    \item Compiler design and optimization
+\end{itemize}
+
+\subsection{Logic and Proof Theory}
+\begin{itemize}
+    \item Constructive mathematics
+    \item Intuitionistic logic
+    \item Automated theorem proving
+    \item Formal verification
+\end{itemize}
+
+\subsection{Computer Science Theory}
+\begin{itemize}
+    \item Complexity theory
+    \item Algorithm design
+    \item Cryptography
+    \item Distributed systems
+\end{itemize}
+
+\section{Important Theorems}
+
+\subsection{Recursion Theorem}
+\begin{theorem}[Recursion Theorem]
+For any computable function $f$, there exists a Turing machine $M$ such that $M$ and $f(\langle M \rangle)$ compute the same function.
+\end{theorem}
+
+\subsection{Fixed Point Theorem}
+\begin{theorem}[Fixed Point Theorem in Lambda Calculus]
+For any lambda term $F$, there exists a term $X$ such that $F X =_\beta X$.
+\end{theorem}
+
+\subsection{Church-Rosser Theorem}
+\begin{theorem}[Church-Rosser Theorem]
+If $M \to^* N_1$ and $M \to^* N_2$, then there exists $N_3$ such that $N_1 \to^* N_3$ and $N_2 \to^* N_3$.
+\end{theorem}
+
+\section{Open Problems}
+
+\subsection{P vs NP}
+\begin{conjecture}[P vs NP Problem]
+Is P = NP?
+\end{conjecture}
+
+\subsection{Church-Turing-Deutsch Principle}
+\begin{conjecture}
+Every finitely realizable physical system can be perfectly simulated by a universal model computing machine operating by finite means.
+\end{conjecture}
+
+\section{Conclusion}
+
+Computability theory provides the mathematical foundation for understanding computation. Key insights include:
+
+\begin{itemize}
+    \item The equivalence of different computational models (Church-Turing thesis)
+    \item The existence of undecidable problems (halting problem)
+    \item The connection between computation and logic (Curry-Howard correspondence)
+    \item The fundamental limits of algorithmic computation
+\end{itemize}
+
+These concepts are essential for computer science, logic, and the philosophy of computation, providing deep insights into what can and cannot be computed.
+
+\end{document}

@@ -147,6 +147,7 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 - **Multimodal AI** - Cross-modal learning, fusion strategies, attention mechanisms, large multimodal models, applications
 - **Transformers** - Attention mechanisms, encoder-decoder architecture, positional encoding, training methods, variants and applications
 - **Graph Layout Optimization** - Graph visualization, force-directed algorithms, hierarchical layouts, network analysis
+- **Time Series Forecasting** - Statistical methods (ARIMA, exponential smoothing), ML approaches (RNN, LSTM, Transformers), feature engineering, evaluation metrics
 
 - **Computer Graphics**
   - 3D transformations and projections
@@ -352,10 +353,10 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 27 (9 Pure Math, 7 Applied Math, 2 Physics, 11 Computer Science)
+- **Total completed subjects**: 28 (9 Pure Math, 7 Applied Math, 2 Physics, 12 Computer Science)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization, Time Series Forecasting
 # notes

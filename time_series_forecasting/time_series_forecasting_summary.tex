@@ -1,0 +1,588 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=red,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    pdfstartview=FitH
+}
+
+\title{Time Series Forecasting: Comprehensive Summary}
+\author{Mathematical Notes Collection}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction to Time Series Forecasting}
+
+Time series forecasting is the process of predicting future values of a time series based on its historical patterns. It combines statistical methods, machine learning techniques, and domain expertise to make accurate predictions about future trends, seasonality, and patterns.
+
+\subsection{Key Concepts}
+
+\begin{definition}[Time Series]
+A time series is a sequence of data points collected at regular time intervals, typically denoted as $\{X_t\}_{t=1}^T$ where $t$ represents time and $T$ is the total number of observations.
+\end{definition}
+
+\begin{definition}[Forecasting]
+Forecasting is the process of predicting future values $\hat{X}_{T+h}$ for horizon $h$ based on historical data $\{X_t\}_{t=1}^T$.
+\end{definition}
+
+\subsection{Components of Time Series}
+
+\begin{enumerate}
+\item \textbf{Trend}: Long-term increase or decrease in the data
+\item \textbf{Seasonality}: Regular patterns that repeat over fixed periods
+\item \textbf{Cyclical}: Irregular patterns without fixed periodicity
+\item \textbf{Irregular/Random}: Unpredictable noise and random fluctuations
+\end{enumerate}
+
+\subsection{Decomposition}
+
+\begin{definition}[Additive Decomposition]
+$$X_t = T_t + S_t + C_t + \epsilon_t$$
+where $T_t$ is trend, $S_t$ is seasonal, $C_t$ is cyclical, and $\epsilon_t$ is irregular component.
+\end{definition}
+
+\begin{definition}[Multiplicative Decomposition]
+$$X_t = T_t \times S_t \times C_t \times \epsilon_t$$
+\end{definition}
+
+\section{Traditional Statistical Methods}
+
+\subsection{Exponential Smoothing}
+
+\subsubsection{Simple Exponential Smoothing}
+
+\begin{definition}[Simple Exponential Smoothing]
+For a time series without trend or seasonality:
+$$\hat{X}_{t+1} = \alpha X_t + (1-\alpha)\hat{X}_t$$
+where $\alpha \in [0,1]$ is the smoothing parameter.
+\end{definition}
+
+\begin{algorithm}
+\caption{Simple Exponential Smoothing}
+\begin{algorithmic}[1]
+\STATE Initialize $\hat{X}_1 = X_1$
+\FOR{$t = 2$ to $T$}
+    \STATE $\hat{X}_t = \alpha X_{t-1} + (1-\alpha)\hat{X}_{t-1}$
+\ENDFOR
+\STATE Forecast: $\hat{X}_{T+h} = \hat{X}_T$ for $h \geq 1$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Holt's Method (Double Exponential Smoothing)}
+
+\begin{definition}[Holt's Method]
+For time series with trend:
+$$\hat{X}_{t+1} = L_t + b_t$$
+where:
+$$L_t = \alpha X_t + (1-\alpha)(L_{t-1} + b_{t-1})$$
+$$b_t = \beta(L_t - L_{t-1}) + (1-\beta)b_{t-1}$$
+\end{definition}
+
+\subsubsection{Holt-Winters Method (Triple Exponential Smoothing)}
+
+\begin{definition}[Holt-Winters Method]
+For time series with trend and seasonality:
+$$\hat{X}_{t+h} = (L_t + hb_t)S_{t+h-m}$$
+where $m$ is the seasonal period and:
+$$L_t = \alpha \frac{X_t}{S_{t-m}} + (1-\alpha)(L_{t-1} + b_{t-1})$$
+$$b_t = \beta(L_t - L_{t-1}) + (1-\beta)b_{t-1}$$
+$$S_t = \gamma \frac{X_t}{L_t} + (1-\gamma)S_{t-m}$$
+\end{definition}
+
+\subsection{ARIMA Models}
+
+\subsubsection{Autoregressive (AR) Models}
+
+\begin{definition}[AR(p) Model]
+An autoregressive model of order $p$:
+$$X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p} + \epsilon_t$$
+where $\epsilon_t \sim N(0, \sigma^2)$ is white noise.
+\end{definition}
+
+\subsubsection{Moving Average (MA) Models}
+
+\begin{definition}[MA(q) Model]
+A moving average model of order $q$:
+$$X_t = \mu + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \ldots + \theta_q \epsilon_{t-q}$$
+\end{definition}
+
+\subsubsection{ARIMA(p,d,q) Model}
+
+\begin{definition}[ARIMA Model]
+An ARIMA(p,d,q) model for a time series $\{Y_t\}$:
+$$\phi(B)(1-B)^d Y_t = \theta(B)\epsilon_t$$
+where $B$ is the backshift operator, $(1-B)^d$ represents differencing $d$ times, and:
+$$\phi(B) = 1 - \phi_1 B - \phi_2 B^2 - \ldots - \phi_p B^p$$
+$$\theta(B) = 1 + \theta_1 B + \theta_2 B^2 + \ldots + \theta_q B^q$$
+\end{definition}
+
+\subsubsection{Seasonal ARIMA (SARIMA)}
+
+\begin{definition}[SARIMA(p,d,q)(P,D,Q)$_s$ Model]
+$$\phi(B)\Phi(B^s)(1-B)^d(1-B^s)^D Y_t = \theta(B)\Theta(B^s)\epsilon_t$$
+where $s$ is the seasonal period and $\Phi(B^s)$, $\Theta(B^s)$ are seasonal polynomials.
+\end{definition}
+
+\subsection{State Space Models}
+
+\begin{definition}[State Space Model]
+A state space model consists of:
+\begin{align}
+\text{State equation: } & \mathbf{x}_t = \mathbf{F}\mathbf{x}_{t-1} + \mathbf{G}\mathbf{w}_t \\
+\text{Observation equation: } & \mathbf{y}_t = \mathbf{H}\mathbf{x}_t + \mathbf{v}_t
+\end{align}
+where $\mathbf{w}_t$ and $\mathbf{v}_t$ are noise processes.
+\end{definition}
+
+\subsubsection{Kalman Filter}
+
+\begin{algorithm}
+\caption{Kalman Filter}
+\begin{algorithmic}[1]
+\STATE Initialize $\hat{\mathbf{x}}_0$ and $\mathbf{P}_0$
+\FOR{$t = 1$ to $T$}
+    \STATE \textbf{Prediction:}
+    \STATE $\hat{\mathbf{x}}_{t|t-1} = \mathbf{F}\hat{\mathbf{x}}_{t-1}$
+    \STATE $\mathbf{P}_{t|t-1} = \mathbf{F}\mathbf{P}_{t-1}\mathbf{F}^T + \mathbf{G}\mathbf{Q}\mathbf{G}^T$
+    \STATE \textbf{Update:}
+    \STATE $\mathbf{K}_t = \mathbf{P}_{t|t-1}\mathbf{H}^T(\mathbf{H}\mathbf{P}_{t|t-1}\mathbf{H}^T + \mathbf{R})^{-1}$
+    \STATE $\hat{\mathbf{x}}_t = \hat{\mathbf{x}}_{t|t-1} + \mathbf{K}_t(\mathbf{y}_t - \mathbf{H}\hat{\mathbf{x}}_{t|t-1})$
+    \STATE $\mathbf{P}_t = (\mathbf{I} - \mathbf{K}_t\mathbf{H})\mathbf{P}_{t|t-1}$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\section{Machine Learning Methods}
+
+\subsection{Linear Models}
+
+\subsubsection{Linear Regression}
+
+\begin{definition}[Linear Regression for Time Series]
+$$\hat{X}_{t+h} = \beta_0 + \sum_{i=1}^p \beta_i X_{t-i+1} + \sum_{j=1}^q \gamma_j f_j(t)$$
+where $f_j(t)$ are time-based features (trend, seasonality, etc.).
+\end{definition}
+
+\subsubsection{Ridge and Lasso Regression}
+
+\begin{definition}[Ridge Regression]
+$$\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}} \left\{ \sum_{t=1}^T (X_t - \mathbf{x}_t^T\boldsymbol{\beta})^2 + \lambda \sum_{j=1}^p \beta_j^2 \right\}$$
+\end{definition}
+
+\begin{definition}[Lasso Regression]
+$$\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}} \left\{ \sum_{t=1}^T (X_t - \mathbf{x}_t^T\boldsymbol{\beta})^2 + \lambda \sum_{j=1}^p |\beta_j| \right\}$$
+\end{definition}
+
+\subsection{Tree-Based Methods}
+
+\subsubsection{Random Forest}
+
+\begin{algorithm}
+\caption{Random Forest for Time Series}
+\begin{algorithmic}[1]
+\STATE Create bootstrap samples from training data
+\FOR{each bootstrap sample}
+    \STATE Train decision tree with random feature selection
+    \STATE Use lagged values and time features as inputs
+\ENDFOR
+\STATE Predict: Average predictions from all trees
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Gradient Boosting}
+
+\begin{definition}[Gradient Boosting]
+$$\hat{F}_m(\mathbf{x}) = \hat{F}_{m-1}(\mathbf{x}) + \gamma_m h_m(\mathbf{x})$$
+where $h_m$ is the $m$-th weak learner and $\gamma_m$ is the step size.
+\end{definition}
+
+\subsection{Neural Networks}
+
+\subsubsection{Feedforward Neural Networks}
+
+\begin{definition}[MLP for Time Series]
+$$\hat{X}_{t+h} = f(\mathbf{W}_2 \sigma(\mathbf{W}_1 \mathbf{x}_t + \mathbf{b}_1) + \mathbf{b}_2)$$
+where $\mathbf{x}_t = [X_{t-1}, X_{t-2}, \ldots, X_{t-p}]^T$ and $\sigma$ is activation function.
+\end{definition}
+
+\subsubsection{Recurrent Neural Networks (RNN)}
+
+\begin{definition}[RNN]
+$$\mathbf{h}_t = \sigma(\mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b}_h)$$
+$$\hat{X}_t = \mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y$$
+\end{definition}
+
+\subsubsection{Long Short-Term Memory (LSTM)}
+
+\begin{definition}[LSTM Cell]
+\begin{align}
+\mathbf{f}_t &= \sigma(\mathbf{W}_f \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f) \\
+\mathbf{i}_t &= \sigma(\mathbf{W}_i \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_i) \\
+\tilde{\mathbf{C}}_t &= \tanh(\mathbf{W}_C \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_C) \\
+\mathbf{C}_t &= \mathbf{f}_t * \mathbf{C}_{t-1} + \mathbf{i}_t * \tilde{\mathbf{C}}_t \\
+\mathbf{o}_t &= \sigma(\mathbf{W}_o \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_o) \\
+\mathbf{h}_t &= \mathbf{o}_t * \tanh(\mathbf{C}_t)
+\end{align}
+\end{definition}
+
+\subsubsection{Gated Recurrent Unit (GRU)}
+
+\begin{definition}[GRU Cell]
+\begin{align}
+\mathbf{z}_t &= \sigma(\mathbf{W}_z \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t]) \\
+\mathbf{r}_t &= \sigma(\mathbf{W}_r \cdot [\mathbf{h}_{t-1}, \mathbf{x}_t]) \\
+\tilde{\mathbf{h}}_t &= \tanh(\mathbf{W} \cdot [\mathbf{r}_t * \mathbf{h}_{t-1}, \mathbf{x}_t]) \\
+\mathbf{h}_t &= (1 - \mathbf{z}_t) * \mathbf{h}_{t-1} + \mathbf{z}_t * \tilde{\mathbf{h}}_t
+\end{align}
+\end{definition}
+
+\subsection{Transformer-Based Models}
+
+\subsubsection{Time Series Transformer}
+
+\begin{definition}[Time Series Transformer]
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$
+where $\mathbf{Q}$, $\mathbf{K}$, $\mathbf{V}$ are derived from time series embeddings.
+\end{definition}
+
+\subsubsection{Informer}
+
+\begin{definition}[Informer Architecture]
+The Informer model uses:
+\begin{itemize}
+\item ProbSparse self-attention mechanism
+\item Self-attention distilling operation
+\item Generative style decoder
+\end{itemize}
+\end{definition}
+
+\subsection{Deep Learning Architectures}
+
+\subsubsection{CNN-LSTM}
+
+\begin{definition}[CNN-LSTM]
+$$\mathbf{c}_t = \text{CNN}(\mathbf{x}_{t-w:t})$$
+$$\mathbf{h}_t = \text{LSTM}(\mathbf{c}_t, \mathbf{h}_{t-1})$$
+$$\hat{X}_{t+h} = \mathbf{W}\mathbf{h}_t + \mathbf{b}$$
+\end{definition}
+
+\subsubsection{Seq2Seq Models}
+
+\begin{definition}[Sequence-to-Sequence]
+$$\mathbf{h}_t = \text{Encoder}(\mathbf{x}_t, \mathbf{h}_{t-1})$$
+$$\mathbf{s}_t = \text{Decoder}(\mathbf{s}_{t-1}, \mathbf{h}_T)$$
+$$\hat{X}_{t+h} = \text{Output}(\mathbf{s}_t)$$
+\end{definition}
+
+\section{Feature Engineering}
+
+\subsection{Time-Based Features}
+
+\begin{enumerate}
+\item \textbf{Temporal Features}: Hour, day, week, month, year
+\item \textbf{Cyclical Encoding}: $\sin(2\pi t/p)$, $\cos(2\pi t/p)$
+\item \textbf{Lagged Features}: $X_{t-1}, X_{t-2}, \ldots, X_{t-p}$
+\item \textbf{Rolling Statistics}: Mean, std, min, max over windows
+\item \textbf{Difference Features}: $\Delta X_t = X_t - X_{t-1}$
+\end{enumerate}
+
+\subsection{Statistical Features}
+
+\begin{definition}[Rolling Window Statistics]
+For window size $w$:
+$$\text{Mean}_t = \frac{1}{w}\sum_{i=0}^{w-1} X_{t-i}$$
+$$\text{Std}_t = \sqrt{\frac{1}{w-1}\sum_{i=0}^{w-1} (X_{t-i} - \text{Mean}_t)^2}$$
+\end{definition}
+
+\subsection{Domain-Specific Features}
+
+\begin{enumerate}
+\item \textbf{Weather Data}: Temperature, humidity, pressure
+\item \textbf{Economic Indicators}: GDP, inflation, interest rates
+\item \textbf{Calendar Events}: Holidays, special events
+\item \textbf{External Factors}: Market conditions, news sentiment
+\end{enumerate}
+
+\section{Model Selection and Validation}
+
+\subsection{Time Series Cross-Validation}
+
+\begin{algorithm}
+\caption{Time Series Cross-Validation}
+\begin{algorithmic}[1]
+\STATE Split data into $k$ folds chronologically
+\FOR{$i = 1$ to $k$}
+    \STATE Train on folds $1$ to $i-1$
+    \STATE Validate on fold $i$
+    \STATE Compute validation error
+\ENDFOR
+\STATE Average validation errors across folds
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Walk-Forward Analysis}
+
+\begin{definition}[Walk-Forward Analysis]
+For each time point $t$:
+\begin{enumerate}
+\item Train model on data up to time $t$
+\item Predict value at time $t+h$
+\item Move to time $t+1$ and repeat
+\end{enumerate}
+\end{definition}
+
+\subsection{Model Evaluation Metrics}
+
+\begin{definition}[Mean Absolute Error (MAE)]
+$$\text{MAE} = \frac{1}{n}\sum_{i=1}^n |X_i - \hat{X}_i|$$
+\end{definition}
+
+\begin{definition}[Root Mean Square Error (RMSE)]
+$$\text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^n (X_i - \hat{X}_i)^2}$$
+\end{definition}
+
+\begin{definition}[Mean Absolute Percentage Error (MAPE)]
+$$\text{MAPE} = \frac{100\%}{n}\sum_{i=1}^n \left|\frac{X_i - \hat{X}_i}{X_i}\right|$$
+\end{definition}
+
+\begin{definition}[Symmetric MAPE (sMAPE)]
+$$\text{sMAPE} = \frac{100\%}{n}\sum_{i=1}^n \frac{|X_i - \hat{X}_i|}{(|X_i| + |\hat{X}_i|)/2}$$
+\end{definition}
+
+\section{Advanced Topics}
+
+\subsection{Multivariate Time Series}
+
+\begin{definition}[Vector Autoregression (VAR)]
+$$\mathbf{X}_t = \mathbf{c} + \mathbf{A}_1\mathbf{X}_{t-1} + \mathbf{A}_2\mathbf{X}_{t-2} + \ldots + \mathbf{A}_p\mathbf{X}_{t-p} + \boldsymbol{\epsilon}_t$$
+where $\mathbf{X}_t$ is a vector of time series.
+\end{definition}
+
+\subsection{Nonlinear Models}
+
+\subsubsection{Threshold Autoregression (TAR)}
+
+\begin{definition}[TAR Model]
+$$X_t = \begin{cases}
+\phi_1^{(1)} + \phi_1^{(1)}X_{t-1} + \ldots + \phi_p^{(1)}X_{t-p} + \epsilon_t^{(1)} & \text{if } X_{t-d} \leq r \\
+\phi_0^{(2)} + \phi_1^{(2)}X_{t-1} + \ldots + \phi_p^{(2)}X_{t-p} + \epsilon_t^{(2)} & \text{if } X_{t-d} > r
+\end{cases}$$
+\end{definition}
+
+\subsection{Ensemble Methods}
+
+\begin{definition}[Ensemble Forecast]
+$$\hat{X}_t = \sum_{i=1}^M w_i \hat{X}_{t,i}$$
+where $\sum_{i=1}^M w_i = 1$ and $\hat{X}_{t,i}$ are individual forecasts.
+\end{definition}
+
+\subsection{Probabilistic Forecasting}
+
+\begin{definition}[Quantile Regression]
+For quantile $\tau$:
+$$\hat{Q}_\tau(X_{t+h}) = \arg\min_{\theta} \sum_{i=1}^n \rho_\tau(X_i - \theta)$$
+where $\rho_\tau(u) = u(\tau - \mathbf{1}_{u < 0})$.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Economic Forecasting}
+
+\begin{enumerate}
+\item \textbf{GDP Growth}: Economic output prediction
+\item \textbf{Inflation Rates}: Price level forecasting
+\item \textbf{Unemployment}: Labor market predictions
+\item \textbf{Stock Prices}: Financial market forecasting
+\end{enumerate}
+
+\subsection{Demand Forecasting}
+
+\begin{enumerate}
+\item \textbf{Retail Sales}: Product demand prediction
+\item \textbf{Energy Consumption}: Power grid planning
+\item \textbf{Transportation}: Traffic flow prediction
+\item \textbf{Healthcare}: Patient volume forecasting
+\end{enumerate}
+
+\subsection{Weather and Climate}
+
+\begin{enumerate}
+\item \textbf{Temperature}: Weather prediction
+\item \textbf{Precipitation}: Rainfall forecasting
+\item \textbf{Climate Change}: Long-term climate modeling
+\item \textbf{Renewable Energy}: Solar/wind power prediction
+\end{enumerate}
+
+\subsection{Technology and IoT}
+
+\begin{enumerate}
+\item \textbf{Server Load}: IT infrastructure planning
+\item \textbf{Sensor Data}: IoT device monitoring
+\item \textbf{Network Traffic}: Bandwidth forecasting
+\item \textbf{User Behavior}: Web analytics prediction
+\end{enumerate}
+
+\section{Challenges and Considerations}
+
+\subsection{Data Quality Issues}
+
+\begin{enumerate}
+\item \textbf{Missing Values}: Handling gaps in time series
+\item \textbf{Outliers}: Detecting and treating anomalies
+\item \textbf{Non-stationarity}: Addressing trend and seasonality
+\item \textbf{Data Sparsity}: Working with limited historical data
+\end{enumerate}
+
+\subsection{Model Complexity}
+
+\begin{enumerate}
+\item \textbf{Overfitting}: Balancing model complexity and generalization
+\item \textbf{Hyperparameter Tuning}: Optimizing model parameters
+\item \textbf{Computational Cost}: Managing training time and resources
+\item \textbf{Interpretability}: Understanding model decisions
+\end{enumerate}
+
+\subsection{External Factors}
+
+\begin{enumerate}
+\item \textbf{Regime Changes}: Handling structural breaks
+\item \textbf{External Shocks}: Accounting for unexpected events
+\item \textbf{Correlation Changes}: Managing time-varying relationships
+\item \textbf{Nonlinearity}: Capturing complex patterns
+\end{enumerate}
+
+\section{Software and Tools}
+
+\subsection{Statistical Software}
+
+\begin{enumerate}
+\item \textbf{R}: forecast, fable, tsibble packages
+\item \textbf{Python}: statsmodels, pmdarima, sktime
+\item \textbf{MATLAB}: Econometrics Toolbox
+\item \textbf{SAS}: SAS/ETS, SAS Forecast Server
+\end{enumerate}
+
+\subsection{Machine Learning Libraries}
+
+\begin{enumerate}
+\item \textbf{Python}: scikit-learn, TensorFlow, PyTorch
+\item \textbf{R}: caret, randomForest, xgboost
+\item \textbf{Julia}: Flux.jl, MLJ.jl
+\item \textbf{Scala}: Spark MLlib
+\end{enumerate}
+
+\subsection{Specialized Tools}
+
+\begin{enumerate}
+\item \textbf{Prophet}: Facebook's forecasting tool
+\item \textbf{NeuralProphet}: Neural network-based Prophet
+\item \textbf{Darts}: Python library for time series
+\item \textbf{GluonTS}: Probabilistic time series modeling
+\end{enumerate}
+
+\section{Key Theorems and Results}
+
+\begin{theorem}[Wold's Decomposition]
+Any covariance-stationary time series can be decomposed into a deterministic component and a purely non-deterministic component.
+\end{theorem}
+
+\begin{theorem}[Granger Causality]
+A time series $X$ Granger-causes $Y$ if past values of $X$ contain information that helps predict $Y$ beyond what is contained in past values of $Y$ alone.
+\end{theorem}
+
+\begin{proposition}[Stationarity Requirement]
+For ARIMA models to be valid, the time series must be stationary or made stationary through differencing.
+\end{proposition}
+
+\begin{theorem}[Optimal Forecast]
+The optimal forecast minimizes the expected squared prediction error under certain regularity conditions.
+\end{theorem}
+
+\section{Future Directions}
+
+\subsection{Emerging Methods}
+
+\begin{enumerate}
+\item \textbf{Graph Neural Networks}: Modeling complex dependencies
+\item \textbf{Attention Mechanisms}: Focusing on relevant time periods
+\item \textbf{Generative Models}: Probabilistic forecasting
+\item \textbf{Transfer Learning}: Leveraging related time series
+\end{enumerate}
+
+\subsection{Real-Time Forecasting}
+
+\begin{enumerate}
+\item \textbf{Streaming Algorithms}: Online learning approaches
+\item \textbf{Edge Computing}: Distributed forecasting systems
+\item \textbf{Adaptive Models}: Self-updating algorithms
+\item \textbf{Low-Latency}: Fast prediction systems
+\end{enumerate}
+
+\subsection{Interpretable AI}
+
+\begin{enumerate}
+\item \textbf{Explainable Models}: Understanding predictions
+\item \textbf{Causal Inference}: Identifying causal relationships
+\item \textbf{Counterfactual Analysis}: What-if scenarios
+\item \textbf{Uncertainty Quantification}: Confidence intervals
+\end{enumerate}
+
+\section{Conclusion}
+
+Time series forecasting is a critical field that combines statistical rigor with machine learning innovation. The choice between traditional statistical methods and modern ML approaches depends on:
+
+\begin{itemize}
+\item \textbf{Data characteristics}: Size, quality, and complexity
+\item \textbf{Forecasting horizon}: Short-term vs. long-term predictions
+\item \textbf{Interpretability requirements}: Need for explainable models
+\item \textbf{Computational constraints}: Available resources and time
+\end{itemize}
+
+Traditional methods like ARIMA and exponential smoothing remain valuable for their interpretability and statistical foundations, while machine learning approaches excel at capturing complex patterns and handling high-dimensional data.
+
+The future of time series forecasting lies in:
+\begin{itemize}
+\item Hybrid approaches combining statistical and ML methods
+\item Real-time adaptive systems
+\item Probabilistic forecasting with uncertainty quantification
+\item Integration of external data sources and domain knowledge
+\end{itemize}
+
+As data availability increases and computational power grows, the field continues to evolve toward more sophisticated, accurate, and interpretable forecasting systems that can handle the complexity of real-world time series data.
+
+\end{document}

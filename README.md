@@ -136,14 +136,17 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
   - Dark matter and dark energy
 
 ### Computer Science
+- **Algorithms** - Sorting, searching, graph algorithms, dynamic programming, complexity analysis
 - **Machine Learning** - Supervised/unsupervised learning, neural networks, deep learning, ensemble methods
 - **ML Explainability** - Feature importance, local methods, gradient-based explanations, interpretable models
+- **Computability Theory** - Turing machines, lambda calculus, recursive functions, decidability, complexity classes
 - **Compiler Design and Optimization** - Lexical analysis, parsing, semantic analysis, code generation, optimization techniques
 - **Python Programming** - Syntax, data structures, OOP, functions, modules, error handling, advanced features
 - **Scala Programming** - Object-oriented and functional programming, pattern matching, collections, concurrency, advanced features
 - **Quantum Machine Learning** - Quantum algorithms for ML, quantum neural networks, quantum optimization, hybrid approaches
 - **Multimodal AI** - Cross-modal learning, fusion strategies, attention mechanisms, large multimodal models, applications
 - **Transformers** - Attention mechanisms, encoder-decoder architecture, positional encoding, training methods, variants and applications
+- **Graph Layout Optimization** - Graph visualization, force-directed algorithms, hierarchical layouts, network analysis
 
 - **Computer Graphics**
   - 3D transformations and projections
@@ -349,10 +352,10 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 24 (9 Pure Math, 7 Applied Math, 2 Physics, 8 Computer Science)
+- **Total completed subjects**: 27 (9 Pure Math, 7 Applied Math, 2 Physics, 11 Computer Science)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization
 # notes

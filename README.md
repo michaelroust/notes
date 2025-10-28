@@ -36,6 +36,7 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 ### Physics
 - **Classical Physics** - Mechanics, thermodynamics, electromagnetism, waves, optics, fluid mechanics
 - **Relativity and Quantum Physics** - Special/general relativity, quantum mechanics, field theory
+- **Plasma Physics** - Magnetohydrodynamics (MHD), plasma waves and instabilities, fusion physics and tokamaks, space plasmas and astrophysical plasmas, computational plasma physics
 - **Quantum Computation and Information Theory** - Qubits, gates, algorithms, error correction, quantum information
 
 ## Proposed Subjects (Not Yet Created)
@@ -121,12 +122,6 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
   - Semiconductor physics
   - Phase transitions and critical phenomena
 
-- **Plasma Physics**
-  - Magnetohydrodynamics (MHD)
-  - Plasma waves and instabilities
-  - Fusion physics and tokamaks
-  - Space plasmas and astrophysical plasmas
-  - Computational plasma physics
 
 - **Astrophysics**
   - Stellar structure and evolution
@@ -354,10 +349,10 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 29 (9 Pure Math, 7 Applied Math, 2 Physics, 13 Computer Science)
+- **Total completed subjects**: 30 (9 Pure Math, 7 Applied Math, 3 Physics, 13 Computer Science)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization, Time Series Forecasting, Cryptography
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization, Time Series Forecasting, Cryptography, Plasma Physics
 # notes

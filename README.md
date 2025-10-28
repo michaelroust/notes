@@ -142,6 +142,8 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 - **Python Programming** - Syntax, data structures, OOP, functions, modules, error handling, advanced features
 - **Scala Programming** - Object-oriented and functional programming, pattern matching, collections, concurrency, advanced features
 - **Quantum Machine Learning** - Quantum algorithms for ML, quantum neural networks, quantum optimization, hybrid approaches
+- **Multimodal AI** - Cross-modal learning, fusion strategies, attention mechanisms, large multimodal models, applications
+- **Transformers** - Attention mechanisms, encoder-decoder architecture, positional encoding, training methods, variants and applications
 
 - **Computer Graphics**
   - 3D transformations and projections
@@ -347,10 +349,10 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 22 (9 Pure Math, 7 Applied Math, 2 Physics, 6 Computer Science)
+- **Total completed subjects**: 24 (9 Pure Math, 7 Applied Math, 2 Physics, 8 Computer Science)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers
 # notes

@@ -1,0 +1,963 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=red,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    pdfstartview=FitH
+}
+
+\title{Cryptography: Comprehensive Summary}
+\author{Mathematical Notes Collection}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction to Cryptography}
+
+Cryptography is the science of secure communication in the presence of adversaries. It encompasses techniques for protecting information confidentiality, ensuring data integrity, authenticating parties, and providing non-repudiation.
+
+\subsection{Basic Concepts}
+
+\begin{definition}[Cryptography]
+Cryptography is the practice and study of techniques for secure communication in the presence of third parties called adversaries.
+\end{definition}
+
+\begin{definition}[Cryptosystem]
+A cryptosystem is a tuple $(P, C, K, E, D)$ where:
+\begin{itemize}
+\item $P$ is the set of plaintexts
+\item $C$ is the set of ciphertexts
+\item $K$ is the set of keys
+\item $E$ is the set of encryption functions
+\item $D$ is the set of decryption functions
+\end{itemize}
+\end{definition}
+
+\subsection{Security Goals}
+
+\begin{enumerate}
+\item \textbf{Confidentiality}: Information is accessible only to authorized parties
+\item \textbf{Integrity}: Information cannot be modified without detection
+\item \textbf{Authentication}: Verification of identity of communicating parties
+\item \textbf{Non-repudiation}: Prevention of denial of participation in communication
+\end{enumerate}
+
+\subsection{Types of Cryptography}
+
+\begin{enumerate}
+\item \textbf{Symmetric Cryptography}: Same key for encryption and decryption
+\item \textbf{Asymmetric Cryptography}: Different keys for encryption and decryption
+\item \textbf{Hash Functions}: One-way functions for data integrity
+\item \textbf{Digital Signatures}: Authentication and non-repudiation
+\end{enumerate}
+
+\section{Mathematical Foundations}
+
+\subsection{Number Theory}
+
+\subsubsection{Modular Arithmetic}
+
+\begin{definition}[Modular Arithmetic]
+For integers $a$, $b$, and $n > 0$:
+$$a \equiv b \pmod{n} \iff n \mid (a - b)$$
+\end{definition}
+
+\begin{theorem}[Properties of Modular Arithmetic]
+For integers $a$, $b$, $c$, and $n > 0$:
+\begin{enumerate}
+\item $(a + b) \bmod n = ((a \bmod n) + (b \bmod n)) \bmod n$
+\item $(a \cdot b) \bmod n = ((a \bmod n) \cdot (b \bmod n)) \bmod n$
+\item $(a^b) \bmod n = ((a \bmod n)^b) \bmod n$
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{Greatest Common Divisor}
+
+\begin{definition}[GCD]
+The greatest common divisor of integers $a$ and $b$ is the largest integer $d$ such that $d \mid a$ and $d \mid b$.
+\end{definition}
+
+\begin{algorithm}
+\caption{Extended Euclidean Algorithm}
+\begin{algorithmic}[1]
+\REQUIRE Integers $a$, $b$ with $a \geq b \geq 0$
+\ENSURE Integers $d$, $x$, $y$ such that $d = \gcd(a,b) = ax + by$
+\IF{$b = 0$}
+    \STATE \textbf{return} $(a, 1, 0)$
+\ELSE
+    \STATE $(d', x', y') \leftarrow \text{ExtendedEuclidean}(b, a \bmod b)$
+    \STATE $d \leftarrow d'$
+    \STATE $x \leftarrow y'$
+    \STATE $y \leftarrow x' - \lfloor a/b \rfloor \cdot y'$
+    \STATE \textbf{return} $(d, x, y)$
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Modular Inverse}
+
+\begin{definition}[Modular Inverse]
+For integers $a$ and $n$, the modular inverse of $a$ modulo $n$ is an integer $x$ such that:
+$$ax \equiv 1 \pmod{n}$$
+\end{definition}
+
+\begin{proposition}[Existence of Modular Inverse]
+The modular inverse of $a$ modulo $n$ exists if and only if $\gcd(a,n) = 1$.
+\end{proposition}
+
+\subsection{Finite Fields}
+
+\begin{definition}[Finite Field]
+A finite field $\mathbb{F}_q$ is a field with $q$ elements where $q = p^n$ for prime $p$ and integer $n \geq 1$.
+\end{definition}
+
+\begin{theorem}[Finite Field Properties]
+For finite field $\mathbb{F}_q$:
+\begin{enumerate}
+\item The multiplicative group $\mathbb{F}_q^*$ is cyclic
+\item For any $a \in \mathbb{F}_q$: $a^q = a$
+\item For any $a \in \mathbb{F}_q^*$: $a^{q-1} = 1$
+\end{enumerate}
+\end{theorem}
+
+\subsection{Elliptic Curves}
+
+\begin{definition}[Elliptic Curve]
+An elliptic curve over field $K$ is defined by the Weierstrass equation:
+$$y^2 = x^3 + ax + b$$
+where $a, b \in K$ and $\Delta = -16(4a^3 + 27b^2) \neq 0$.
+\end{definition}
+
+\begin{definition}[Elliptic Curve Group Law]
+For points $P = (x_1, y_1)$ and $Q = (x_2, y_2)$ on elliptic curve $E$:
+\begin{align}
+P + Q &= \begin{cases}
+\mathcal{O} & \text{if } P = -Q \\
+(x_3, y_3) & \text{otherwise}
+\end{cases}
+\end{align}
+where:
+\begin{align}
+x_3 &= \lambda^2 - x_1 - x_2 \\
+y_3 &= \lambda(x_1 - x_3) - y_1 \\
+\lambda &= \begin{cases}
+\frac{y_2 - y_1}{x_2 - x_1} & \text{if } P \neq Q \\
+\frac{3x_1^2 + a}{2y_1} & \text{if } P = Q
+\end{cases}
+\end{align}
+\end{definition}
+
+\section{Symmetric Cryptography}
+
+\subsection{Block Ciphers}
+
+\begin{definition}[Block Cipher]
+A block cipher is a deterministic algorithm operating on fixed-length groups of bits (blocks) with an unvarying transformation specified by a symmetric key.
+\end{definition}
+
+\subsubsection{Data Encryption Standard (DES)}
+
+\begin{definition}[DES]
+DES is a 64-bit block cipher with 56-bit key using Feistel network structure.
+\end{definition}
+
+\begin{algorithm}
+\caption{DES Encryption}
+\begin{algorithmic}[1]
+\STATE Split 64-bit plaintext into $L_0$ and $R_0$ (32 bits each)
+\FOR{$i = 1$ to $16$}
+    \STATE $L_i \leftarrow R_{i-1}$
+    \STATE $R_i \leftarrow L_{i-1} \oplus F(R_{i-1}, K_i)$
+\ENDFOR
+\STATE Ciphertext $\leftarrow R_{16} \| L_{16}$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Advanced Encryption Standard (AES)}
+
+\begin{definition}[AES]
+AES is a 128-bit block cipher with key sizes of 128, 192, or 256 bits using substitution-permutation network.
+\end{definition}
+
+\begin{algorithm}
+\caption{AES Round Function}
+\begin{algorithmic}[1]
+\STATE \textbf{SubBytes}: Apply S-box to each byte
+\STATE \textbf{ShiftRows}: Cyclically shift rows
+\STATE \textbf{MixColumns}: Mix columns using matrix multiplication
+\STATE \textbf{AddRoundKey}: XOR with round key
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Stream Ciphers}
+
+\begin{definition}[Stream Cipher]
+A stream cipher is a symmetric key cipher where plaintext digits are combined with a pseudorandom cipher digit stream (keystream).
+\end{definition}
+
+\subsubsection{Linear Feedback Shift Register (LFSR)}
+
+\begin{definition}[LFSR]
+An LFSR is a shift register whose input bit is a linear function of its previous state.
+\end{definition}
+
+\begin{algorithm}
+\caption{LFSR Generation}
+\begin{algorithmic}[1]
+\STATE Initialize register with seed value
+\FOR{each clock cycle}
+    \STATE Output least significant bit
+    \STATE Compute feedback bit as XOR of selected taps
+    \STATE Shift register right and insert feedback bit
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Modes of Operation}
+
+\subsubsection{Electronic Codebook (ECB)}
+
+\begin{definition}[ECB Mode]
+In ECB mode, each plaintext block is encrypted independently using the same key.
+\end{definition}
+
+\subsubsection{Cipher Block Chaining (CBC)}
+
+\begin{definition}[CBC Mode]
+In CBC mode, each plaintext block is XORed with the previous ciphertext block before encryption.
+\end{definition}
+
+\begin{algorithm}
+\caption{CBC Encryption}
+\begin{algorithmic}[1]
+\STATE $C_0 \leftarrow IV$ (initialization vector)
+\FOR{$i = 1$ to $n$}
+    \STATE $C_i \leftarrow E_K(P_i \oplus C_{i-1})$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Counter (CTR) Mode}
+
+\begin{definition}[CTR Mode]
+In CTR mode, a counter is encrypted to produce a keystream, which is XORed with the plaintext.
+\end{definition}
+
+\section{Asymmetric Cryptography}
+
+\subsection{RSA Cryptosystem}
+
+\begin{definition}[RSA]
+RSA is an asymmetric cryptosystem based on the difficulty of factoring large integers.
+\end{definition}
+
+\begin{algorithm}
+\caption{RSA Key Generation}
+\begin{algorithmic}[1]
+\STATE Choose two large primes $p$ and $q$
+\STATE Compute $n = pq$ and $\phi(n) = (p-1)(q-1)$
+\STATE Choose $e$ such that $\gcd(e, \phi(n)) = 1$
+\STATE Compute $d$ such that $ed \equiv 1 \pmod{\phi(n)}$
+\STATE Public key: $(n, e)$, Private key: $(n, d)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{RSA Encryption/Decryption}
+\begin{algorithmic}[1]
+\STATE \textbf{Encryption}: $c \equiv m^e \pmod{n}$
+\STATE \textbf{Decryption}: $m \equiv c^d \pmod{n}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}[RSA Correctness]
+For RSA cryptosystem with public key $(n,e)$ and private key $(n,d)$:
+$$(m^e)^d \equiv m \pmod{n}$$
+for any message $m$ with $0 \leq m < n$.
+\end{theorem}
+
+\subsection{Diffie-Hellman Key Exchange}
+
+\begin{definition}[Diffie-Hellman]
+Diffie-Hellman is a method for securely exchanging cryptographic keys over a public channel.
+\end{definition}
+
+\begin{algorithm}
+\caption{Diffie-Hellman Key Exchange}
+\begin{algorithmic}[1]
+\STATE Alice and Bob agree on prime $p$ and generator $g$
+\STATE Alice chooses secret $a$, sends $A = g^a \bmod p$ to Bob
+\STATE Bob chooses secret $b$, sends $B = g^b \bmod p$ to Alice
+\STATE Alice computes $K = B^a \bmod p$
+\STATE Bob computes $K = A^b \bmod p$
+\STATE Shared secret: $K = g^{ab} \bmod p$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Elliptic Curve Cryptography (ECC)}
+
+\begin{definition}[Elliptic Curve Discrete Logarithm Problem]
+Given elliptic curve $E$, point $P$, and point $Q = kP$, find integer $k$.
+\end{definition}
+
+\begin{algorithm}
+\caption{ECDH Key Exchange}
+\begin{algorithmic}[1]
+\STATE Alice and Bob agree on elliptic curve $E$ and base point $G$
+\STATE Alice chooses secret $a$, sends $A = aG$ to Bob
+\STATE Bob chooses secret $b$, sends $B = bG$ to Alice
+\STATE Alice computes $K = aB$
+\STATE Bob computes $K = bA$
+\STATE Shared secret: $K = abG$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Hash Functions}
+
+\subsection{Properties of Hash Functions}
+
+\begin{definition}[Cryptographic Hash Function]
+A cryptographic hash function $H: \{0,1\}^* \rightarrow \{0,1\}^n$ should satisfy:
+\begin{enumerate}
+\item \textbf{Preimage resistance}: Given $h$, hard to find $m$ such that $H(m) = h$
+\item \textbf{Second preimage resistance}: Given $m$, hard to find $m' \neq m$ such that $H(m) = H(m')$
+\item \textbf{Collision resistance}: Hard to find any $m, m'$ such that $H(m) = H(m')$
+\end{enumerate}
+\end{definition}
+
+\subsection{SHA Family}
+
+\subsubsection{SHA-1}
+
+\begin{definition}[SHA-1]
+SHA-1 produces a 160-bit hash value and operates on 512-bit blocks.
+\end{definition}
+
+\begin{algorithm}
+\caption{SHA-1 Processing}
+\begin{algorithmic}[1]
+\STATE Pad message to multiple of 512 bits
+\STATE Initialize hash values $h_0, h_1, h_2, h_3, h_4$
+\FOR{each 512-bit block}
+    \STATE Break block into 16 32-bit words
+    \STATE Extend to 80 words using recurrence relation
+    \STATE Process through 80 rounds with different functions
+    \STATE Update hash values
+\ENDFOR
+\STATE Output 160-bit hash
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{SHA-256}
+
+\begin{definition}[SHA-256]
+SHA-256 produces a 256-bit hash value and operates on 512-bit blocks.
+\end{definition}
+
+\subsection{Merkle-Damgård Construction}
+
+\begin{definition}[Merkle-Damgård]
+The Merkle-Damgård construction builds a collision-resistant hash function from a collision-resistant compression function.
+\end{definition}
+
+\begin{algorithm}
+\caption{Merkle-Damgård Construction}
+\begin{algorithmic}[1]
+\STATE Pad message $M$ to length multiple of block size
+\STATE Initialize $h_0 = IV$
+\FOR{each block $M_i$}
+    \STATE $h_i = f(h_{i-1}, M_i)$
+\ENDFOR
+\STATE Output $h_n$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Digital Signatures}
+
+\subsection{RSA Signatures}
+
+\begin{algorithm}
+\caption{RSA Signature Generation}
+\begin{algorithmic}[1]
+\STATE Compute hash $h = H(m)$ of message $m$
+\STATE Generate signature $s = h^d \bmod n$
+\STATE Send $(m, s)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{RSA Signature Verification}
+\begin{algorithmic}[1]
+\STATE Compute hash $h = H(m)$ of received message $m$
+\STATE Compute $h' = s^e \bmod n$
+\STATE Accept if $h = h'$, reject otherwise
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Elliptic Curve Digital Signature Algorithm (ECDSA)}
+
+\begin{algorithm}
+\caption{ECDSA Signature Generation}
+\begin{algorithmic}[1]
+\STATE Compute hash $h = H(m)$ of message $m$
+\STATE Choose random $k$ with $1 \leq k < n$
+\STATE Compute $R = kG = (x_R, y_R)$
+\STATE Compute $r = x_R \bmod n$
+\STATE Compute $s = k^{-1}(h + rd) \bmod n$
+\STATE Signature: $(r, s)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{ECDSA Signature Verification}
+\begin{algorithmic}[1]
+\STATE Compute hash $h = H(m)$ of message $m$
+\STATE Compute $u_1 = hs^{-1} \bmod n$ and $u_2 = rs^{-1} \bmod n$
+\STATE Compute $R = u_1G + u_2Q = (x_R, y_R)$
+\STATE Accept if $r = x_R \bmod n$, reject otherwise
+\end{algorithmic}
+\end{algorithm}
+
+\section{Key Management}
+
+\subsection{Key Distribution}
+
+\begin{definition}[Key Distribution Problem]
+The key distribution problem is how to securely share cryptographic keys between communicating parties.
+\end{definition}
+
+\subsubsection{Key Distribution Centers (KDC)}
+
+\begin{algorithm}
+\caption{KDC Protocol}
+\begin{algorithmic}[1]
+\STATE Alice requests session key with Bob from KDC
+\STATE KDC generates random session key $K_{AB}$
+\STATE KDC sends $E_{K_A}(K_{AB})$ to Alice
+\STATE KDC sends $E_{K_B}(K_{AB})$ to Bob
+\STATE Alice and Bob use $K_{AB}$ for secure communication
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Public Key Infrastructure (PKI)}
+
+\begin{definition}[PKI]
+A PKI is a framework for managing digital certificates and public-private key pairs.
+\end{definition}
+
+\begin{definition}[Digital Certificate]
+A digital certificate binds a public key to an identity and is signed by a Certificate Authority (CA).
+\end{definition}
+
+\subsection{Perfect Forward Secrecy}
+
+\begin{definition}[Perfect Forward Secrecy]
+Perfect forward secrecy ensures that compromise of long-term keys does not compromise past session keys.
+\end{definition}
+
+\section{Protocols and Applications}
+
+\subsection{Transport Layer Security (TLS)}
+
+\begin{algorithm}
+\caption{TLS Handshake}
+\begin{algorithmic}[1]
+\STATE Client sends ClientHello with supported cipher suites
+\STATE Server sends ServerHello with chosen cipher suite
+\STATE Server sends certificate and ServerHelloDone
+\STATE Client verifies certificate and sends ClientKeyExchange
+\STATE Both parties compute master secret and session keys
+\STATE Client and server send ChangeCipherSpec and Finished
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Secure Shell (SSH)}
+
+\begin{definition}[SSH]
+SSH is a cryptographic network protocol for secure remote login and file transfer.
+\end{definition}
+
+\subsection{IPSec}
+
+\begin{definition}[IPSec]
+IPSec is a suite of protocols for securing Internet Protocol communications.
+\end{definition}
+
+\subsection{PGP/GPG}
+
+\begin{definition}[PGP]
+Pretty Good Privacy (PGP) is a data encryption and decryption program providing cryptographic privacy and authentication.
+\end{definition}
+
+\section{Advanced Topics}
+
+\subsection{Quantum Cryptography}
+
+\begin{definition}[Quantum Key Distribution]
+Quantum key distribution uses quantum mechanics to guarantee secure key exchange.
+\end{definition}
+
+\subsubsection{BB84 Protocol}
+
+\begin{algorithm}
+\caption{BB84 Protocol}
+\begin{algorithmic}[1]
+\STATE Alice generates random bit string and basis choices
+\STATE Alice sends qubits encoded in chosen bases
+\STATE Bob measures qubits in random bases
+\STATE Alice and Bob announce basis choices
+\STATE Alice and Bob discard bits where bases don't match
+\STATE Alice and Bob perform error correction and privacy amplification
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Homomorphic Encryption}
+
+\begin{definition}[Homomorphic Encryption]
+Homomorphic encryption allows computation on encrypted data without decrypting it.
+\end{definition}
+
+\begin{definition}[Fully Homomorphic Encryption]
+Fully homomorphic encryption supports arbitrary computation on encrypted data.
+\end{definition}
+
+\subsection{Multi-Party Computation}
+
+\begin{definition}[Secure Multi-Party Computation]
+Secure multi-party computation allows parties to jointly compute a function over their inputs while keeping those inputs private.
+\end{definition}
+
+\subsection{Zero-Knowledge Proofs}
+
+\begin{definition}[Zero-Knowledge Proof]
+A zero-knowledge proof is a method by which one party (the prover) can prove to another party (the verifier) that they know a value $x$ without conveying any information apart from the fact that they know the value $x$.
+\end{definition}
+
+\subsubsection{Properties of Zero-Knowledge Proofs}
+
+\begin{definition}[Completeness]
+If the statement is true, the honest verifier will be convinced by an honest prover.
+\end{definition}
+
+\begin{definition}[Soundness]
+If the statement is false, no cheating prover can convince the honest verifier that it is true, except with some small probability.
+\end{definition}
+
+\begin{definition}[Zero-Knowledge]
+If the statement is true, no verifier learns anything other than the fact that the statement is true.
+\end{definition}
+
+\subsubsection{Interactive Proof Systems}
+
+\begin{definition}[Interactive Proof System]
+An interactive proof system is a protocol between a prover and verifier where the prover convinces the verifier of the truth of a statement through multiple rounds of interaction.
+\end{definition}
+
+\begin{algorithm}
+\caption{Interactive Zero-Knowledge Proof Protocol}
+\begin{algorithmic}[1]
+\STATE Prover commits to secret using commitment scheme
+\STATE Verifier sends random challenge $c$
+\STATE Prover responds $r$ based on challenge and secret
+\STATE Verifier checks response against commitment
+\STATE Repeat $k$ rounds until desired confidence level
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Non-Interactive Zero-Knowledge Proofs}
+
+\begin{definition}[Non-Interactive Zero-Knowledge Proof]
+A non-interactive zero-knowledge proof requires no interaction between prover and verifier, using a common reference string or random oracle.
+\end{definition}
+
+\begin{theorem}[Fiat-Shamir Transformation]
+Any public-coin interactive proof can be converted to a non-interactive proof using the Fiat-Shamir heuristic with a random oracle.
+\end{theorem}
+
+\subsubsection{Succinct Non-Interactive Arguments of Knowledge (SNARKs)}
+
+\begin{definition}[SNARK]
+A SNARK is a non-interactive zero-knowledge proof system where the proof size and verification time are sublinear in the size of the computation being proven.
+\end{definition}
+
+\begin{definition}[Arithmetic Circuit]
+An arithmetic circuit is a directed acyclic graph where each node performs an arithmetic operation (addition or multiplication) on field elements.
+\end{definition}
+
+\begin{algorithm}
+\caption{SNARK Construction}
+\begin{algorithmic}[1]
+\STATE Convert computation to arithmetic circuit
+\STATE Generate proving key and verification key
+\STATE Prover computes witness for circuit satisfiability
+\STATE Prover generates proof using proving key
+\STATE Verifier checks proof using verification key
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{zk-SNARKs}
+
+\begin{definition}[zk-SNARK]
+A zk-SNARK is a zero-knowledge Succinct Non-interactive Argument of Knowledge that provides privacy and succinctness.
+\end{definition}
+
+\begin{enumerate}
+\item \textbf{QAP (Quadratic Arithmetic Program)}: Convert circuit to polynomial constraints
+\item \textbf{Trusted Setup}: Generate proving and verification keys
+\item \textbf{Proof Generation}: Create proof of circuit satisfiability
+\item \textbf{Proof Verification}: Verify proof without revealing witness
+\end{enumerate}
+
+\subsubsection{zk-STARKs}
+
+\begin{definition}[zk-STARK]
+A zk-STARK is a zero-knowledge Scalable Transparent Argument of Knowledge that requires no trusted setup.
+\end{definition}
+
+\begin{algorithm}
+\caption{zk-STARK Construction}
+\begin{algorithmic}[1]
+\STATE Convert computation to algebraic intermediate representation
+\STATE Generate execution trace and constraints
+\STATE Apply FRI (Fast Reed-Solomon Interactive Oracle Proofs)
+\STATE Generate proof without trusted setup
+\STATE Verify proof using public randomness
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Bulletproofs}
+
+\begin{definition}[Bulletproof]
+A Bulletproof is a non-interactive zero-knowledge proof protocol that allows a prover to convince a verifier that a committed value lies within a given range.
+\end{definition}
+
+\begin{theorem}[Range Proof]
+Bulletproofs can prove that a committed value $v$ satisfies $0 \leq v < 2^n$ for any positive integer $n$.
+\end{theorem}
+
+\subsubsection{Applications of Zero-Knowledge Proofs}
+
+\begin{enumerate}
+\item \textbf{Authentication}: Prove identity without revealing credentials
+\item \textbf{Blockchain Privacy}: Private transactions in cryptocurrencies
+\item \textbf{Compliance}: Prove regulatory compliance without revealing sensitive data
+\item \textbf{Decentralized Identity}: Anonymous credentials and selective disclosure
+\item \textbf{Private Computation}: Prove computation results without revealing inputs
+\item \textbf{Supply Chain}: Prove product authenticity without revealing trade secrets
+\end{enumerate}
+
+\subsubsection{Commitment Schemes}
+
+\begin{definition}[Commitment Scheme]
+A commitment scheme allows a party to commit to a chosen value while keeping it hidden until they reveal it.
+\end{definition}
+
+\begin{algorithm}
+\caption{Pedersen Commitment}
+\begin{algorithmic}[1]
+\STATE Choose generators $g, h$ of group $G$ with prime order $p$
+\STATE To commit to value $v$: $C = g^v h^r$ where $r$ is random
+\STATE To open: reveal $(v, r)$
+\STATE Verification: check $C = g^v h^r$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Sigma Protocols}
+
+\begin{definition}[Sigma Protocol]
+A Sigma protocol is a three-move interactive proof system: commitment, challenge, response.
+\end{definition}
+
+\begin{algorithm}
+\caption{Schnorr Identification Protocol}
+\begin{algorithmic}[1]
+\STATE Prover chooses random $k$, sends $R = g^k$
+\STATE Verifier sends random challenge $c$
+\STATE Prover sends $s = k + cx$ where $x$ is secret key
+\STATE Verifier checks $g^s = R \cdot y^c$ where $y = g^x$ is public key
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Proof Composition}
+
+\begin{definition}[Proof Composition]
+Proof composition allows combining multiple zero-knowledge proofs into a single proof.
+\end{definition}
+
+\begin{enumerate}
+\item \textbf{AND Composition}: Prove multiple statements simultaneously
+\item \textbf{OR Composition}: Prove at least one of several statements
+\item \textbf{Proof Recursion}: Use proofs to verify other proofs
+\end{enumerate}
+
+\subsubsection{Trusted Setup}
+
+\begin{definition}[Trusted Setup]
+A trusted setup is a ceremony where secret parameters are generated and then destroyed, leaving only public parameters.
+\end{definition}
+
+\begin{definition}[Universal Setup]
+A universal setup can be used for any circuit of a given size, rather than requiring a new setup for each circuit.
+\end{definition}
+
+\subsubsection{Post-Quantum Zero-Knowledge}
+
+\begin{definition}[Post-Quantum Zero-Knowledge]
+Post-quantum zero-knowledge proofs are resistant to attacks by quantum computers.
+\end{definition}
+
+\begin{enumerate}
+\item \textbf{Lattice-based}: Using lattice problems for security
+\item \textbf{Code-based}: Using error-correcting codes
+\item \textbf{Multivariate}: Using systems of multivariate equations
+\item \textbf{Isogeny-based}: Using elliptic curve isogenies
+\end{enumerate}
+
+\section{Cryptanalysis}
+
+\subsection{Attack Types}
+
+\begin{enumerate}
+\item \textbf{Ciphertext-only attack}: Attacker has only ciphertexts
+\item \textbf{Known-plaintext attack}: Attacker has ciphertexts and corresponding plaintexts
+\item \textbf{Chosen-plaintext attack}: Attacker can choose plaintexts and obtain ciphertexts
+\item \textbf{Chosen-ciphertext attack}: Attacker can choose ciphertexts and obtain plaintexts
+\end{enumerate}
+
+\subsection{Statistical Attacks}
+
+\subsubsection{Frequency Analysis}
+
+\begin{definition}[Frequency Analysis]
+Frequency analysis studies the frequency of letters or groups of letters in ciphertext to break substitution ciphers.
+\end{definition}
+
+\subsection{Mathematical Attacks}
+
+\subsubsection{Linear Cryptanalysis}
+
+\begin{definition}[Linear Cryptanalysis]
+Linear cryptanalysis exploits linear approximations of the cipher to recover the key.
+\end{definition}
+
+\subsubsection{Differential Cryptanalysis}
+
+\begin{definition}[Differential Cryptanalysis]
+Differential cryptanalysis studies how differences in input pairs affect differences in output pairs.
+\end{definition}
+
+\subsection{Side-Channel Attacks}
+
+\begin{definition}[Side-Channel Attack]
+Side-channel attacks exploit information leaked through physical implementation of cryptographic systems.
+\end{definition}
+
+\begin{enumerate}
+\item \textbf{Timing attacks}: Exploit timing variations in operations
+\item \textbf{Power analysis}: Exploit power consumption patterns
+\item \textbf{Electromagnetic analysis}: Exploit electromagnetic emissions
+\item \textbf{Cache attacks}: Exploit cache access patterns
+\end{enumerate}
+
+\section{Security Models and Proofs}
+
+\subsection{Security Definitions}
+
+\begin{definition}[Semantic Security]
+A cryptosystem is semantically secure if no efficient algorithm can distinguish between encryptions of different messages.
+\end{definition}
+
+\begin{definition}[Chosen-Plaintext Attack (CPA) Security]
+A cryptosystem is CPA-secure if it remains secure even when the attacker can obtain encryptions of chosen plaintexts.
+\end{definition}
+
+\subsection{Random Oracle Model}
+
+\begin{definition}[Random Oracle]
+A random oracle is an ideal hash function that returns truly random responses to unique queries.
+\end{definition}
+
+\subsection{Provable Security}
+
+\begin{theorem}[Security Reduction]
+If problem $A$ is hard and cryptosystem $C$ can be broken, then problem $A$ can be solved efficiently.
+\end{theorem}
+
+\section{Implementation Considerations}
+
+\subsection{Secure Random Number Generation}
+
+\begin{definition}[Cryptographically Secure PRNG]
+A cryptographically secure pseudorandom number generator produces output that is computationally indistinguishable from true randomness.
+\end{definition}
+
+\subsection{Constant-Time Implementation}
+
+\begin{definition}[Constant-Time Algorithm]
+A constant-time algorithm takes the same amount of time to execute regardless of input values.
+\end{definition}
+
+\subsection{Memory Management}
+
+\begin{enumerate}
+\item \textbf{Secure memory allocation}: Prevent memory leaks of sensitive data
+\item \textbf{Memory wiping}: Clear sensitive data from memory
+\item \textbf{Memory protection}: Prevent unauthorized access to sensitive memory regions
+\end{enumerate}
+
+\section{Standards and Regulations}
+
+\subsection{Cryptographic Standards}
+
+\begin{enumerate}
+\item \textbf{FIPS 140-2}: Security requirements for cryptographic modules
+\item \textbf{Common Criteria}: International standard for security evaluation
+\item \textbf{NIST Guidelines}: Recommendations for cryptographic implementations
+\end{enumerate}
+
+\subsection{Export Controls}
+
+\begin{definition}[Export Control]
+Export controls restrict the export of cryptographic software and hardware to certain countries.
+\end{definition}
+
+\section{Applications}
+
+\subsection{Digital Currency}
+
+\begin{definition}[Cryptocurrency]
+Cryptocurrency is a digital currency secured by cryptography, typically using blockchain technology.
+\end{definition}
+
+\subsection{Blockchain}
+
+\begin{definition}[Blockchain]
+A blockchain is a distributed ledger maintained by a network of nodes using cryptographic techniques.
+\end{definition}
+
+\subsection{Secure Communication}
+
+\begin{enumerate}
+\item \textbf{Email encryption}: PGP, S/MIME
+\item \textbf{Messaging}: Signal, WhatsApp
+\item \textbf{VoIP}: SRTP, ZRTP
+\end{enumerate}
+
+\subsection{Authentication Systems}
+
+\begin{enumerate}
+\item \textbf{Multi-factor authentication}: TOTP, HOTP
+\item \textbf{Biometric authentication}: Fingerprint, face recognition
+\item \textbf{Smart cards}: EMV, contactless payments
+\end{enumerate}
+
+\section{Future Directions}
+
+\subsection{Post-Quantum Cryptography}
+
+\begin{definition}[Post-Quantum Cryptography]
+Post-quantum cryptography refers to cryptographic algorithms resistant to attacks by quantum computers.
+\end{definition}
+
+\subsubsection{Lattice-Based Cryptography}
+
+\begin{definition}[Lattice Problem]
+A lattice problem involves finding short vectors in high-dimensional lattices.
+\end{definition}
+
+\subsubsection{Code-Based Cryptography}
+
+\begin{definition}[Code-Based Cryptography]
+Code-based cryptography uses error-correcting codes to construct cryptographic primitives.
+\end{definition}
+
+\subsection{Lightweight Cryptography}
+
+\begin{definition}[Lightweight Cryptography]
+Lightweight cryptography provides security for resource-constrained devices.
+\end{definition}
+
+\subsection{Attribute-Based Encryption}
+
+\begin{definition}[Attribute-Based Encryption]
+Attribute-based encryption allows fine-grained access control based on attributes.
+\end{definition}
+
+\section{Key Theorems and Results}
+
+\begin{theorem}[Shannon's Perfect Secrecy]
+A cryptosystem has perfect secrecy if and only if the key is at least as long as the message and used only once.
+\end{theorem}
+
+\begin{theorem}[Goldwasser-Micali Security]
+The Goldwasser-Micali cryptosystem is semantically secure under the quadratic residuosity assumption.
+\end{theorem}
+
+\begin{theorem}[ElGamal Security]
+The ElGamal cryptosystem is semantically secure under the decisional Diffie-Hellman assumption.
+\end{theorem}
+
+\begin{proposition}[Hash Function Security]
+A hash function is collision-resistant if and only if it is second preimage resistant and preimage resistant.
+\end{proposition}
+
+\section{Conclusion}
+
+Cryptography is a fundamental field that provides the mathematical and algorithmic foundations for secure communication and data protection. The field encompasses:
+
+\begin{itemize}
+\item \textbf{Theoretical foundations}: Number theory, algebra, probability theory
+\item \textbf{Symmetric cryptography}: Block ciphers, stream ciphers, modes of operation
+\item \textbf{Asymmetric cryptography}: RSA, Diffie-Hellman, elliptic curves
+\item \textbf{Hash functions}: SHA family, Merkle-Damgård construction
+\item \textbf{Digital signatures}: RSA, ECDSA, DSA
+\item \textbf{Key management}: Distribution, PKI, perfect forward secrecy
+\item \textbf{Security protocols}: TLS, SSH, IPSec
+\item \textbf{Advanced topics}: Quantum cryptography, homomorphic encryption, zero-knowledge proofs
+\end{itemize}
+
+The field continues to evolve with:
+\begin{itemize}
+\item \textbf{Post-quantum cryptography}: Preparing for quantum computing threats
+\item \textbf{Lightweight cryptography}: Securing IoT and embedded devices
+\item \textbf{Privacy-preserving techniques}: Homomorphic encryption, secure multi-party computation
+\item \textbf{Quantum cryptography}: Quantum key distribution and quantum-resistant algorithms
+\end{itemize}
+
+Cryptography remains essential for protecting information in our digital world, balancing security requirements with practical implementation constraints while adapting to emerging threats and technological advances.
+
+\end{document}

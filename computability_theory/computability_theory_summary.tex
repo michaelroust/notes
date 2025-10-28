@@ -79,8 +79,24 @@ where $M[x := N]$ denotes substitution of $N$ for $x$ in $M$.
 \end{definition}
 
 \begin{definition}
+The \textbf{alpha conversion} rule allows renaming bound variables:
+$$\lambda x. M =_\alpha \lambda y. M[x := y]$$
+provided $y$ is not free in $M$.
+\end{definition}
+
+\begin{definition}
+The \textbf{eta conversion} rule is:
+$$\lambda x. M x =_\eta M$$
+provided $x$ is not free in $M$.
+\end{definition}
+
+\begin{definition}
 A lambda term is in \textbf{normal form} if no beta reduction can be applied to it.
 \end{definition}
+
+\begin{theorem}[Church-Rosser Theorem]
+If $M \to^* N_1$ and $M \to^* N_2$, then there exists $N_3$ such that $N_1 \to^* N_3$ and $N_2 \to^* N_3$.
+\end{theorem}
 
 \subsection{Church Encoding}
 \begin{definition}
@@ -212,6 +228,10 @@ The \textbf{space complexity} of a Turing machine $M$ is the function $f: \mathb
 \end{definition}
 
 \begin{definition}
+\textbf{SPACE}(s(n)) is the class of languages decided by $O(s(n))$ space Turing machines.
+\end{definition}
+
+\begin{definition}
 $$\text{PSPACE} = \bigcup_{k} \text{SPACE}(n^k)$$
 is the class of languages decidable in polynomial space.
 \end{definition}
@@ -233,6 +253,27 @@ A language $B$ is \textbf{NP-complete} if:
 \begin{theorem}[Cook-Levin Theorem]
 SAT is NP-complete.
 \end{theorem}
+
+\subsection{Complexity Class Hierarchy}
+\begin{theorem}
+$$\text{P} \subseteq \text{NP} \subseteq \text{PSPACE} \subseteq \text{EXPTIME}$$
+\end{theorem}
+
+\begin{theorem}[Savitch's Theorem]
+$$\text{NPSPACE} = \text{PSPACE}$$
+\end{theorem}
+
+\subsection{Important Complexity Classes}
+\begin{itemize}
+    \item \textbf{L}: Logarithmic space
+    \item \textbf{NL}: Nondeterministic logarithmic space
+    \item \textbf{P}: Polynomial time
+    \item \textbf{NP}: Nondeterministic polynomial time
+    \item \textbf{co-NP}: Complement of NP
+    \item \textbf{PSPACE}: Polynomial space
+    \item \textbf{EXPTIME}: Exponential time
+    \item \textbf{NEXPTIME}: Nondeterministic exponential time
+\end{itemize}
 
 \section{Lambda Calculus Theory}
 
@@ -302,8 +343,42 @@ There is a correspondence between:
     \item $A \times B$ corresponds to conjunction $A \land B$
     \item $A + B$ corresponds to disjunction $A \lor B$
     \item $\forall \alpha. A$ corresponds to universal quantification $\forall x. A$
+    \item $\exists \alpha. A$ corresponds to existential quantification $\exists x. A$
+    \item $\bot$ corresponds to falsehood
+    \item $\top$ corresponds to truth
 \end{itemize}
 \end{example}
+
+\subsection{Proof Terms}
+\begin{definition}
+In the Curry-Howard correspondence:
+\begin{itemize}
+    \item A proof of $A \Rightarrow B$ is a function from proofs of $A$ to proofs of $B$
+    \item A proof of $A \land B$ is a pair of proofs of $A$ and $B$
+    \item A proof of $A \lor B$ is either a proof of $A$ or a proof of $B$
+    \item A proof of $\forall x. A(x)$ is a function that maps any $x$ to a proof of $A(x)$
+    \item A proof of $\exists x. A(x)$ is a pair $(x, p)$ where $p$ is a proof of $A(x)$
+\end{itemize}
+\end{definition}
+
+\subsection{Constructive Logic}
+\begin{definition}
+\textbf{Constructive logic} (intuitionistic logic) is the logic corresponding to typed lambda calculus under the Curry-Howard correspondence.
+\end{definition}
+
+\begin{theorem}
+The law of excluded middle $A \lor \neg A$ is not provable in constructive logic.
+\end{theorem}
+
+\subsection{Dependent Types and Logic}
+\begin{definition}
+In \textbf{dependent type theory}, the Curry-Howard correspondence extends to:
+\begin{itemize}
+    \item Dependent function types $\Pi_{x:A} B(x)$ correspond to universal quantification $\forall x \in A. B(x)$
+    \item Dependent pair types $\Sigma_{x:A} B(x)$ correspond to existential quantification $\exists x \in A. B(x)$
+    \item Identity types $x =_A y$ correspond to equality propositions
+\end{itemize}
+\end{definition}
 
 \section{Computational Equivalence}
 
@@ -356,6 +431,45 @@ A string $s$ is \textbf{incompressible} if $K(s) \geq |s|$.
 \begin{theorem}
 Most strings are incompressible.
 \end{theorem}
+
+\subsection{Conditional Kolmogorov Complexity}
+\begin{definition}
+The \textbf{conditional Kolmogorov complexity} of $x$ given $y$ is:
+$$K(x|y) = \min\{|p| : U(p, y) = x\}$$
+\end{definition}
+
+\subsection{Mutual Information}
+\begin{definition}
+The \textbf{algorithmic mutual information} between strings $x$ and $y$ is:
+$$I(x:y) = K(x) + K(y) - K(x,y)$$
+\end{definition}
+
+\subsection{Universal Distribution}
+\begin{definition}
+The \textbf{universal distribution} is:
+$$m(x) = 2^{-K(x)}$$
+\end{definition}
+
+\begin{theorem}
+The universal distribution is optimal in the sense that for any computable distribution $p$:
+$$m(x) \geq c \cdot p(x)$$
+for some constant $c$ depending only on $p$.
+\end{theorem}
+
+\subsection{Algorithmic Randomness}
+\begin{definition}
+A sequence $x$ is \textbf{algorithmically random} if:
+$$K(x[1:n]) \geq n - c$$
+for some constant $c$ and all $n$.
+\end{definition}
+
+\subsection{Applications of Algorithmic Information Theory}
+\begin{itemize}
+    \item \textbf{Data compression}: Understanding limits of compression
+    \item \textbf{Machine learning}: Measuring complexity of patterns
+    \item \textbf{Philosophy of information}: Defining randomness and information
+    \item \textbf{Cryptography}: Analyzing security of cryptographic systems
+\end{itemize}
 
 \section{Applications}
 

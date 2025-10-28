@@ -61,15 +61,6 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
   - Intersection theory
   - Applications to number theory
 
-- **Computability Theory**
-  - Turing machines and computational models
-  - Lambda calculus (untyped, typed, System F, dependent types)
-  - Recursive functions and Church-Turing thesis
-  - Decidability and the halting problem
-  - Reducibility and Rice's theorem
-  - Complexity theory basics (P, NP, PSPACE)
-  - Curry-Howard correspondence
-  - Algorithmic information theory
 
 ### Applied Mathematics
 - **Control Theory**
@@ -134,7 +125,7 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 - **Algorithms** - Sorting, searching, graph algorithms, dynamic programming, complexity analysis
 - **Machine Learning** - Supervised/unsupervised learning, neural networks, deep learning, ensemble methods
 - **ML Explainability** - Feature importance, local methods, gradient-based explanations, interpretable models
-- **Computability Theory** - Turing machines, lambda calculus, recursive functions, decidability, complexity classes
+- **Computability Theory** - Turing machines and computational models, lambda calculus (untyped, typed, System F, dependent types), recursive functions and Church-Turing thesis, decidability and the halting problem, reducibility and Rice's theorem, complexity theory basics (P, NP, PSPACE), Curry-Howard correspondence, algorithmic information theory
 - **Compiler Design and Optimization** - Lexical analysis, parsing, semantic analysis, code generation, optimization techniques
 - **Python Programming** - Syntax, data structures, OOP, functions, modules, error handling, advanced features
 - **Scala Programming** - Object-oriented and functional programming, pattern matching, collections, concurrency, advanced features

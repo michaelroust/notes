@@ -39,6 +39,38 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 - **Plasma Physics** - Magnetohydrodynamics (MHD), plasma waves and instabilities, fusion physics and tokamaks, space plasmas and astrophysical plasmas, computational plasma physics
 - **Quantum Computation and Information Theory** - Qubits, gates, algorithms, error correction, quantum information
 
+### Business and Management
+
+#### Core Business
+- **Business Plan Writing** - Executive summary, market analysis, financial planning, business model development
+- **Fundamental Management** - Leadership principles, organizational behavior, strategic planning, decision making
+- **Commodity Trading** - Market fundamentals, trading strategies, risk management, futures and options
+
+#### Finance and Accounting
+- **Finance and Accounting** - Financial statements, ratio analysis, budgeting, cost accounting, financial planning
+- Corporate finance, investment analysis, financial markets, risk management, international finance, personal finance
+
+#### Marketing
+- **Marketing** - Market research, consumer behavior, branding, digital marketing, sales strategies
+- Digital marketing, brand management, advertising and promotion, e-commerce marketing
+
+#### Human Resources
+- **Human Resources** - Recruitment, training, performance management, compensation, labor relations
+- Employee relations, compensation and benefits, training and development, performance management, diversity and inclusion
+
+#### Information Technology
+- **Information Technology** - IT strategy, systems analysis, project management, cybersecurity, digital transformation
+- Management information systems, business analytics, data analysis, e-commerce, business intelligence
+
+#### International Business
+- **International Business** - Global markets, cross-cultural management, international trade, foreign exchange
+- Global business environment, cross-cultural management, international trade, global supply chain management
+
+#### Additional Business Topics
+- **Economics** - Microeconomics, macroeconomics, international economics, managerial economics, business statistics, econometrics
+- **Entrepreneurship** - Business plan development, small business management, innovation and creativity, venture capital, social entrepreneurship
+- **Specialized Topics** - Supply chain management, quality management, business law, negotiation skills, public relations, real estate finance, healthcare management, nonprofit management
+
 ## Proposed Subjects (Not Yet Created)
 
 ### Pure Mathematics
@@ -212,6 +244,175 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
   - Applications to physics and biology
   - Computational methods for chaos
 
+### Business and Management
+- **Business Ethics**
+  - Corporate social responsibility
+  - Ethical decision making
+  - Stakeholder management
+  - Sustainability and environmental ethics
+  - Professional codes of conduct
+
+- **Strategic Management**
+  - Strategic planning and analysis
+  - Competitive advantage
+  - Corporate strategy and diversification
+  - Strategic implementation
+  - Performance measurement and control
+
+- **Operations Management**
+  - Process design and improvement
+  - Capacity planning
+  - Inventory management
+  - Quality control and Six Sigma
+  - Lean manufacturing principles
+
+- **Project Management**
+  - Project planning and scheduling
+  - Risk management
+  - Resource allocation
+  - Agile and waterfall methodologies
+  - Project leadership and team management
+
+- **Leadership and Team Building**
+  - Leadership theories and styles
+  - Team dynamics and development
+  - Conflict resolution
+  - Motivation and engagement
+  - Change management
+
+- **Business Communication**
+  - Written and oral communication
+  - Presentation skills
+  - Cross-cultural communication
+  - Negotiation techniques
+  - Digital communication strategies
+
+- **Supply Chain Management**
+  - Logistics and distribution
+  - Vendor management
+  - Global supply chain optimization
+  - Technology in supply chains
+  - Sustainability in supply chains
+
+- **Quality Management**
+  - Total Quality Management (TQM)
+  - ISO standards and certification
+  - Statistical process control
+  - Continuous improvement methodologies
+  - Customer satisfaction measurement
+
+- **Business Law**
+  - Contract law and commercial transactions
+  - Employment law
+  - Intellectual property rights
+  - Regulatory compliance
+  - International business law
+
+- **Real Estate Finance**
+  - Property valuation and investment analysis
+  - Real estate markets and cycles
+  - Commercial real estate development
+  - Real estate investment trusts (REITs)
+  - Property management and leasing
+
+- **Healthcare Management**
+  - Healthcare systems and policy
+  - Healthcare operations and quality
+  - Healthcare finance and reimbursement
+  - Healthcare technology and informatics
+  - Population health management
+
+- **Nonprofit Management**
+  - Nonprofit governance and leadership
+  - Fundraising and development
+  - Grant writing and management
+  - Volunteer management
+  - Social impact measurement
+
+- **Public Relations**
+  - Media relations and crisis communication
+  - Brand reputation management
+  - Stakeholder engagement
+  - Digital PR and social media
+  - Corporate communications strategy
+
+- **Negotiation Skills**
+  - Negotiation theory and frameworks
+  - Multi-party negotiations
+  - International negotiations
+  - Conflict resolution techniques
+  - Power dynamics in negotiations
+
+- **Business Analytics**
+  - Data-driven decision making
+  - Predictive analytics and forecasting
+  - Business intelligence tools
+  - Data visualization and reporting
+  - Statistical analysis for business
+
+- **E-commerce and Digital Business**
+  - Online business models
+  - Digital marketing strategies
+  - E-commerce platforms and technologies
+  - Digital transformation
+  - Cybersecurity for business
+
+- **Innovation and Creativity**
+  - Innovation management
+  - Design thinking
+  - Creative problem solving
+  - Technology commercialization
+  - Intellectual property management
+
+- **Venture Capital and Private Equity**
+  - Investment evaluation and due diligence
+  - Valuation methodologies
+  - Deal structuring and negotiation
+  - Portfolio management
+  - Exit strategies
+
+- **Family Business Management**
+  - Succession planning
+  - Family governance structures
+  - Managing family dynamics in business
+  - Professionalization of family firms
+  - Estate planning and wealth transfer
+
+- **Social Entrepreneurship**
+  - Social impact measurement
+  - Sustainable business models
+  - Social innovation
+  - Impact investing
+  - Corporate social responsibility
+
+- **International Trade and Finance**
+  - Global trade policies and regulations
+  - Foreign exchange markets
+  - International payment systems
+  - Trade finance and documentation
+  - Global economic integration
+
+- **Crisis Management**
+  - Crisis communication strategies
+  - Business continuity planning
+  - Risk assessment and mitigation
+  - Reputation management
+  - Stakeholder communication during crises
+
+- **Digital Marketing and Social Media**
+  - Search engine optimization (SEO)
+  - Social media marketing strategies
+  - Content marketing
+  - Influencer marketing
+  - Digital advertising and analytics
+
+- **Business Process Improvement**
+  - Process mapping and analysis
+  - Lean Six Sigma methodologies
+  - Business process reengineering
+  - Change management
+  - Performance measurement and KPIs
+
 ### Engineering
 - **Electromagnetic Theory**
   - Maxwell's equations and wave propagation
@@ -340,10 +541,10 @@ A comprehensive collection of LaTeX notes covering various mathematical and scie
 14. **Materials Science** - Interdisciplinary, connects physics and engineering
 
 ## Notes
-- **Total completed subjects**: 30 (9 Pure Math, 7 Applied Math, 3 Physics, 13 Computer Science)
+- **Total completed subjects**: 44 (9 Pure Math, 10 Applied Math, 4 Physics, 13 Computer Science, 8 Business and Management)
 - All existing subjects have been compiled to PDF with proper table of contents
 - Each subject follows a consistent LaTeX format with theorem environments
 - Mathematical notation is standardized across all documents
 - Cross-references between related subjects are maintained
-- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization, Time Series Forecasting, Cryptography, Plasma Physics
+- Recent additions include: Number Theory, Category Theory, Mathematical Inconsistencies, Operations Research, Foundational Data Science, Machine Learning, ML Explainability, Computability Theory, Compiler Design and Optimization, Python Programming, Scala Programming, Quantum Machine Learning, Multimodal AI, Transformers, Algorithms, Graph Layout Optimization, Time Series Forecasting, Cryptography, Plasma Physics, Business Plan Writing, Commodity Trading, Finance and Accounting, Fundamental Management, Human Resources, Information Technology, International Business, Marketing
 # notes
